@@ -4,68 +4,72 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>United States National Parks</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<input type="button" value="Fetch Parks" onclick="location.href='@Url.Action("FetchParkApi", "Park")'" />
+
+@* This works below as well *@
+@Html.ActionLink("Fetch Parks", "FetchParkApi", "Park")
+
+@* Map with markers will generate inside map id *@
+<div id="map">
+</div>
+<div class="clearfix"></div>
+
+@*<div class="container-fluid">
+    <div class="flex-container">
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <h4>Park</h4>
+                <hr />
+
+                <div class="form-group">
+                    <div class="flex-container">
+                        <div class="state-filter-box">
+                            @Html.LabelFor(model => model.SelectedState)
+                        </div>
+                        <div class="state-filter-box">
+                            @Html.DropDownListFor(model => model., Model., "Please Select State")
+                        </div>
+                        <div class="state-filter-box">
+                            <input type="submit" value="Filter" class="btn btn-default" />
+                        </div>
+                        <div class="state-filter-box">
+                            @Html.ActionLink("See All Parks", "Index", "Parks", null, new { @class = "btn btn-default" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ParkId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ParkName)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.ParkState)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ParkLatitude)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ParkLongitude)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ParkDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ParkCode)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkState)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkLatitude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkLongitude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkCode)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParkName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParkState)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ParkId })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

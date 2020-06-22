@@ -4,57 +4,35 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="header-container">
+    <h1>@Html.DisplayFor(model => model.ParkName)</h1>
+    <div class="weather-info">
+        <h2>Current Weather</h2>
+        @*<span>@Model.Park.CurrentWeatherInfo.temperature &deg;F | </span>
+            <span>@Model.Park.CurrentWeatherInfo.condition | </span>
+            <span>Wind: @Model.Park.CurrentWeatherInfo.wind mph</span>*@
+    </div>
+</div>
+
+<div class="flex-container">
+    <div class="flex-box">
+        <div class="content-box">
+            @*@Html.ActionLink("Add Park to Wish List", "AddParkToWishList", new { @id = Model.ParkId }, new { @class = "btn btn-default" })*@
+
+            <h3>Located in: @Html.DisplayFor(model => model.ParkState)</h3>
+            <p>@Html.DisplayFor(model => model.ParkDescription)</p>
+        </div>
+    </div>
+    <div class="flex-box solo-park-map">
+        <div id="map"></div>
+    </div>
+    <hr />
+</div>
+
+<div class="park-header">
+    <h2>Trails available at <em>@Html.DisplayFor(model => model.ParkName)</em></h2>
+</div>
 
 <div>
-    <h4>Park</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParkId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParkName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkState)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParkState)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkLatitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParkLatitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkLongitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParkLongitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParkDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParkCode)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Back to Parks", "Index", "Parks")
 </div>

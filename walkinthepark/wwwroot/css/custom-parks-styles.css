@@ -1,0 +1,166 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+    border-radius: 5px;
+}
+
+h1 {
+    font-size: 3.5em;
+}
+
+select {
+    padding: 5px;
+}
+
+.state-filter-box {
+    margin: 0 15px 5px 0;
+}
+
+/* Custom Styles  */
+.container-fluid {
+    padding:0;
+    margin:0;
+}
+
+.navbar {
+    background: #6a5d43;
+    margin:0;
+}
+
+.jumbotron {
+    background: #907f5d;
+    margin-bottom: 0;
+    padding: 15px;
+    border-radius: 0;
+}
+
+.btn-primary {
+    background: #A28D64;
+    border-color: #4C3811;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:focus, .btn-primary:active:hover {
+    background: #6a5d43;
+}
+
+.grid-container {
+    display: grid;
+}
+
+th {
+    background-color: #907f5d;
+}
+
+.header-container {
+    padding: 15px;
+    background-color: #907f5d;
+}
+
+.trail-list .trail-box {
+    padding: 10px 0;
+}
+
+.trail-list .trail-box:nth-child(even) {
+    background: white;
+}
+
+.trail-list .trail-box:nth-child(odd) {
+    background: #907f5d;
+}
+
+#map {
+    height: 50vh;
+    width: 100%;
+}
+
+.content-box {
+    padding: 15px;
+}
+
+.park-header h2 {
+    margin: 0;
+    padding: 15px;
+    background-color: #b9a67f;
+    box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.7) inset;
+}
+
+footer {
+    position: relative;
+    padding: 0 15px;
+}
+
+
+@media screen and (min-width:768px) {
+    .header-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    tr:hover {
+        background-color: #fdf7ea;
+    }
+
+    .solo-park-map #map {
+        width: 50vw;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .flex-box {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .trail-list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .trail-list .trail-box {
+        display: flex;
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .centered-flex {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+@media screen and (min-width:991px) {
+    .header-container {
+        flex-direction: row;
+    }
+}
