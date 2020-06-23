@@ -37,9 +37,10 @@ namespace walkinthepark.Controllers
         }
 
         // GET: ParkController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            Park park = await _context.Parks.FindAsync(id);
+            return View(park);
         }
 
         // GET: ParkController/Create
@@ -139,6 +140,13 @@ namespace walkinthepark.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Index", _context.Parks.ToList());
+        }
+
+        public string GetGoogleMapsJsKey()
+        {
+            var googleMapsJsKey = _configuration["GoogleMapsJsKey"];
+            string googleUrl = "https://maps.googleapis.com/maps/api/js?key={googleMapsJsKey}&callback=initMapgoogleMapsJsKey";
+            return googleUrl;
         }
     }
 }

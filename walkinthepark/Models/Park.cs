@@ -31,9 +31,17 @@ namespace walkinthepark.Models
         public string ParkCode { get; set; }
 
         [NotMapped]
-        public string ComboParkLatLng { get; set; }
-
-        [NotMapped]
         public string Designation { get; set; }
+
+        // Google Maps Markers
+        [NotMapped]
+        public ParkMarkers ParkMarkers { get; set; }
+    }
+
+    public class ParkMarkers
+    {
+        //public string ParkUniqueCode { get; set; }
+        public string ParkLatitude { get; set; }
+        public string ParkLongitude { get; set; }
     }
 }

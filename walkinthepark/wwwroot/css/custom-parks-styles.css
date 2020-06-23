@@ -61,6 +61,13 @@ select {
 
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:focus, .btn-primary:active:hover {
     background: #6a5d43;
+    border-color: #4f4635;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:focus {
+    background: #4f4635;
+    border-color: #6a5d43;
+    box-shadow: none;
 }
 
 .grid-container {
