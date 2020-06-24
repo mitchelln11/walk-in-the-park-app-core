@@ -121,8 +121,6 @@ namespace walkinthepark.Controllers
 
         public async Task ApplyHikingTrailValues(Park park, List<Trail> trailInfo)
         {
-            var foreignParkId = park.ParkId;
-            //HikingTrail hiking = _context.HikingTrails.Where(t => t.ParkId == foreignParkId).FirstOrDefault();
             foreach (var individualTrail in trailInfo)
             {
                 HikingTrail hikingTrail = new HikingTrail();
@@ -132,7 +130,7 @@ namespace walkinthepark.Controllers
                 hikingTrail.HikingApiCode = individualTrail.id;
                 hikingTrail.ParkId = park.ParkId;
 
-                string trailSummary = hikingTrail.TrailSummary;
+                string trailSummary = individualTrail.summary;
                 if (trailSummary == null)
                 {
                     hikingTrail.TrailSummary = "No information available at this time.";
@@ -145,7 +143,7 @@ namespace walkinthepark.Controllers
                 }
 
                 // Trail Conditions
-                string trailCondition = hikingTrail.TrailCondition;
+                string trailCondition = individualTrail.conditionDetails;
                 if (trailCondition != null)
                 {
                     hikingTrail.TrailCondition = trailCondition;
