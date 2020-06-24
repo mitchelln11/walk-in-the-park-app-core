@@ -33,9 +33,23 @@ namespace walkinthepark.Models
         [NotMapped]
         public string Designation { get; set; }
 
-        // Google Maps Markers
+        // Weather
         [NotMapped]
-        public ParkMarkers ParkMarkers { get; set; }
+        public CurrentWeatherInfo CurrentWeatherInfo { get; set; } // From below
+
+        // Google Maps Markers
+        [NotMapped] 
+        public ParkMarkers ParkMarkers { get; set; }  // From below
+
+        [NotMapped]
+        public List<HikingTrail> HikingTrail  { get; set; }
+    }
+
+    public class CurrentWeatherInfo
+    {
+        public double temperature { get; set; }
+        public double wind { get; set; }
+        public string condition { get; set; }
     }
 
     public class ParkMarkers

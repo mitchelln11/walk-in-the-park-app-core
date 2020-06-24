@@ -1,0 +1,60 @@
+﻿@model IEnumerable<walkinthepark.Models.HikingTrail>
+
+<div class="container-fluid">
+    <div class="flex-box">
+        <div class="content-box">
+            <h1>United States National Parks</h1>
+            <input type="button" value="Fetch Parks" onclick="location.href='@Url.Action("FetchTrailsApi", "HikingTrail")'" />
+        </div>
+    </div>
+</div>
+
+<div class="trail-list">
+    @foreach (var item in Model)
+    {
+        <div class="trail-box">
+
+            <div class="col-md-6">
+                @Html.DisplayFor(model => item.TrailId)
+                <h3>@Html.DisplayFor(model => item.TrailName)</h3>
+                <h3>Trail Summary:</h3>
+                <p>@Html.DisplayFor(model => item.TrailSummary)</p>
+            </div>
+            <div class="col-md-4 centered-flex">
+                <p><strong>Trail Difficulty:</strong> @Html.DisplayFor(model => item.TrailDifficulty)</p>
+                <p><strong>Trail Length:</strong> @Html.DisplayFor(model => item.TrailLength)</p>
+                <p><strong>Trail Condition:</strong> @Html.DisplayFor(model => item.TrailCondition)</p>
+            </div>
+            @*<div class="col-md-2">
+                <p><strong>Trail Rating:</strong></p>
+                @Html.DisplayFor(model => item.AverageUserRating)
+            </div>*@
+            @*<div class="col-md-2">
+                <p><strong>Review This Trail:</strong></p>*@
+                @*@using (Html.BeginForm())*@
+                @*{
+                    var userId = TempData["UserId"]?.ToString();
+                    TempData.Keep();*@
+                    @*<div class="flex-container">
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="flex-container">
+                                        <div class="state-filter-box">*@
+                                            @*@Html.DropDownListFor(model => model.SelectedRating, Model.StarRating, "Please Rate Trail")-->--> @* Added , Model.HikingTrail *@
+                                        @*</div>
+                                        <div class="state-filter-box">*@
+                                            @*@Html.DisplayFor(model => item.TrailId)*@
+                                            @*<h3>User Id : @userId</h3>
+                                            <input type="submit" value="Rate" class="btn btn-default" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                @*}*@
+            @*</div>*@
+        </div>
+    }
+</div>

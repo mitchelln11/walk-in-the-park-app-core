@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using walkinthepark.Data;
 using walkinthepark.Models;
-using walkinthepark.HelperMethods;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -40,8 +39,13 @@ namespace walkinthepark.Controllers
         public async Task<ActionResult> Details(int id)
         {
             Park park = await _context.Parks.FindAsync(id);
+            park.HikingTrail = _context.HikingTrails.Where(i => i.ParkId == id).ToList();
+            //park.CurrentWeatherInfo = new CurrentWeatherInfo(); // Instantiate park to bind data to
+            //await FetchWeatherApi(park);
+            //await FetchTrailsApi(park);
             return View(park);
         }
+
 
         // GET: ParkController/Create
         public ActionResult Create()
@@ -106,8 +110,8 @@ namespace walkinthepark.Controllers
             }
         }
 
-
-        public async Task<RedirectToActionResult> FetchParkApi()
+        ////////---------------- PARKS --------------------/////////////////
+        public async Task<RedirectToActionResult> FetchParkApi() // Referenced on Button click
         {
             var parkKey = _configuration["NpsKey"];
             string url = $"https://developer.nps.gov/api/v1/parks?q=National%20Park&limit=91&api_key={parkKey}";
@@ -148,5 +152,105 @@ namespace walkinthepark.Controllers
             string googleUrl = "https://maps.googleapis.com/maps/api/js?key={googleMapsJsKey}&callback=initMapgoogleMapsJsKey";
             return googleUrl;
         }
+
+
+        ////////---------------- WEATHER --------------------/////////////////
+        public async Task<RedirectToActionResult> FetchWeatherApi(Park park) // Referenced on Button click
+        {
+            var weatherKey = _configuration["OpenWeatherKey"];
+            string url = $"https://api.openweathermap.org/data/2.5/weather?lat={park.ParkLatitude}&lon={park.ParkLongitude}&APPID={weatherKey}";
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+            string jsonresult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                RestApiOpenWeather weather = JsonConvert.DeserializeObject<RestApiOpenWeather>(jsonresult);
+                await GetCurrentTemperature(weather.main.temp);
+
+                //string condition = weather.condition;
+                //weather.wind = weather.;
+                //var temperature = weather.temperature;
+                Console.WriteLine();
+                await _context.SaveChangesAsync();
+                //await GetWindCondition(weather.wind);
+            }
+            return RedirectToAction("Details", park.ParkId);
+        }
+
+        public async Task GetCurrentTemperature(double kelvin)
+        {
+            double convertKelvinToFahrenheit = Convert.ToDouble(((kelvin - 273.15) * 9 / 5) + 32);
+            CurrentWeatherInfo currentWeather = new CurrentWeatherInfo();
+            currentWeather.temperature = Math.Round(convertKelvinToFahrenheit, 2);
+            await _context.SaveChangesAsync();
+        }
+
+        //////////---------------- HIKING TRAILS --------------------/////////////////
+        //public async Task<RedirectToActionResult> FetchTrailsApi(Park park) // Referenced on Button click
+        //{
+        //    var hikingTrailsKey = _configuration["HikingProjectKey"];
+        //    string url = $"https://www.hikingproject.com/data/get-trails?lat={park.ParkLatitude}&lon={park.ParkLongitude}&maxDistance=100&key={hikingTrailsKey}";
+        //    HttpClient client = new HttpClient();
+        //    HttpResponseMessage response = await client.GetAsync(url);
+        //    string jsonresult = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //    {
+                
+        //        RestApiHikingProject trails = JsonConvert.DeserializeObject<RestApiHikingProject>(jsonresult);
+        //        List<Trail> trailInfo = trails.trails.ToList();
+        //        await ApplyHikingTrailValues(park, trailInfo);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    return RedirectToAction("Details");
+        //}
+
+        //public async Task ApplyHikingTrailValues(Park park, List<Trail> trailInfo)
+        //{
+        //    var foreignParkId = park.ParkId;
+        //    //HikingTrail hiking = _context.HikingTrails.Where(t => t.ParkId == foreignParkId).FirstOrDefault();
+        //    foreach (var individualTrail in trailInfo)
+        //    {
+        //        HikingTrail hikingTrail = new HikingTrail();
+        //        hikingTrail.TrailName = individualTrail.name;
+        //        hikingTrail.TrailLength = Math.Round(individualTrail.length, 2);
+        //        hikingTrail.TrailDifficulty = individualTrail.difficulty;
+        //        hikingTrail.HikingApiCode = individualTrail.id;
+        //        hikingTrail.ParkId = park.ParkId;
+
+        //        string trailSummary = hikingTrail.TrailSummary;
+        //        if (trailSummary == null)
+        //        {
+        //            hikingTrail.TrailSummary = "No information available at this time.";
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        else
+        //        {
+        //            hikingTrail.TrailSummary = trailSummary;
+        //            await _context.SaveChangesAsync();
+        //        }
+
+        //        // Trail Conditions
+        //        string trailCondition = hikingTrail.TrailCondition;
+        //        if (trailCondition != null)
+        //        {
+        //            hikingTrail.TrailCondition = trailCondition;
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        else
+        //        {
+        //            hikingTrail.TrailCondition = "No condition status available at this time";
+        //            await _context.SaveChangesAsync();
+        //        }
+
+        //        // Check to see if it already exists before adding to database
+        //        var trailCode = _context.HikingTrails.Where(c => c.HikingApiCode == hikingTrail.HikingApiCode).FirstOrDefault();
+        //        if (trailCode == null)
+        //        {
+        //            _context.HikingTrails.Add(hikingTrail);
+        //        }
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }

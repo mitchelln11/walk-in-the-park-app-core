@@ -6,12 +6,12 @@
 
 <div class="header-container">
     <h1>@Html.DisplayFor(model => model.ParkName)</h1>
-    <div class="weather-info">
-        <h2>Current Weather</h2>
-        @*<span>@Model.Park.CurrentWeatherInfo.temperature &deg;F | </span>
-            <span>@Model.Park.CurrentWeatherInfo.condition | </span>
-            <span>Wind: @Model.Park.CurrentWeatherInfo.wind mph</span>*@
-    </div>
+    @*<div class="weather-info">
+    <h2>Current Weather</h2>*@
+    @*<span>@Model.CurrentWeatherInfo.temperature &deg;F | </span>*@
+    @*<span>@Model.CurrentWeatherInfo.condition | </span>
+    <span>Wind: @Model.CurrentWeatherInfo.wind mph</span>*@
+    @* </div> *@
 </div>
 
 <div class="flex-container">
@@ -37,8 +37,61 @@
     <h2>Trails available at <em>@Html.DisplayFor(model => model.ParkName)</em></h2>
 </div>
 
-<div>
-    @Html.ActionLink("Back to Parks", "Index", "Parks")
+<div class="flex-box">
+    <div class="content-box">
+        <input type="button" value="Fetch Trails" onclick="location.href='@Url.Action("FetchTrailsApi", "HikingTrail", new { id = Model.ParkId })'" />
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HikingTrail[0].TrailName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HikingTrail[0].TrailDifficulty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HikingTrail[0].TrailLength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HikingTrail[0].TrailCondition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HikingTrail[0].TrailSummary)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.HikingTrail)
+        {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrailName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrailDifficulty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrailLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrailCondition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrailSummary)
+            </td>
+            @Html.HiddenFor(modelItem => item.TrailId)
+            @Html.HiddenFor(modelItem => item.HikingApiCode)
+        </tr>
+            }
+    </tbody>
+</table>
+
+<div class="flex-box">
+    @Html.ActionLink("Back to Parks", "Index", "Park")
 </div>
 
 @Html.HiddenFor(model => model.ParkLatitude)

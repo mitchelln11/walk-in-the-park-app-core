@@ -44,7 +44,48 @@ select {
 
 .navbar {
     background: #6a5d43;
-    margin:0;
+    padding: 0;
+}
+
+.navbar-nav li a {
+    color: #fff;
+}
+
+.navbar-dark {
+    background-color: #544b36;
+    color:#fff;
+    padding: 10px;
+}
+
+a.navbar-brand {
+    color: #212529;
+    padding-left: 15px;
+}
+
+.navbar-toggler {
+    background-color: #544b36;
+    color: #fff;
+    border:none;
+    border-radius:0;
+}
+.navbar-toggler:active, .navbar-toggler:hover {
+    background-color: #544b36;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(215,202,178,1);
+}
+
+a.btn.btn-default {
+    background: #544b36;
+}
+
+.navbar-dark li.nav-item, li.nav-item {
+    padding: 0 10px;
+}
+
+#logoutForm .navbar-dark li.nav-item {
+    padding: 0 10px;
 }
 
 .jumbotron {
@@ -111,6 +152,10 @@ th {
     box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.7) inset;
 }
 
+.table {
+  margin-bottom:0;
+}
+
 footer {
     position: relative;
     padding: 0 15px;
@@ -126,7 +171,8 @@ footer {
     }
 
     tr:hover {
-        background-color: #fdf7ea;
+/*        background-color: rgba(215,202,178,0.8);*/
+        opacity:0.8;
     }
 
     .solo-park-map #map {

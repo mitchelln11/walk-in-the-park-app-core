@@ -27,11 +27,7 @@ namespace walkinthepark.Models
         [Display(Name = "Trail Condition")]
         public string TrailCondition { get; set; }
 
-        public string HikingApiCode { get; set; }
-
-        [Display(Name = "Average Rating")]
-        [Column(TypeName = "decimal(18,3)")]
-        public decimal AverageUserRating { get; set; }
+        public int HikingApiCode { get; set; } // Unique code to prevent duplicates
 
         [ForeignKey("Park")]
         public int ParkId { get; set; }

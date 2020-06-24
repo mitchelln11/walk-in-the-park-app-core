@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using walkinthepark.Models;
-using walkinthepark.HelperMethods;
 using System.Net.Http;
 
 namespace walkinthepark.Controllers
