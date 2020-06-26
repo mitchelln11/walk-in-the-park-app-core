@@ -40,9 +40,8 @@ namespace walkinthepark.Controllers
         {
             Park park = await _context.Parks.FindAsync(id);
             park.HikingTrail = _context.HikingTrails.Where(i => i.ParkId == id).ToList();
-            //park.CurrentWeatherInfo = new CurrentWeatherInfo(); // Instantiate park to bind data to
-            //await FetchWeatherApi(park);
-            //await FetchTrailsApi(park);
+            park.CurrentWeatherInfo = new CurrentWeatherInfo(); // Instantiate blank spot for data to bind to, sets to object
+            await FetchWeatherApi(park);
             return View(park);
         }
 
@@ -165,92 +164,32 @@ namespace walkinthepark.Controllers
             if (response.IsSuccessStatusCode)
             {
                 RestApiOpenWeather weather = JsonConvert.DeserializeObject<RestApiOpenWeather>(jsonresult);
-                await GetCurrentTemperature(weather.main.temp);
-
-                //string condition = weather.condition;
-                //weather.wind = weather.;
-                //var temperature = weather.temperature;
-                Console.WriteLine();
+                park.CurrentWeatherInfo.temperature = GetCurrentTemperature(weather.main.temp);
+                park.CurrentWeatherInfo.condition = weather.weather[0].main;
+                park.CurrentWeatherInfo.wind = Math.Round(weather.wind.speed, 2);
                 await _context.SaveChangesAsync();
-                //await GetWindCondition(weather.wind);
             }
             return RedirectToAction("Details", park.ParkId);
         }
 
-        public async Task GetCurrentTemperature(double kelvin)
+        public double GetCurrentTemperature(double kelvin)
         {
             double convertKelvinToFahrenheit = Convert.ToDouble(((kelvin - 273.15) * 9 / 5) + 32);
             CurrentWeatherInfo currentWeather = new CurrentWeatherInfo();
             currentWeather.temperature = Math.Round(convertKelvinToFahrenheit, 2);
-            await _context.SaveChangesAsync();
+            try
+            {
+                return currentWeather.temperature;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                _context.SaveChangesAsync();
+            }
+            return currentWeather.temperature;
         }
-
-        //////////---------------- HIKING TRAILS --------------------/////////////////
-        //public async Task<RedirectToActionResult> FetchTrailsApi(Park park) // Referenced on Button click
-        //{
-        //    var hikingTrailsKey = _configuration["HikingProjectKey"];
-        //    string url = $"https://www.hikingproject.com/data/get-trails?lat={park.ParkLatitude}&lon={park.ParkLongitude}&maxDistance=100&key={hikingTrailsKey}";
-        //    HttpClient client = new HttpClient();
-        //    HttpResponseMessage response = await client.GetAsync(url);
-        //    string jsonresult = await response.Content.ReadAsStringAsync();
-        //    if (response.IsSuccessStatusCode)
-        //    {
-                
-        //        RestApiHikingProject trails = JsonConvert.DeserializeObject<RestApiHikingProject>(jsonresult);
-        //        List<Trail> trailInfo = trails.trails.ToList();
-        //        await ApplyHikingTrailValues(park, trailInfo);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    return RedirectToAction("Details");
-        //}
-
-        //public async Task ApplyHikingTrailValues(Park park, List<Trail> trailInfo)
-        //{
-        //    var foreignParkId = park.ParkId;
-        //    //HikingTrail hiking = _context.HikingTrails.Where(t => t.ParkId == foreignParkId).FirstOrDefault();
-        //    foreach (var individualTrail in trailInfo)
-        //    {
-        //        HikingTrail hikingTrail = new HikingTrail();
-        //        hikingTrail.TrailName = individualTrail.name;
-        //        hikingTrail.TrailLength = Math.Round(individualTrail.length, 2);
-        //        hikingTrail.TrailDifficulty = individualTrail.difficulty;
-        //        hikingTrail.HikingApiCode = individualTrail.id;
-        //        hikingTrail.ParkId = park.ParkId;
-
-        //        string trailSummary = hikingTrail.TrailSummary;
-        //        if (trailSummary == null)
-        //        {
-        //            hikingTrail.TrailSummary = "No information available at this time.";
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        else
-        //        {
-        //            hikingTrail.TrailSummary = trailSummary;
-        //            await _context.SaveChangesAsync();
-        //        }
-
-        //        // Trail Conditions
-        //        string trailCondition = hikingTrail.TrailCondition;
-        //        if (trailCondition != null)
-        //        {
-        //            hikingTrail.TrailCondition = trailCondition;
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        else
-        //        {
-        //            hikingTrail.TrailCondition = "No condition status available at this time";
-        //            await _context.SaveChangesAsync();
-        //        }
-
-        //        // Check to see if it already exists before adding to database
-        //        var trailCode = _context.HikingTrails.Where(c => c.HikingApiCode == hikingTrail.HikingApiCode).FirstOrDefault();
-        //        if (trailCode == null)
-        //        {
-        //            _context.HikingTrails.Add(hikingTrail);
-        //        }
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    await _context.SaveChangesAsync();
-        //}
     }
 }

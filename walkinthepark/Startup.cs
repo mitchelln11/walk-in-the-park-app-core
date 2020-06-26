@@ -45,12 +45,12 @@ namespace walkinthepark
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            Configuration.GetSection("OpenWeatherKey");
-            Configuration.GetSection("NpsKey");
-            Configuration.GetSection("HikingProjectKey");
-            Configuration.GetSection("GooglePlacesKey");
-            Configuration.GetSection("GoogleMapsJsKey");
-            Configuration.GetSection("GeoKey");
+                    Configuration.GetSection("OpenWeatherKey");
+                    Configuration.GetSection("NpsKey");
+                    Configuration.GetSection("HikingProjectKey");
+                    Configuration.GetSection("GooglePlacesKey");
+                    Configuration.GetSection("GoogleMapsJsKey");
+                    Configuration.GetSection("GeoKey");
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

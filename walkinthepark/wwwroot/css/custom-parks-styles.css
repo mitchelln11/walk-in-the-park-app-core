@@ -84,6 +84,12 @@ a.navbar-brand {
     background-color: #544b36;
 }
 
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 tr:nth-child(even) {
     background-color: rgba(215,202,178,1);
 }

@@ -6,12 +6,14 @@
 
     <div class="header-container">
         <h1>@Html.DisplayFor(model => model.ParkName)</h1>
-        @*<div class="weather-info">
-        <h2>Current Weather</h2>*@
-        @*<span>@Model.CurrentWeatherInfo.temperature &deg;F | </span>*@
-        @*<span>@Model.CurrentWeatherInfo.condition | </span>
-        <span>Wind: @Model.CurrentWeatherInfo.wind mph</span>*@
-        @* </div> *@
+        <div class="weather-info">
+            <h2>Current Weather</h2>
+            <div>
+                <span>@Model.CurrentWeatherInfo.temperature &deg;F | </span>
+                <span>@Model.CurrentWeatherInfo.condition | </span>
+                <span>Wind: @Model.CurrentWeatherInfo.wind mph</span>
+            </div>
+        </div>
     </div>
 
     <div class="flex-container">
