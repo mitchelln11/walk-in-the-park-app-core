@@ -3,118 +3,133 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-    <div class="header-container">
-        <h1>@Html.DisplayFor(model => model.ParkName)</h1>
-        <div class="weather-info">
-            <h2>Current Weather</h2>
-            <div>
-                <span>@Model.CurrentWeatherInfo.temperature &deg;F | </span>
-                <span>@Model.CurrentWeatherInfo.condition | </span>
-                <span>Wind: @Model.CurrentWeatherInfo.wind mph</span>
+<div class="flex-container">
+    <div class="flex-box">
+        <div class="header-container">
+            <h1>@Html.DisplayFor(model => model.ParkName)</h1>
+            <div class="weather-info">
+                <h2>Current Weather</h2>
+                <div>
+                    <span>@Model.CurrentWeatherInfo.temperature &deg;F | </span>
+                    <span>@Model.CurrentWeatherInfo.condition | </span>
+                    <span>Wind: @Model.CurrentWeatherInfo.wind mph</span>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="flex-container">
-        <div class="flex-box">
-            <div class="content-box">
-                @*@Html.ActionLink("Add Park to Wish List", "AddParkToWishList", new { @id = Model.ParkId }, new { @class = "btn btn-default" })*@
+<div class="flex-container">
+    <div class="flex-box">
+        <div class="content-box">
+            @*@Html.ActionLink("Add Park to Wish List", "AddParkToWishList", new { @id = Model.ParkId }, new { @class = "btn btn-default" })*@
 
-                <h3>Located in: @Html.DisplayFor(model => model.ParkState)</h3>
-                <p>@Html.DisplayFor(model => model.ParkDescription)</p>
-            </div>
+            <h3>Located in: @Html.DisplayFor(model => model.ParkState)</h3>
+            <p>@Html.DisplayFor(model => model.ParkDescription)</p>
         </div>
-        @{
-            // Create an empty list for the marker values to add into
-            List<walkinthepark.Models.ParkMarkers> parkMarkers = new List<walkinthepark.Models.ParkMarkers>();
-        }
-        <div class="flex-box solo-park-map">
-            <div id="map"></div>
-        </div>
-        <hr />
     </div>
 
-    <div class="park-header">
-        <h2>Trails available at <em>@Html.DisplayFor(model => model.ParkName)</em></h2>
+    @{
+        // Create an empty list for the marker values to add into
+        List<walkinthepark.Models.ParkMarkers> parkMarkers = new List<walkinthepark.Models.ParkMarkers>();
+    }
+    <div class="flex-box solo-park-map">
+        <div id="map"></div>
     </div>
+</div>
+<hr />
 
+<div class="flex-container">
+    <div class="flex-box">
+        <div class="park-header">
+            <h2>Trails available at <em>@Html.DisplayFor(model => model.ParkName)</em></h2>
+        </div>
+    </div>
+</div>
+
+<div class="flex-container">
     <div class="flex-box">
         <div class="content-box">
             <input type="button" value="Fetch Trails" onclick="location.href='@Url.Action("FetchTrailsApi", "HikingTrail", new { id = Model.ParkId })'" />
         </div>
     </div>
+</div>
 
-    <table class="table lengthy-table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.HikingTrail[0].TrailName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HikingTrail[0].TrailDifficulty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HikingTrail[0].TrailLength)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HikingTrail[0].TrailCondition)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HikingTrail[0].TrailSummary)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.HikingTrail)
-            {
+<div class="flex-container">
+    <div class="flex-box">
+        <table class="table lengthy-table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailDifficulty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailLength)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailCondition)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailSummary)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.HikingTrail)
+                {
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrailName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrailDifficulty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrailLength)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrailCondition)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrailSummary)
-                </td>
-                @Html.HiddenFor(modelItem => item.TrailId)
-                @Html.HiddenFor(modelItem => item.HikingApiCode)
-            </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrailName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrailDifficulty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrailLength)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrailCondition)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrailSummary)
+                        </td>
+                        @Html.HiddenFor(modelItem => item.TrailId)
+                        @Html.HiddenFor(modelItem => item.HikingApiCode)
+                    </tr>
                 }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+</div>
 
+<div class="flex-container">
     <div class="flex-box">
         <div class="content-box">
             @Html.ActionLink("Back to Parks", "Index", "Park")
+
+            @Html.HiddenFor(model => model.ParkLatitude)
+            @Html.HiddenFor(model => model.ParkLongitude)
         </div>
     </div>
+</div>
 
-    @Html.HiddenFor(model => model.ParkLatitude)
-    @Html.HiddenFor(model => model.ParkLongitude)
+<script>
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: @Html.DisplayFor(model => model.ParkLatitude), lng: @Html.DisplayFor(model => model.ParkLongitude) }, // General Middle of the US
+        zoom: 5
+    });
 
-    <script>
-    var map;
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: @Html.DisplayFor(model => model.ParkLatitude), lng: @Html.DisplayFor(model => model.ParkLongitude) }, // General Middle of the US
-            zoom: 5
-        });
+    marker = new google.maps.Marker({
+        position: { lat: @Html.DisplayFor(model => model.ParkLatitude), lng: @Html.DisplayFor(model => model.ParkLongitude) },
+    map: map
+    });
 
-        marker = new google.maps.Marker({
-            position: { lat: @Html.DisplayFor(model => model.ParkLatitude), lng: @Html.DisplayFor(model => model.ParkLongitude) },
-        map: map
-        });
-
-    }
-    </script>
-
-    <script src='https://maps.googleapis.com/maps/api/js?key=@(ViewData["GoogleMapsJsKey"])&callback=initMap' async defer type="text/javascript"></script>
+}
+</script>
+<script src='https://maps.googleapis.com/maps/api/js?key=@(ViewData["GoogleMapsJsKey"])&callback=initMap' async defer type="text/javascript"></script>

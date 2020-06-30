@@ -31,8 +31,14 @@ namespace walkinthepark.Controllers
         public ActionResult Details(int id)
         {
             Hiker hiker = _context.Hikers.Find(id);
-
-            RedirectToRoute("Details", new { id });
+            try
+            {
+                RedirectToRoute("Details", new { id });
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return View(hiker);
         }
 

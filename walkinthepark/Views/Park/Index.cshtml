@@ -6,21 +6,20 @@
 
 <div class="flex-box">
     <div class="content-box">
-        <h1>United States National Parks</h1>
-        <input type="button" value="Fetch Parks" onclick="location.href='@Url.Action("FetchParkApi", "Park")'" />
+    <h1>United States National Parks</h1>
+    <input type="button" value="Fetch Parks" onclick="location.href='@Url.Action("FetchParkApi", "Park")'" />
     </div>
-</div>
 
-@{
-    // Create an empty list for the marker values to add into
-    List<walkinthepark.Models.ParkMarkers> parkMarkers = new List<walkinthepark.Models.ParkMarkers>();
-}
-@* Map with markers will generate inside map id *@
-<div id="map">
-</div>
-<div class="clearfix"></div>
+    @{
+        // Create an empty list for the marker values to add into
+        List<walkinthepark.Models.ParkMarkers> parkMarkers = new List<walkinthepark.Models.ParkMarkers>();
+    }
+    @* Map with markers will generate inside map id *@
+    <div id="map">
+    </div>
+    <div class="clearfix"></div>
 
-@*<div class="container-fluid">
+    @*<div class="container-fluid">
         <div class="flex-container">
             <div class="panel-body">
                 <div class="form-horizontal">
@@ -48,46 +47,46 @@
         </div>
     </div>*@
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ParkName)
-            <th>
-                @Html.DisplayNameFor(model => model.ParkState)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            // Add Markers
-            ParkMarkers parkMarker = new ParkMarkers();
-            //Assign required parameters
-            parkMarker.ParkLatitude = item.ParkLatitude;
-            parkMarker.ParkLongitude = item.ParkLongitude;
-            //Actually add all three values together into the parkMarker object
-            parkMarkers.Add(parkMarker);
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ParkName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ParkState)
-                </td>
-
-                @Html.HiddenFor(modelItem => item.ParkLongitude)
-                @Html.HiddenFor(modelItem => item.ParkLongitude)
-
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ParkId })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParkName)
+                <th>
+                    @Html.DisplayNameFor(model => model.ParkState)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                // Add Markers
+                ParkMarkers parkMarker = new ParkMarkers();
+                //Assign required parameters
+                parkMarker.ParkLatitude = item.ParkLatitude;
+                parkMarker.ParkLongitude = item.ParkLongitude;
+                //Actually add all three values together into the parkMarker object
+                parkMarkers.Add(parkMarker);
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParkName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParkState)
+                    </td>
 
+                    @Html.HiddenFor(modelItem => item.ParkLongitude)
+                    @Html.HiddenFor(modelItem => item.ParkLongitude)
+
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.ParkId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 <script>
     var map;
     function initMap() {

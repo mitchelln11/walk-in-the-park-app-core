@@ -37,15 +37,6 @@ select {
 }
 
 /* Custom Styles  */
-main section, main h1 {
-    padding: 0 25px;
-}
-
-.container-fluid {
-    padding:0;
-    margin:0;
-}
-
 .lengthy-table th:nth-child(4), .lengthy-table th:nth-child(5), .lengthy-table td:nth-child(4), .lengthy-table td:nth-child(5) {
     display: none;
 }
@@ -83,11 +74,21 @@ a.navbar-brand {
 .navbar-toggler:active, .navbar-toggler:hover {
     background-color: #544b36;
 }
+.navbar .container-fluid {
+    padding: 0;
+}
+.container-fluid .carousel {
+    padding:0;
+}
 
 .weather-info {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.carousel {
+    margin: 0 -15px;
 }
 
 tr:nth-child(even) {
@@ -111,6 +112,11 @@ a.btn.btn-default {
     margin-bottom: 0;
     padding: 15px;
     border-radius: 0;
+    margin: 0 -15px;
+}
+
+.flex-box {
+    margin: 0 -15px;
 }
 
 .btn-primary {
@@ -160,7 +166,7 @@ th {
 }
 
 .content-box {
-    padding: 15px;
+    padding: 25px;
 }
 
 .park-header h2 {
