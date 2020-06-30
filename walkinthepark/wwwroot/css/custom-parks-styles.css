@@ -26,6 +26,11 @@ textarea {
 
 h1 {
     font-size: 3.5em;
+    text-align: center;
+}
+
+p {
+    text-align: justify;
 }
 
 select {
@@ -186,8 +191,12 @@ footer {
 }
 
 @media screen and (min-width:600px) {
-
-}
+    h1 {
+        text-align: left;
+    }
+    p {
+        text-align: left;
+    }
 
 @media screen and (min-width:768px) {
     .header-container {
