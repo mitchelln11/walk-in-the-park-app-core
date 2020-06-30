@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using walkinthepark.Data;
@@ -27,26 +30,29 @@ namespace walkinthepark.Controllers
         // GET: HikerController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Hiker hiker = _context.Hikers.Find(id);
+
+            RedirectToRoute("Details", new { id });
+            return View(hiker);
         }
 
         // GET: HikerController/Create
         public ActionResult Create()
         {
-            Hiker hiker = new Hiker();
-            return View(hiker);
+            return View();
         }
 
         // POST: HikerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Hiker hiker)
+        public ActionResult Create([Bind] Hiker hiker)
         {
             try
             {
+                hiker.ApplicationId = FindRegisteredUserId();
                 _context.Hikers.Add(hiker);
-                _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.SaveChanges();
+                return RedirectToAction("Details", "Hiker", new { id = hiker.Id });
             }
             catch
             {
@@ -94,6 +100,17 @@ namespace walkinthepark.Controllers
             {
                 return View();
             }
+        }
+
+        public string FindRegisteredUserId()
+        {
+            var userApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Console.WriteLine(userApplicationId);
+            return userApplicationId;
+            //Hiker hiker = new Hiker();
+            //hiker.Id = _context.Hikers.Where(a => a.Id ==)
+            //var userId = user?.Id;
+            //return userId;
         }
     }
 }

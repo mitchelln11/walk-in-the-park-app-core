@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,5 +33,10 @@ namespace walkinthepark.Models
 
         [Display(Name = "Longitude")]
         public string Longitude { get; set; }
+
+        [ForeignKey("ApplicationUser")]
+        [HiddenInput(DisplayValue = false)]
+        public string ApplicationId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
