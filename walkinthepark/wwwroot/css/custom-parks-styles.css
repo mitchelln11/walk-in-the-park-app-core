@@ -42,6 +42,10 @@ select {
 }
 
 /* Custom Styles  */
+.container-fluid {
+    padding:0;
+    margin:0;
+}
 .lengthy-table th:nth-child(4), .lengthy-table th:nth-child(5), .lengthy-table td:nth-child(4), .lengthy-table td:nth-child(5) {
     display: none;
 }
@@ -92,9 +96,6 @@ a.navbar-brand {
     align-items: center;
 }
 
-.carousel {
-    margin: 0 -15px;
-}
 
 tr:nth-child(even) {
     background-color: rgba(215,202,178,1);
@@ -117,12 +118,8 @@ a.btn.btn-default {
     margin-bottom: 0;
     padding: 15px;
     border-radius: 0;
-    margin: 0 -15px;
 }
 
-.flex-box {
-    margin: 0 -15px;
-}
 
 .btn-primary {
     background: #A28D64;
