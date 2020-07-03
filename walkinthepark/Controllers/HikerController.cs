@@ -123,7 +123,7 @@ namespace walkinthepark.Controllers
                 _context.Users.Remove(user);
                 _context.SaveChanges();
                 await LogOutUser();
-                return RedirectToAction("Index", "Hiker");
+                return RedirectToAction("Index", "Park");
             }
             catch
             {
@@ -140,11 +140,6 @@ namespace walkinthepark.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("DeleteConfirmed");
         }
-        //public int FindHikerId(int id)
-        //{
-        //    Hiker hiker = _context.Hikers.Where(h => h.Id == id).FirstOrDefault();
-        //    return hiker.Id;
-        //}
 
         //public async Task<ActionResult> AddParkToWishList(Park park)
         //{
