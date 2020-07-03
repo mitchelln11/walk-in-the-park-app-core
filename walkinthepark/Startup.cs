@@ -22,14 +22,6 @@ namespace walkinthepark
     // Configure everything after console app starts up
     public class Startup
     {
-        // User Secret Keys
-        private string _parkApiKey = null;
-        private string _openWeatherApiKey = null;
-        private string _hikingAppApiKey = null;
-        private string _googleMapsJsApiKey = null;
-        private string _googlePlacesApiKey = null;
-        private string _googleGeolocationApiKey = null;
-
         // How you read anything from the Configuration engine
         public Startup(IConfiguration configuration)
         {

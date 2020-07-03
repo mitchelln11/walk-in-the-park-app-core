@@ -1,16 +1,15 @@
 ﻿@model walkinthepark.Models.Hiker
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
+
 
 <div class="flex-container">
     <div class="flex-box">
         <div class="content-box">
-            <h1>@Html.DisplayFor(model => model.FirstName)  Details</h1>
+            <h1>Delete</h1>
+            <h3>Are you sure you want to delete this hiker?</h3>
             <hr />
             <dl class="row">
                 @Html.HiddenFor(model => model.Id)
@@ -50,9 +49,10 @@
                 </dd>
             </dl>
 
-                @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.Id }, new { @class = "btn btn-danger" })
-                @Html.ActionLink("Edit Profile", "Edit", "Hiker", new { id = Model.Id })
-            <a asp-action="Index">Back to List</a>
+            <form asp-action="Delete">
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-action="Index">Back to List</a>
+            </form>
         </div>
     </div>
 </div>

@@ -1,0 +1,58 @@
+﻿@model walkinthepark.Models.Hiker
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="flex-container">
+    <div class="flex-box">
+        <div class="content-box">
+            <h1>Edit Hiker</h1>
+            <hr />
+            <form asp-action="Edit">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Latitude)
+                @Html.HiddenFor(model => model.Longitude)
+                @Html.HiddenFor(model => model.ApplicationId)
+                @Html.HiddenFor(model => model.ApplicationUser)
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StreetAddress" class="control-label"></label>
+                    <input asp-for="StreetAddress" class="form-control" />
+                    <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="State" class="control-label"></label>
+                    <input asp-for="State" class="form-control" />
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -1,12 +1,15 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Email Confirmed";
 }
 
 <div class="flex-container">
     <div class="flex-box">
         <div class="content-box">
             <h1>@ViewData["Title"]</h1>
+            <hr />
+            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
         </div>
     </div>
+</div>

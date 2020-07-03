@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,13 @@ namespace walkinthepark.Controllers
 {
     public class HikerController : Controller
     {
-        private ApplicationDbContext _context;
-        public HikerController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _context;
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public HikerController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
+            _signInManager = signInManager;
         }
 
         // GET: HikerController
@@ -29,7 +33,7 @@ namespace walkinthepark.Controllers
 
         // GET: HikerController/Details/5
         public ActionResult Details(int id)
-        {
+            {
             Hiker hiker = _context.Hikers.Find(id);
             try
             {
@@ -67,9 +71,10 @@ namespace walkinthepark.Controllers
         }
 
         // GET: HikerController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            Hiker hiker = _context.Hikers.Find(id);
+            return View(hiker);
         }
 
         // POST: HikerController/Edit/5
@@ -79,6 +84,8 @@ namespace walkinthepark.Controllers
         {
             try
             {
+                _context.Hikers.Update(hiker);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -90,17 +97,33 @@ namespace walkinthepark.Controllers
         // GET: HikerController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Hiker hiker = _context.Hikers.Find(id);
+            try
+            {
+                RedirectToRoute("Delete", new { id });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return View(hiker);
         }
 
         // POST: HikerController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Hiker hiker)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            Hiker hiker = _context.Hikers.Find(id);
+            IdentityUser user = _context.Users.Where(s => s.Id == hiker.ApplicationId).FirstOrDefault();
             try
             {
-                return RedirectToAction(nameof(Index));
+                _context.Hikers.Remove(hiker);
+                _context.SaveChanges();
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+                await LogOutUser();
+                return RedirectToAction("Index", "Hiker");
             }
             catch
             {
@@ -108,15 +131,45 @@ namespace walkinthepark.Controllers
             }
         }
 
-        public string FindRegisteredUserId()
+        // Find Id of logged in user
+        public string FindRegisteredUserId() => User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+        // Log out user
+        public async Task<IActionResult> LogOutUser()
         {
-            var userApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            Console.WriteLine(userApplicationId);
-            return userApplicationId;
-            //Hiker hiker = new Hiker();
-            //hiker.Id = _context.Hikers.Where(a => a.Id ==)
-            //var userId = user?.Id;
-            //return userId;
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("DeleteConfirmed");
         }
+        //public int FindHikerId(int id)
+        //{
+        //    Hiker hiker = _context.Hikers.Where(h => h.Id == id).FirstOrDefault();
+        //    return hiker.Id;
+        //}
+
+        //public async Task<ActionResult> AddParkToWishList(Park park)
+        //{
+        //    // New Wishlist item
+        //    HikerParkWishlistViewModel wishlist = new HikerParkWishlistViewModel();
+        //    Hiker hiker = new Hiker();
+
+        //    try
+        //    {
+        //        // Find user ID to add to wishlist
+        //        var currentUserId = FindHikerId(Model. hiker.Id);
+
+        //        // Find Park Id
+        //        var currentParkId = park.ParkId;
+
+        //        wishlist.HikerId = currentUserId;
+        //        wishlist.ParkId = currentParkId;
+        //        _context.HikerParkWishlists.Add(wishlist);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //    return RedirectToAction("Details","Park");
+        //}
     }
 }

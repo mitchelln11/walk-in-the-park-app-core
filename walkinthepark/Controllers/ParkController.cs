@@ -45,7 +45,6 @@ namespace walkinthepark.Controllers
             return View(park);
         }
 
-
         // GET: ParkController/Create
         public ActionResult Create()
         {
@@ -190,6 +189,12 @@ namespace walkinthepark.Controllers
                 _context.SaveChangesAsync();
             }
             return currentWeather.temperature;
+        }
+
+        public int FindParkId(int id)
+        {
+            Park parkId = _context.Parks.Where(p => p.ParkId == id).FirstOrDefault();
+            return parkId.ParkId;
         }
     }
 }
