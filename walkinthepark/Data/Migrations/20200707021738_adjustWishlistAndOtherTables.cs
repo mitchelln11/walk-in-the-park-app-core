@@ -2,7 +2,7 @@
 
 namespace walkinthepark.Data.Migrations
 {
-    public partial class adjustWishlistAndOtherTables : Migration
+    public partial class AdjustWishlistAndOtherTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

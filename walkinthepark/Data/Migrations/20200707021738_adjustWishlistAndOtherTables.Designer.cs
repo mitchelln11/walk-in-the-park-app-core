@@ -11,7 +11,7 @@ namespace walkinthepark.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20200707021738_adjustWishlistAndOtherTables")]
-    partial class adjustWishlistAndOtherTables
+    partial class AdjustWishlistAndOtherTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -159,8 +159,13 @@ namespace walkinthepark.Controllers
                 ParkName = currentPark.ParkName
             };
 
-            _context.HikerParkWishlists.Add(wishlist);
-            await _context.SaveChangesAsync();
+            // make sure there are no duplicates
+            bool parkExistsInWishlist = _context.HikerParkWishlists.Any(w => w.ParkId == wishlist.ParkId);
+            if (parkExistsInWishlist == false)
+            {
+                _context.HikerParkWishlists.Add(wishlist);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToAction("Details", "Hiker", new { id = currentHiker.HikerId });
         }

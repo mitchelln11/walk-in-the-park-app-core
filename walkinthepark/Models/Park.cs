@@ -50,9 +50,9 @@ namespace walkinthepark.Models
 
     public class CurrentWeatherInfo
     {
-        public double temperature { get; set; }
-        public double wind { get; set; }
-        public string condition { get; set; }
+        public double Temperature { get; set; }
+        public double Wind { get; set; }
+        public string Condition { get; set; }
     }
 
     public class ParkMarkers

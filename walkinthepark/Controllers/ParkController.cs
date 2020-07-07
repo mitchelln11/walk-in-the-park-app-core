@@ -67,7 +67,7 @@ namespace walkinthepark.Controllers
         }
 
         // GET: ParkController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
             return View();
         }
@@ -88,7 +88,7 @@ namespace walkinthepark.Controllers
         }
 
         // GET: ParkController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete()
         {
             return View();
         }
@@ -165,9 +165,9 @@ namespace walkinthepark.Controllers
             if (response.IsSuccessStatusCode)
             {
                 RestApiOpenWeather weather = JsonConvert.DeserializeObject<RestApiOpenWeather>(jsonresult);
-                park.CurrentWeatherInfo.temperature = GetCurrentTemperature(weather.main.temp);
-                park.CurrentWeatherInfo.condition = weather.weather[0].main;
-                park.CurrentWeatherInfo.wind = Math.Round(weather.wind.speed, 2);
+                park.CurrentWeatherInfo.Temperature = GetCurrentTemperature(weather.main.temp);
+                park.CurrentWeatherInfo.Condition = weather.weather[0].main;
+                park.CurrentWeatherInfo.Wind = Math.Round(weather.wind.speed, 2);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Details", park.ParkId);
@@ -178,11 +178,11 @@ namespace walkinthepark.Controllers
             double convertKelvinToFahrenheit = Convert.ToDouble(((kelvin - 273.15) * 9 / 5) + 32);
             CurrentWeatherInfo currentWeather = new CurrentWeatherInfo
             {
-                temperature = Math.Round(convertKelvinToFahrenheit, 2)
+                Temperature = Math.Round(convertKelvinToFahrenheit, 2)
             };
             try
             {
-                return currentWeather.temperature;
+                return currentWeather.Temperature;
             }
             catch (Exception ex)
             {
@@ -192,7 +192,7 @@ namespace walkinthepark.Controllers
             {
                 _context.SaveChangesAsync();
             }
-            return currentWeather.temperature;
+            return currentWeather.Temperature;
         }
 
         public int FindParkId(int id)
