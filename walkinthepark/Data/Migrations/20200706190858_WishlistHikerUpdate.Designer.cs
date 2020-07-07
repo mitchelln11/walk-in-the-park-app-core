@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using walkinthepark.Data;
 
 namespace walkinthepark.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200706190858_WishlistHikerUpdate")]
+    partial class WishlistHikerUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,7 +229,7 @@ namespace walkinthepark.Data.Migrations
 
             modelBuilder.Entity("walkinthepark.Models.Hiker", b =>
                 {
-                    b.Property<int>("HikerId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -240,6 +242,9 @@ namespace walkinthepark.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Hiker")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -256,9 +261,11 @@ namespace walkinthepark.Data.Migrations
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("HikerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");
+
+                    b.HasIndex("Hiker");
 
                     b.ToTable("Hikers");
                 });
@@ -305,6 +312,9 @@ namespace walkinthepark.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("Park")
+                        .HasColumnType("int");
+
                     b.Property<string>("ParkCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -325,25 +335,21 @@ namespace walkinthepark.Data.Migrations
 
                     b.HasKey("ParkId");
 
+                    b.HasIndex("Park");
+
                     b.ToTable("Parks");
                 });
 
-            modelBuilder.Entity("walkinthepark.ViewModels.HikerParkWishlist", b =>
+            modelBuilder.Entity("walkinthepark.ViewModels.HikerParkWishlistViewModel", b =>
                 {
-                    b.Property<int>("HikerId")
-                        .HasColumnType("int");
+                    b.Property<int>("HikerParkWishlistId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ParkId")
-                        .HasColumnType("int");
+                    b.HasKey("HikerParkWishlistId");
 
-                    b.Property<string>("ParkName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("HikerId", "ParkId");
-
-                    b.HasIndex("ParkId");
-
-                    b.ToTable("HikerParkWishlists");
+                    b.ToTable("Wishlist");
                 });
 
             modelBuilder.Entity("walkinthepark.Models.ApplicationUser", b =>
@@ -409,6 +415,10 @@ namespace walkinthepark.Data.Migrations
                     b.HasOne("walkinthepark.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationId");
+
+                    b.HasOne("walkinthepark.ViewModels.HikerParkWishlistViewModel", null)
+                        .WithMany("Hiker")
+                        .HasForeignKey("Hiker");
                 });
 
             modelBuilder.Entity("walkinthepark.Models.HikingTrail", b =>
@@ -420,19 +430,11 @@ namespace walkinthepark.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("walkinthepark.ViewModels.HikerParkWishlist", b =>
+            modelBuilder.Entity("walkinthepark.Models.Park", b =>
                 {
-                    b.HasOne("walkinthepark.Models.Hiker", "Hiker")
-                        .WithMany("Wishlists")
-                        .HasForeignKey("HikerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("walkinthepark.Models.Park", "Park")
-                        .WithMany("Wishlists")
-                        .HasForeignKey("ParkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("walkinthepark.ViewModels.HikerParkWishlistViewModel", null)
+                        .WithMany("Parks")
+                        .HasForeignKey("Park");
                 });
 #pragma warning restore 612, 618
         }

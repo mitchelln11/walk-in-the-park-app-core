@@ -19,7 +19,7 @@ namespace walkinthepark.Controllers
 {
     public class ParkController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
 
         // Need constructor with parameter to work in Core
@@ -123,13 +123,15 @@ namespace walkinthepark.Controllers
 
                 foreach (var singlePark in parkList.Where(p => p.designation.Contains("National and State Parks") || p.designation.Contains("National Park")))
                 {
-                    Park park = new Park(); // Instantiate a new park so you can use it in this method
-                    park.ParkName = singlePark.fullName;
-                    park.ParkState = singlePark.states;
-                    park.ParkDescription = singlePark.description;
-                    park.ParkLatitude = singlePark.latitude;
-                    park.ParkLongitude = singlePark.longitude;
-                    park.ParkCode = singlePark.parkCode;
+                    Park park = new Park
+                    {
+                        ParkName = singlePark.fullName,
+                        ParkState = singlePark.states,
+                        ParkDescription = singlePark.description,
+                        ParkLatitude = singlePark.latitude,
+                        ParkLongitude = singlePark.longitude,
+                        ParkCode = singlePark.parkCode
+                    }; // Instantiate a new park so you can use it in this method
 
                     var uniqueParkCode = _context.Parks.Where(c => c.ParkCode == singlePark.parkCode).FirstOrDefault();
                     if (uniqueParkCode == null)
@@ -174,8 +176,10 @@ namespace walkinthepark.Controllers
         public double GetCurrentTemperature(double kelvin)
         {
             double convertKelvinToFahrenheit = Convert.ToDouble(((kelvin - 273.15) * 9 / 5) + 32);
-            CurrentWeatherInfo currentWeather = new CurrentWeatherInfo();
-            currentWeather.temperature = Math.Round(convertKelvinToFahrenheit, 2);
+            CurrentWeatherInfo currentWeather = new CurrentWeatherInfo
+            {
+                temperature = Math.Round(convertKelvinToFahrenheit, 2)
+            };
             try
             {
                 return currentWeather.temperature;

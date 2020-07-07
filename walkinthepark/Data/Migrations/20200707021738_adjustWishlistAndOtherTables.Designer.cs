@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using walkinthepark.Data;
 
 namespace walkinthepark.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200707021738_adjustWishlistAndOtherTables")]
+    partial class adjustWishlistAndOtherTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -336,14 +338,14 @@ namespace walkinthepark.Data.Migrations
                     b.Property<int>("ParkId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ParkName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("HikerParkId")
+                        .HasColumnType("int");
 
                     b.HasKey("HikerId", "ParkId");
 
                     b.HasIndex("ParkId");
 
-                    b.ToTable("HikerParkWishlists");
+                    b.ToTable("HikerParkWishlist");
                 });
 
             modelBuilder.Entity("walkinthepark.Models.ApplicationUser", b =>

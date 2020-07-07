@@ -25,10 +25,7 @@
 <div class="flex-container">
     <div class="flex-box">
         <div class="content-box">
-            @if (SignInManager.IsSignedIn(User))
-            {
-                Html.ActionLink("Add Park to Wish List", "AddParkToWishList", "HikerParkWishlist", new { @id = Model.ParkId }, new { @class = "btn btn-default" });
-            }
+            @Html.ActionLink("Add Park to Wish List", "AddParkToWishList", "Hiker", new { @id = Model.ParkId }, new { @class = "btn btn-default" })
             <h3>Located in: @Html.DisplayFor(model => model.ParkState)</h3>
             <p>@Html.DisplayFor(model => model.ParkDescription)</p>
         </div>

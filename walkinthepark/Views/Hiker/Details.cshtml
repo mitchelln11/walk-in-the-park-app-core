@@ -13,7 +13,7 @@
             <h1>@Html.DisplayFor(model => model.FirstName)  Details</h1>
             <hr />
             <dl class="row">
-                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.HikerId)
                 @Html.HiddenFor(model => model.Latitude)
                 @Html.HiddenFor(model => model.Longitude)
                 @Html.HiddenFor(model => model.ApplicationId)
@@ -50,8 +50,8 @@
                 </dd>
             </dl>
 
-                @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.Id }, new { @class = "btn btn-danger" })
-                @Html.ActionLink("Edit Profile", "Edit", "Hiker", new { id = Model.Id })
+                @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Edit Profile", "Edit", "Hiker", new { id = Model.HikerId })
             <a asp-action="Index">Back to List</a>
         </div>
     </div>

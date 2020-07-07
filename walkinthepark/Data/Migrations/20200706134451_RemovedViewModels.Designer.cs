@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using walkinthepark.Data;
 
 namespace walkinthepark.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200706134451_RemovedViewModels")]
+    partial class RemovedViewModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,7 +229,7 @@ namespace walkinthepark.Data.Migrations
 
             modelBuilder.Entity("walkinthepark.Models.Hiker", b =>
                 {
-                    b.Property<int>("HikerId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -256,7 +258,7 @@ namespace walkinthepark.Data.Migrations
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("HikerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");
 
@@ -328,24 +330,6 @@ namespace walkinthepark.Data.Migrations
                     b.ToTable("Parks");
                 });
 
-            modelBuilder.Entity("walkinthepark.ViewModels.HikerParkWishlist", b =>
-                {
-                    b.Property<int>("HikerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParkId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ParkName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("HikerId", "ParkId");
-
-                    b.HasIndex("ParkId");
-
-                    b.ToTable("HikerParkWishlists");
-                });
-
             modelBuilder.Entity("walkinthepark.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -415,21 +399,6 @@ namespace walkinthepark.Data.Migrations
                 {
                     b.HasOne("walkinthepark.Models.Park", "Park")
                         .WithMany()
-                        .HasForeignKey("ParkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("walkinthepark.ViewModels.HikerParkWishlist", b =>
-                {
-                    b.HasOne("walkinthepark.Models.Hiker", "Hiker")
-                        .WithMany("Wishlists")
-                        .HasForeignKey("HikerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("walkinthepark.Models.Park", "Park")
-                        .WithMany("Wishlists")
                         .HasForeignKey("ParkId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -10,7 +10,7 @@
             <h1>Edit Hiker</h1>
             <hr />
             <form asp-action="Edit">
-                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.HikerId)
                 @Html.HiddenFor(model => model.Latitude)
                 @Html.HiddenFor(model => model.Longitude)
                 @Html.HiddenFor(model => model.ApplicationId)

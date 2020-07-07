@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using walkinthepark.ViewModels;
 
 namespace walkinthepark.Models
 {
@@ -43,6 +44,8 @@ namespace walkinthepark.Models
 
         [NotMapped]
         public List<HikingTrail> HikingTrail  { get; set; }
+
+        public List<HikerParkWishlist> Wishlists { get; set; }
     }
 
     public class CurrentWeatherInfo

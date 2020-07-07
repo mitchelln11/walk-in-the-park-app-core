@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using walkinthepark.Data;
 using walkinthepark.Models;
+using walkinthepark.ViewModels;
 
 namespace walkinthepark.Controllers
 {
@@ -33,13 +34,13 @@ namespace walkinthepark.Controllers
 
         // GET: HikerController/Details/5
         public ActionResult Details(int id)
-            {
+        {
             Hiker hiker = _context.Hikers.Find(id);
             try
             {
                 RedirectToRoute("Details", new { id });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -62,7 +63,7 @@ namespace walkinthepark.Controllers
                 hiker.ApplicationId = FindRegisteredUserId();
                 _context.Hikers.Add(hiker);
                 _context.SaveChanges();
-                return RedirectToAction("Details", "Hiker", new { id = hiker.Id });
+                return RedirectToAction("Details", "Hiker", new { id = hiker.HikerId });
             }
             catch
             {
@@ -141,30 +142,27 @@ namespace walkinthepark.Controllers
             return RedirectToAction("DeleteConfirmed");
         }
 
-        //public async Task<ActionResult> AddParkToWishList(Park park)
-        //{
-        //    // New Wishlist item
-        //    HikerParkWishlistViewModel wishlist = new HikerParkWishlistViewModel();
-        //    Hiker hiker = new Hiker();
+        public async Task<ActionResult> AddParkToWishList(int id)
+        {
 
-        //    try
-        //    {
-        //        // Find user ID to add to wishlist
-        //        var currentUserId = FindHikerId(Model. hiker.Id);
+            // Find logged in user to add to the correct wishlist
+            string currentUser = FindRegisteredUserId();
+            var currentHiker = _context.Hikers.Where(h => h.ApplicationId == currentUser).FirstOrDefault();
 
-        //        // Find Park Id
-        //        var currentParkId = park.ParkId;
+            // Find current park
+            var currentPark = _context.Parks.Where(p => p.ParkId == id).FirstOrDefault();
 
-        //        wishlist.HikerId = currentUserId;
-        //        wishlist.ParkId = currentParkId;
-        //        _context.HikerParkWishlists.Add(wishlist);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //    return RedirectToAction("Details","Park");
-        //}
+            HikerParkWishlist wishlist = new HikerParkWishlist()
+            {
+                HikerId = currentHiker.HikerId,
+                ParkId = currentPark.ParkId,
+                ParkName = currentPark.ParkName
+            };
+
+            _context.HikerParkWishlists.Add(wishlist);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Hiker", new { id = currentHiker.HikerId });
+        }
     }
 }
