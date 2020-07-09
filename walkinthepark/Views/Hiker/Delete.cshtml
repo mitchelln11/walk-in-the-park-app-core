@@ -50,8 +50,8 @@
             </dl>
 
             <form asp-action="Delete">
-                <input type="submit" value="Delete" class="btn btn-danger" /> |
-                <a asp-action="Index">Back to List</a>
+                <input type="submit" value="Delete" class="btn btn-danger crud-links" />
+                <a asp-action="Details" asp-route-id="@Model.HikerId" class="btn btn-default crud-links">Back to Profile</a>
             </form>
         </div>
     </div>

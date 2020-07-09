@@ -9,7 +9,7 @@
 <div class="flex-container">
     <div class="flex-box">
         <div class="header-container">
-            <h1>@Html.DisplayFor(model => model.ParkName)</h1>
+            <h1>@Model.ParkName</h1>
             <div class="weather-info">
                 <h2>Current Weather</h2>
                 <div>
@@ -26,8 +26,8 @@
     <div class="flex-box">
         <div class="content-box">
             @Html.ActionLink("Add Park to Wish List", "AddParkToWishList", "Hiker", new { @id = Model.ParkId }, new { @class = "btn btn-default" })
-            <h3>Located in: @Html.DisplayFor(model => model.ParkState)</h3>
-            <p>@Html.DisplayFor(model => model.ParkDescription)</p>
+            <h3>Located in: @Model.ParkState</h3>
+            <p>@Model.ParkDescription</p>
         </div>
     </div>
 
@@ -43,7 +43,7 @@
 <div class="flex-container">
     <div class="flex-box">
         <div class="park-header">
-            <h2>Trails available at <em>@Html.DisplayFor(model => model.ParkName)</em></h2>
+            <h2>Trails available at <em>@Model.ParkName</em></h2>
         </div>
     </div>
 </div>
@@ -84,19 +84,19 @@
 
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrailName)
+                            @item.TrailName
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrailDifficulty)
+                            @item.TrailDifficulty
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrailLength)
+                            @item.TrailLength
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrailCondition)
+                            @item.TrailCondition
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrailSummary)
+                            @item.TrailSummary
                         </td>
                         @Html.HiddenFor(modelItem => item.TrailId)
                         @Html.HiddenFor(modelItem => item.HikingApiCode)
@@ -122,12 +122,12 @@
 var map;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: @Html.DisplayFor(model => model.ParkLatitude), lng: @Html.DisplayFor(model => model.ParkLongitude) }, // General Middle of the US
+        center: { lat: @Model.ParkLatitude, lng: @Model.ParkLongitude }, // General Middle of the US
         zoom: 5
     });
 
     marker = new google.maps.Marker({
-        position: { lat: @Html.DisplayFor(model => model.ParkLatitude), lng: @Html.DisplayFor(model => model.ParkLongitude) },
+        position: { lat: @Model.ParkLatitude, lng: @Model.ParkLongitude },
     map: map
     });
 

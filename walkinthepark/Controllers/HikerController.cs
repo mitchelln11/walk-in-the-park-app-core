@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using walkinthepark.Data;
+using walkinthepark.Data.Migrations;
 using walkinthepark.Models;
-using walkinthepark.ViewModels;
 
 namespace walkinthepark.Controllers
 {
@@ -24,6 +20,7 @@ namespace walkinthepark.Controllers
         {
             _context = context;
             _signInManager = signInManager;
+            _context.Database.EnsureCreated();
         }
 
         // GET: HikerController
@@ -33,7 +30,7 @@ namespace walkinthepark.Controllers
         }
 
         // GET: HikerController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             Hiker hiker = _context.Hikers.Find(id);
             try
@@ -160,8 +157,8 @@ namespace walkinthepark.Controllers
             };
 
             // make sure there are no duplicates
-            bool parkExistsInWishlist = _context.HikerParkWishlists.Any(w => w.ParkId == wishlist.ParkId);
-            if (parkExistsInWishlist == false)
+            bool parkExistsInWishlist = _context.HikerParkWishlists.Any(w => w.ParkId == wishlist.ParkId); // Doesn't let you add a park to wishlist if it exist on someone else's wishlist
+            if (parkExistsInWishlist == false )
             {
                 _context.HikerParkWishlists.Add(wishlist);
                 await _context.SaveChangesAsync();
@@ -169,5 +166,13 @@ namespace walkinthepark.Controllers
 
             return RedirectToAction("Details", "Hiker", new { id = currentHiker.HikerId });
         }
+
+        //public bool RegisteredUserHasProfile()
+        //{
+        //    string currentUser = FindRegisteredUserId();
+        //    var currentHiker = _context.Hikers.Any(h => h.ApplicationId == currentUser);
+        //    return currentHiker;
+        //}
+        //public IActionResult WishlistPartialView() => PartialView(_WishlistPartialView)
     }
 }

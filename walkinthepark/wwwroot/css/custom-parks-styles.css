@@ -90,12 +90,21 @@ a.navbar-brand {
     padding:0;
 }
 
-.weather-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.crud-links {
+    margin: 15px 0;
+    display: block;
+    text-align:center;
 }
 
+.crud-links:first-of-type {
+    margin-left: 0;
+}
+
+    .weather-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
 tr:nth-child(even) {
     background-color: rgba(215,202,178,1);
@@ -103,6 +112,7 @@ tr:nth-child(even) {
 
 a.btn.btn-default {
     background: #544b36;
+    color: #fff;
 }
 
 .navbar-dark li.nav-item, li.nav-item {
@@ -119,7 +129,6 @@ a.btn.btn-default {
     padding: 15px;
     border-radius: 0;
 }
-
 
 .btn-primary {
     background: #A28D64;
@@ -191,73 +200,84 @@ footer {
     h1 {
         text-align: left;
     }
+
     p {
         text-align: left;
     }
 
-@media screen and (min-width:768px) {
-    .header-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
+    .crud-links {
+        margin: 15px;
+        display:inline-block;
     }
 
-    .lengthy-table th:nth-child(4), .lengthy-table td:nth-child(4) {
-        display: table-cell;
-        border: none;
+    @media screen and (min-width:768px) {
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .lengthy-table th:nth-child(4), .lengthy-table td:nth-child(4) {
+            display: table-cell;
+            border: none;
+        }
+
+        tr:hover {
+            opacity: 0.8;
+        }
+
+        .solo-park-map #map {
+            width: 50vw;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .flex-baseline {
+            align-items: baseline;
+        }
+
+        .flex-box {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .trail-list {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+            .trail-list .trail-box {
+                display: flex;
+                width: 100%;
+                padding: 10px 0;
+            }
+
+        .centered-flex {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
     }
 
-    tr:hover {
-        opacity:0.8;
+    @media screen and (min-width:991px) {
+        .header-container {
+            flex-direction: row;
+        }
     }
 
-    .solo-park-map #map {
-        width: 50vw;
-    }
-
-    .flex-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .flex-box {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-    }
-
-    .trail-list {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    .trail-list .trail-box {
-        display: flex;
-        width: 100%;
-        padding: 10px 0;
-    }
-
-    .centered-flex {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-}
-
-@media screen and (min-width:991px) {
-    .header-container {
-        flex-direction: row;
-    }
-}
-
-@media screen and (min-width:1200px) {
-    .lengthy-table th:nth-child(5), .lengthy-table td:nth-child(5) {
-        display: table-cell;
-        border: none;
+    @media screen and (min-width:1200px) {
+        .lengthy-table th:nth-child(5), .lengthy-table td:nth-child(5) {
+            display: table-cell;
+            border: none;
+        }
     }
 }

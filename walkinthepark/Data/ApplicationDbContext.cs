@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Mail;
 using walkinthepark.Models;
-using walkinthepark.ViewModels;
 
 namespace walkinthepark.Data
 {

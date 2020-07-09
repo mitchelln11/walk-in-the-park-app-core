@@ -6,53 +6,67 @@
 @{
     ViewData["Title"] = "Details";
 }
+<div class="content-box">
+    @*<h1>@Html.DisplayFor(model => model.FirstName) Details</h1>*@
+    <h1>@Model.FirstName Details</h1>
 
-<div class="flex-container">
+    <hr />
+</div>
+
+<div class="flex-container flex-baseline">
     <div class="flex-box">
         <div class="content-box">
-            <h1>@Html.DisplayFor(model => model.FirstName)  Details</h1>
-            <hr />
             <dl class="row">
                 @Html.HiddenFor(model => model.HikerId)
                 @Html.HiddenFor(model => model.Latitude)
                 @Html.HiddenFor(model => model.Longitude)
                 @Html.HiddenFor(model => model.ApplicationId)
                 @Html.HiddenFor(model => model.ApplicationUser)
-                <dt class="col-sm-2">
+                <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.FirstName)
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.FirstName)
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.LastName)
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.LastName)
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.StreetAddress)
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.StreetAddress)
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.City)
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.City)
                 </dd>
-                <dt class="col-sm-2">
+                <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.State)
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.State)
                 </dd>
             </dl>
 
-                @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-danger" })
-                @Html.ActionLink("Edit Profile", "Edit", "Hiker", new { id = Model.HikerId })
-            <a asp-action="Index">Back to List</a>
+            @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-danger crud-links" })
+            @Html.ActionLink("Edit Profile", "Edit", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-default crud-links" })
+            <a asp-action="Index" asp-controller="Home" class="btn btn-default crud-links">Back to Home</a>
+        </div>
+    </div>
+
+    <div class="flex-box">
+        <div class="content-box">
+            @*<partial name="../Shared/_WishlistPartialView.cshtml" model="Model.Wishlists" />*@
+            @*@await Component.InvokeAsync("../Wishlist/Components/WishlistList", new HikerParkWishlist())*@
+            @*await Component.InvokeAsync("Name of ViewComponent", "Parameter")*@
+            @*<vc:wishlist max-priority="2" is-done="false">
+                </vc:wishlist>*@
         </div>
     </div>
 </div>

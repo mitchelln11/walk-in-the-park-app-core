@@ -146,12 +146,11 @@ namespace walkinthepark.Controllers
             return RedirectToAction("Index", _context.Parks.ToList());
         }
 
-        public string GetGoogleMapsJsKey()
-        {
-            var googleMapsJsKey = _configuration["GoogleMapsJsKey"];
-            string googleUrl = "https://maps.googleapis.com/maps/api/js?key={googleMapsJsKey}&callback=initMapgoogleMapsJsKey";
-            return googleUrl;
-        }
+        //public string GetGoogleMapsJsKey()
+        //{
+        //    var googleMapsJsKey = _configuration["GoogleMapsJsKey"];
+        //    return "https://maps.googleapis.com/maps/api/js?key={googleMapsJsKey}&callback=initMapgoogleMapsJsKey";
+        //}
 
 
         ////////---------------- WEATHER --------------------/////////////////

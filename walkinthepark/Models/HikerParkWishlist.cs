@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using walkinthepark.Models;
 
-namespace walkinthepark.ViewModels
+namespace walkinthepark.Models
 {
     public class HikerParkWishlist
     {
