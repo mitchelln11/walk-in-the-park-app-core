@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using walkinthepark.Services;
 using walkinthepark.Models;
 using System.IO;
+using walkinthepark.Services.Interfaces;
 
 namespace walkinthepark
 {
@@ -46,6 +47,12 @@ namespace walkinthepark
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddMvc();
+
+            // Adding databases from Servics pattern
+            //services.AddTransient<IHikerService, HikerService>();
+            services.AddTransient<IParkService, ParkService>();
+            //services.AddTransient<IWishlistService, WishlistService>();
 
             // Set inactivity logout to 9 hours (Default is 14 days)
             services.ConfigureApplicationCookie(o =>
@@ -59,9 +66,26 @@ namespace walkinthepark
             o.TokenLifespan = TimeSpan.FromHours(3));
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
-            services.AddRazorPages();
+            //services.AddRazorPages(); 
+            //services.AddSingleton<RestApiNationalParks>(); // Added per Tim Corey video -- https://www.youtube.com/watch?v=cwgck1k0YKU&t=870s
             services.AddHttpClient(); // Added per Tim Corey https://www.youtube.com/watch?v=cwgck1k0YKU 6/17/2020
             // Added system.net.http.json through NuGet package install
+            //services.AddHttpClient("parks", p =>
+            //{   // All Uri values are being referenced from the appsettings.json file
+            //    p.BaseAddress = new Uri(Configuration.GetValue<string>("ParksApiBase"));
+            //});
+            //services.AddHttpClient("weather", w =>
+            //{
+            //    w.BaseAddress = new Uri(Configuration.GetValue<string>("WeatherApiBase"));
+            //});
+            //services.AddHttpClient("trails", t =>
+            //{
+            //    t.BaseAddress = new Uri(Configuration.GetValue<string>("TrailsApiBase"));
+            //});
+            //services.AddHttpClient("gmaps", m =>
+            //{
+            //    m.BaseAddress = new Uri(Configuration.GetValue<string>("GMapsApiBase"));
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

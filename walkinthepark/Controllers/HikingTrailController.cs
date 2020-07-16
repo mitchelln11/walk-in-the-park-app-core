@@ -14,7 +14,7 @@ namespace walkinthepark.Controllers
 {
     public class HikingTrailController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
 
         // Need constructor with parameter to work in Core
