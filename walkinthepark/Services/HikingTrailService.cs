@@ -17,11 +17,7 @@ namespace walkinthepark.Services
             _context = context;
         }
 
-        public List<HikingTrail> GetTrails()
-        {
-            var trailList = _context.HikingTrails.ToList();
-            return trailList;
-        }
+        public List<HikingTrail> GetTrails() => _context.HikingTrails.ToList();
 
         // Look for specific trail
         public HikingTrail GetTrailRecord(int id)

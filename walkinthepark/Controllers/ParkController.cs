@@ -23,17 +23,19 @@ namespace walkinthepark.Controllers
     public class ParkController : Controller
     {
         private readonly IParkService _parkService;
-        //private readonly HikingTrailService _trailService;
+        private readonly IHikingTrailService _trailService;
+        private readonly IRestCallsService _restCalls;
         //private readonly IConfiguration _configuration;
         //private readonly IHttpClientFactory _clientFactory;
         //RestApiNationalParks restParks;
         //public string errorString = null;
 
         // Need constructor with parameter to work in Core
-        public ParkController(IParkService parkService/*, HikingTrailService trailService, IConfiguration configuration, IHttpClientFactory clientFactory*/)
+        public ParkController(IParkService parkService, IHikingTrailService trailService, IRestCallsService restCalls/*, IConfiguration configuration, IHttpClientFactory clientFactory*/)
         {
             _parkService = parkService;
-            //_trailService = trailService;
+            _trailService = trailService;
+            _restCalls = restCalls;
             //_configuration = configuration;
             //_clientFactory = clientFactory;
         }
@@ -54,14 +56,14 @@ namespace walkinthepark.Controllers
         }
 
         // GET: ParkController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    Park Park = _parkService.GetParkRecord(id); // Get park of specific ID
-        //    //var trailList = _trailService.GetTrails().Where(i => i.ParkId == id).ToList(); // Get trails that belong to Park with passed ID (Already in database)
-        //    Park.CurrentWeatherInfo = new CurrentWeatherInfo(); // Instantiate blank spot for data to bind to, sets to object
-        //    //await _parkService.FetchWeatherApi(Park);
-        //    return View(Park);
-        //}
+        public async Task<ActionResult> Details(int id)
+        {
+            Park Park = _parkService.GetParkRecord(id); // Get park of specific ID
+            var trailList = _trailService.GetTrails().Where(i => i.ParkId == id).ToList(); // Get trails that belong to Park with passed ID (Already in database)
+            Park.CurrentWeatherInfo = new CurrentWeatherInfo(); // Instantiate blank spot for data to bind to, sets to object
+            await _restCalls.FetchWeatherApi(Park);
+            return View(Park);
+        }
 
         // GET: ParkController/Create
         public ActionResult Create()
@@ -212,7 +214,7 @@ namespace walkinthepark.Controllers
         //        park.CurrentWeatherInfo.Temperature = GetCurrentTemperature(weather.main.temp);
         //        park.CurrentWeatherInfo.Condition = weather.weather[0].main;
         //        park.CurrentWeatherInfo.Wind = Math.Round(weather.wind.speed, 2);
-        //        await _context.SaveChangesAsync();
+        //        await _parkService.SaveChangesAsync();
         //    }
         //    return RedirectToAction("Details", park.ParkId);
         //}
@@ -234,7 +236,7 @@ namespace walkinthepark.Controllers
         //    }
         //    finally
         //    {
-        //        _context.SaveChangesAsync();
+        //        _parkService.SaveChangesAsync();
         //    }
         //    return currentWeather.Temperature;
         //}

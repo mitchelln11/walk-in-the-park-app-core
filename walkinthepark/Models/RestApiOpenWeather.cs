@@ -7,32 +7,32 @@ namespace walkinthepark.Models
 {
     public class RestApiOpenWeather
     {
-        public Coord coord { get; set; }
-        public Weather[] weather { get; set; }
-        public Main main { get; set; }
-        public Wind wind { get; set; }
+        public Coord Coord { get; set; }
+        public Weather[] Weather { get; set; }
+        public Main Main { get; set; }
+        public Wind Wind { get; set; }
     }
 
     public class Coord
     {
-        public float lon { get; set; }
-        public float lat { get; set; }
+        public float Lon { get; set; }
+        public float Lat { get; set; }
     }
 
     public class Main
     {
-        public float temp { get; set; }
+        public float Temp { get; set; }
     }
 
     public class Wind
     {
-        public float speed { get; set; }
+        public float Speed { get; set; }
     }
 
     public class Weather
     {
-        public int id { get; set; }
-        public string main { get; set; }
-        public string description { get; set; }
+        public int Id { get; set; }
+        public string Main { get; set; }
+        public string Description { get; set; }
     }
 }

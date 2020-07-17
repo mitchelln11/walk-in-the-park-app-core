@@ -51,7 +51,9 @@ namespace walkinthepark
 
             // Adding databases from Servics pattern
             //services.AddTransient<IHikerService, HikerService>();
+            services.AddTransient<IHikingTrailService, HikingTrailService>();
             services.AddTransient<IParkService, ParkService>();
+            services.AddTransient<IRestCallsService, RestCallsService>();
             //services.AddTransient<IWishlistService, WishlistService>();
 
             // Set inactivity logout to 9 hours (Default is 14 days)
@@ -74,10 +76,10 @@ namespace walkinthepark
             //{   // All Uri values are being referenced from the appsettings.json file
             //    p.BaseAddress = new Uri(Configuration.GetValue<string>("ParksApiBase"));
             //});
-            //services.AddHttpClient("weather", w =>
-            //{
-            //    w.BaseAddress = new Uri(Configuration.GetValue<string>("WeatherApiBase"));
-            //});
+            services.AddHttpClient("weather", w =>
+            {
+                w.BaseAddress = new Uri(Configuration.GetValue<string>("WeatherApiBase"));
+            });
             //services.AddHttpClient("trails", t =>
             //{
             //    t.BaseAddress = new Uri(Configuration.GetValue<string>("TrailsApiBase"));

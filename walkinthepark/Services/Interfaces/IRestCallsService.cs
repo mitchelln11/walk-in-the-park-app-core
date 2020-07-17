@@ -6,10 +6,8 @@ using walkinthepark.Models;
 
 namespace walkinthepark.Services.Interfaces
 {
-    public interface IParkService 
+    public interface IRestCallsService
     {
-        List<Park> GetParks();
-        Park GetParkRecord(int id);
-        int GetParkId(int id);
+        Task<string> FetchWeatherApi(Park park); // Park object coming from Details View
     }
 }
