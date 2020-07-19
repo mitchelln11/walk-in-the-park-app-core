@@ -9,5 +9,6 @@ namespace walkinthepark.Services.Interfaces
     public interface IRestCallsService
     {
         Task<string> FetchWeatherApi(Park park); // Park object coming from Details View
+        Task<string> FetchTrailsApi(int id);
     }
 }

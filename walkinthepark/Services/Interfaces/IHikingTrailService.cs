@@ -9,5 +9,6 @@ namespace walkinthepark.Services.Interfaces
     public interface IHikingTrailService
     {
         List<HikingTrail> GetTrails();
+        List<HikingTrail> GetTrails(int id);
     }
 }

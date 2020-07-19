@@ -51,7 +51,6 @@ namespace walkinthepark.Controllers
         public ActionResult Index()
         {
             var parks = _parkService.GetParks();
-
             return View(parks);
         }
 
@@ -59,7 +58,7 @@ namespace walkinthepark.Controllers
         public async Task<ActionResult> Details(int id)
         {
             Park Park = _parkService.GetParkRecord(id); // Get park of specific ID
-            var trailList = _trailService.GetTrails().Where(i => i.ParkId == id).ToList(); // Get trails that belong to Park with passed ID (Already in database)
+            Park.HikingTrail = _trailService.GetTrails(id); // Get trails that belong to Park with passed ID (Already in database)
             Park.CurrentWeatherInfo = new CurrentWeatherInfo(); // Instantiate blank spot for data to bind to, sets to object
             await _restCalls.FetchWeatherApi(Park);
             return View(Park);
@@ -197,54 +196,6 @@ namespace walkinthepark.Controllers
         //{
         //    var googleMapsJsKey = _configuration["GoogleMapsJsKey"];
         //    return "https://maps.googleapis.com/maps/api/js?key={googleMapsJsKey}&callback=initMapgoogleMapsJsKey";
-        //}
-
-
-        ////////---------------- WEATHER --------------------/////////////////
-        //public async Task<RedirectToActionResult> FetchWeatherApi(Park park) // Referenced on Button click
-        //{
-        //    var weatherKey = _configuration["OpenWeatherKey"];
-        //    string url = $"https://api.openweathermap.org/data/2.5/weather?lat={park.ParkLatitude}&lon={park.ParkLongitude}&APPID={weatherKey}";
-        //    HttpClient client = new HttpClient();
-        //    HttpResponseMessage response = await client.GetAsync(url);
-        //    string jsonresult = await response.Content.ReadAsStringAsync();
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        RestApiOpenWeather weather = JsonConvert.DeserializeObject<RestApiOpenWeather>(jsonresult);
-        //        park.CurrentWeatherInfo.Temperature = GetCurrentTemperature(weather.main.temp);
-        //        park.CurrentWeatherInfo.Condition = weather.weather[0].main;
-        //        park.CurrentWeatherInfo.Wind = Math.Round(weather.wind.speed, 2);
-        //        await _parkService.SaveChangesAsync();
-        //    }
-        //    return RedirectToAction("Details", park.ParkId);
-        //}
-
-        //public double GetCurrentTemperature(double kelvin)
-        //{
-        //    double convertKelvinToFahrenheit = Convert.ToDouble(((kelvin - 273.15) * 9 / 5) + 32);
-        //    CurrentWeatherInfo currentWeather = new CurrentWeatherInfo
-        //    {
-        //        Temperature = Math.Round(convertKelvinToFahrenheit, 2)
-        //    };
-        //    try
-        //    {
-        //        return currentWeather.Temperature;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        _parkService.SaveChangesAsync();
-        //    }
-        //    return currentWeather.Temperature;
-        //}
-
-        //public int FindParkId(int id)
-        //{
-        //    Park parkId = _context.Parks.Where(p => p.ParkId == id).FirstOrDefault();
-        //    return parkId.ParkId;
         //}
     }
 }

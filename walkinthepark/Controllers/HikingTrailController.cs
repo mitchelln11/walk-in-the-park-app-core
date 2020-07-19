@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using walkinthepark.Data;
 using walkinthepark.Models;
+using walkinthepark.Services.Interfaces;
 
 namespace walkinthepark.Controllers
 {
@@ -16,18 +17,23 @@ namespace walkinthepark.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IRestCallsService _restCalls;
+        private readonly IHikingTrailService _hikingTrails;
 
         // Need constructor with parameter to work in Core
-        public HikingTrailController(ApplicationDbContext context, IConfiguration configuration)
+        public HikingTrailController(ApplicationDbContext context, IConfiguration configuration, IRestCallsService restCalls, IHikingTrailService hikingTrails)
         {
             _context = context;
             _configuration = configuration;
+            _restCalls = restCalls;
+            _hikingTrails = hikingTrails;
         }
 
         // GET: HikingTrailController
         public ActionResult Index()
         {
-            return View();
+            var trails = _hikingTrails.GetTrails();
+            return View(trails);
         }
 
         // GET: HikingTrailController/Details/5
@@ -100,70 +106,71 @@ namespace walkinthepark.Controllers
         }
 
         ////////---------------- HIKING TRAILS --------------------/////////////////
-        public async Task<RedirectToActionResult> FetchTrailsApi(int id) // Referenced on Button click
-        {
-            Park park = await _context.Parks.FindAsync(id);
-            var hikingTrailsKey = _configuration["HikingProjectKey"];
-            string url = $"https://www.hikingproject.com/data/get-trails?lat={park.ParkLatitude}&lon={park.ParkLongitude}&maxDistance=100&key={hikingTrailsKey}";
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-            string jsonresult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-            {
+        //public async Task<RedirectToActionResult> FetchTrailsApi(int id) // Referenced on Button click
+        //{
+        //    Park park = await _context.Parks.FindAsync(id);
+        //    var hikingTrailsKey = _configuration["HikingProjectKey"];
+        //    string url = $"https://www.hikingproject.com/data/get-trails?lat={park.ParkLatitude}&lon={park.ParkLongitude}&maxDistance=100&key={hikingTrailsKey}";
+        //    HttpClient client = new HttpClient();
+        //    HttpResponseMessage response = await client.GetAsync(url);
+        //    string jsonresult = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //    {
 
-                RestApiHikingProject trails = JsonConvert.DeserializeObject<RestApiHikingProject>(jsonresult);
-                List<Trail> trailInfo = trails.trails.ToList();
-                await ApplyHikingTrailValues(park, trailInfo);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction("Details", "Park", new { id = park.ParkId });
-        }
+        //        RestApiHikingProject trails = JsonConvert.DeserializeObject<RestApiHikingProject>(jsonresult);
+        //        List<Trail> trailInfo = trails.trails.ToList();
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    return RedirectToAction("Details", "Park", new { id = park.ParkId });
+        //}
 
-        public async Task ApplyHikingTrailValues(Park park, List<Trail> trailInfo)
-        {
-            foreach (var individualTrail in trailInfo)
-            {
-                HikingTrail hikingTrail = new HikingTrail();
-                hikingTrail.TrailName = individualTrail.name;
-                hikingTrail.TrailLength = Math.Round(individualTrail.length, 2);
-                hikingTrail.TrailDifficulty = individualTrail.difficulty;
-                hikingTrail.HikingApiCode = individualTrail.id;
-                hikingTrail.ParkId = park.ParkId;
+        //public async Task ApplyHikingTrailValues(Park park, List<Trail> trailInfo)
+        //{
+        //    foreach (var individualTrail in trailInfo)
+        //    {
+        //        HikingTrail hikingTrail = new HikingTrail
+        //        {
+        //            TrailName = individualTrail.name,
+        //            TrailLength = Math.Round(individualTrail.length, 2),
+        //            TrailDifficulty = individualTrail.difficulty,
+        //            HikingApiCode = individualTrail.id,
+        //            ParkId = park.ParkId
+        //        };
 
-                string trailSummary = individualTrail.summary;
-                if (trailSummary == null)
-                {
-                    hikingTrail.TrailSummary = "No information available at this time.";
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    hikingTrail.TrailSummary = trailSummary;
-                    await _context.SaveChangesAsync();
-                }
+        //        string trailSummary = individualTrail.summary;
+        //        if (trailSummary == null)
+        //        {
+        //            hikingTrail.TrailSummary = "No information available at this time.";
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        else
+        //        {
+        //            hikingTrail.TrailSummary = trailSummary;
+        //            await _context.SaveChangesAsync();
+        //        }
 
-                // Trail Conditions
-                string trailCondition = individualTrail.conditionDetails;
-                if (trailCondition != null)
-                {
-                    hikingTrail.TrailCondition = trailCondition;
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    hikingTrail.TrailCondition = "No condition status available at this time";
-                    await _context.SaveChangesAsync();
-                }
+        //        // Trail Conditions
+        //        string trailCondition = individualTrail.conditionDetails;
+        //        if (trailCondition != null)
+        //        {
+        //            hikingTrail.TrailCondition = trailCondition;
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        else
+        //        {
+        //            hikingTrail.TrailCondition = "No condition status available at this time";
+        //            await _context.SaveChangesAsync();
+        //        }
 
-                // Check to see if it already exists before adding to database
-                var trailCode = _context.HikingTrails.Where(c => c.HikingApiCode == hikingTrail.HikingApiCode).FirstOrDefault();
-                if (trailCode == null)
-                {
-                    _context.HikingTrails.Add(hikingTrail);
-                }
-                await _context.SaveChangesAsync();
-            }
-            await _context.SaveChangesAsync();
-        }
+        //        // Check to see if it already exists before adding to database
+        //        var trailCode = _context.HikingTrails.Where(c => c.HikingApiCode == hikingTrail.HikingApiCode).FirstOrDefault();
+        //        if (trailCode == null)
+        //        {
+        //            _context.HikingTrails.Add(hikingTrail);
+        //        }
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }

@@ -80,10 +80,10 @@ namespace walkinthepark
             {
                 w.BaseAddress = new Uri(Configuration.GetValue<string>("WeatherApiBase"));
             });
-            //services.AddHttpClient("trails", t =>
-            //{
-            //    t.BaseAddress = new Uri(Configuration.GetValue<string>("TrailsApiBase"));
-            //});
+            services.AddHttpClient("trails", t =>
+            {
+                t.BaseAddress = new Uri(Configuration.GetValue<string>("TrailsApiBase"));
+            });
             //services.AddHttpClient("gmaps", m =>
             //{
             //    m.BaseAddress = new Uri(Configuration.GetValue<string>("GMapsApiBase"));
