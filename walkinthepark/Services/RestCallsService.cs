@@ -119,13 +119,14 @@ namespace walkinthepark.Services
                     park.ParkLatitude = individualPark.Latitude;
                     park.ParkLongitude = individualPark.Longitude;
                     park.ParkCode = individualPark.ParkCode;
-                }
-                // Check for duplicates
-                var uniqueParkCode = _context.Parks.Where(c => c.ParkCode == individualPark.ParkCode).FirstOrDefault();
-                if (uniqueParkCode == null)
-                {
-                    _context.Parks.Add(park);
-                    _context.SaveChanges();
+
+                    // Check for duplicates
+                    var uniqueParkCode = _context.Parks.Where(c => c.ParkCode == individualPark.ParkCode).FirstOrDefault();
+                    if (uniqueParkCode == null)
+                    {
+                        _context.Parks.Add(park);
+                        _context.SaveChanges();
+                    }
                 }
                 await _context.SaveChangesAsync();
             }

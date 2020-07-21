@@ -21,10 +21,5 @@ namespace walkinthepark.Controllers.Helpers
             await _restCalls.FetchParksApi();
             return RedirectToAction("Index", "Park");
         }
-        //public IActionResult FetchNpsApi()
-        //{
-        //    var parks = _restCalls.FetchParksApi();
-        //    return View(parks);
-        //}
     }
 }
