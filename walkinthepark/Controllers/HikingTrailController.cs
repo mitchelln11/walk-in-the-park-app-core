@@ -37,7 +37,7 @@ namespace walkinthepark.Controllers
         }
 
         // GET: HikingTrailController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
             return View();
         }
@@ -64,7 +64,7 @@ namespace walkinthepark.Controllers
         }
 
         // GET: HikingTrailController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
             return View();
         }
@@ -85,7 +85,7 @@ namespace walkinthepark.Controllers
         }
 
         // GET: HikingTrailController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete()
         {
             return View();
         }
@@ -103,6 +103,12 @@ namespace walkinthepark.Controllers
             {
                 return View();
             }
+        }
+
+        public async Task<RedirectToActionResult> FetchTrailsRestHelper(int id)
+        {
+            await _restCalls.FetchTrailsApi(id);
+            return RedirectToAction("Details", "Park", new { id });
         }
 
         ////////---------------- HIKING TRAILS --------------------/////////////////

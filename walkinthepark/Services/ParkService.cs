@@ -16,32 +16,39 @@ namespace walkinthepark.Services
     public class ParkService : IParkService
     {
         private readonly ApplicationDbContext _context;
-        //private readonly IConfiguration _configuration;
-        //private readonly IHttpClientFactory _clientFactory;
-        //RestApiOpenWeather restWeather;
-        //RestApiNationalParks nationalParks;
-        //public string errorString = null;
 
-        //public IEnumerable<Park> Parks { get; private set; }
-        //public bool GetParkError { get; private  set; }
-
-        public ParkService(ApplicationDbContext context/*, IConfiguration configuration, IHttpClientFactory clientFactory*/)
+        public ParkService(ApplicationDbContext context)
         {
             _context = context;
-            //_configuration = configuration;
-            //_clientFactory = clientFactory;
         }
-
-        // Old version
-        //public List<Park> GetParks()
-        //{
-        //    var parkList = _context.Parks.ToList();
-        //    return parkList;
-        //}
 
         public List<Park> GetParks() => _context.Parks.ToList();
 
         public Park GetParkRecord(int id) => _context.Parks.Where(i => i.ParkId == id).FirstOrDefault();
+
+        /// <summary>
+        /// TESTING ---------------------------------------
+        /// </summary>
+        public void DeletePark(int id)
+        {
+            try
+            {
+                Park park = _context.Parks.Where(t => t.ParkId == id).FirstOrDefault();
+                _context.Parks.Remove(park);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        ///
+        /// END TESTING -----------------------------------
+        ///
+
+
+
+
 
         public int GetParkId(int id)
         {

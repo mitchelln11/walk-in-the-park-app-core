@@ -25,29 +25,16 @@ namespace walkinthepark.Controllers
         private readonly IParkService _parkService;
         private readonly IHikingTrailService _trailService;
         private readonly IRestCallsService _restCalls;
-        //private readonly IConfiguration _configuration;
-        //private readonly IHttpClientFactory _clientFactory;
-        //RestApiNationalParks restParks;
-        //public string errorString = null;
 
         // Need constructor with parameter to work in Core
-        public ParkController(IParkService parkService, IHikingTrailService trailService, IRestCallsService restCalls/*, IConfiguration configuration, IHttpClientFactory clientFactory*/)
+        public ParkController(IParkService parkService, IHikingTrailService trailService, IRestCallsService restCalls)
         {
             _parkService = parkService;
             _trailService = trailService;
             _restCalls = restCalls;
-            //_configuration = configuration;
-            //_clientFactory = clientFactory;
         }
 
         // GET: ParkController
-
-        // This works -- commented below
-        //public ActionResult Index()
-        //{
-        //    var parks = _context.Parks.ToList();
-        //    return View(parks);
-        //}
         public ActionResult Index()
         {
             var parks = _parkService.GetParks();
@@ -107,23 +94,35 @@ namespace walkinthepark.Controllers
         }
 
         // GET: ParkController/Delete/5
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            return View();
+            Park Park = _parkService.GetParkRecord(id);
+            try
+            {
+                RedirectToRoute("Delete", new { id = Park.ParkId });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return View(Park);
         }
 
         // POST: ParkController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Park park)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Park Park = _parkService.GetParkRecord(id);
+                _trailService.DeleteTrails(Park);
+                _parkService.DeletePark(Park.ParkId);
+                return RedirectToAction("Index", "Park");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", "Park");
             }
         }
 

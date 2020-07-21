@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using walkinthepark.Data;
+using walkinthepark.Data.Migrations;
 using walkinthepark.Models;
 using walkinthepark.Services.Interfaces;
 
@@ -70,5 +72,29 @@ namespace walkinthepark.Services
             var trailCode = _context.HikingTrails.Where(s => s.HikingApiCode == code).FirstOrDefault();
             return trailCode.HikingApiCode;
         }
+
+
+        /// <summary>
+        /// TESTING ---------------------------------------
+        /// </summary>
+        public void DeleteTrails(Park park)
+        {
+            try
+            {
+                List<HikingTrail> associatedTrails = _context.HikingTrails.Where(t => t.ParkId == park.ParkId).ToList();
+                foreach (var trail in associatedTrails)
+                {
+                    _context.Remove(trail);
+                    _context.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        ///
+        /// END TESTING -----------------------------------
+        ///
     }
 }

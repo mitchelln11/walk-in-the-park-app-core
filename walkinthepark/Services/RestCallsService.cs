@@ -77,6 +77,59 @@ namespace walkinthepark.Services
             }
             return currentWeather.Temperature;
         }
+        /// <summary>
+        /// PARK INFORMATION FROM NPS REST API ENDPOINT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        /// </summary>
+        public async Task<string> FetchParksApi()
+        {
+            var parksKey = _configuration["NpsKey"];
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                $"https://developer.nps.gov/api/v1/parks?q=National%20Park&limit=91&api_key={parksKey}");
+
+            var client = ClientFactory.CreateClient("parks");
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                RestApiNationalParks RestParks = await response.Content.ReadFromJsonAsync<RestApiNationalParks>();
+                var parkInfo = RestParks.Data.Select(m => m).ToList();
+                await ApplyParkValues(parkInfo);
+                await _context.SaveChangesAsync();
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                return $"Status Code: {response.StatusCode}";
+            }
+        }
+
+        public async Task ApplyParkValues(List<Datum> parkInfo)
+        {
+            foreach (var individualPark in parkInfo)
+            {
+                Park park = new Park
+                {
+                    Designation = individualPark.Designation // Temporary National Parks holding
+                };
+                if (park.Designation.Contains("National and State Parks") || park.Designation.Contains("National Park")) // First statement to add Redwood
+                {
+                    park.ParkName = individualPark.FullName;
+                    park.ParkState = individualPark.States;
+                    park.ParkDescription = individualPark.Description;
+                    park.ParkLatitude = individualPark.Latitude;
+                    park.ParkLongitude = individualPark.Longitude;
+                    park.ParkCode = individualPark.ParkCode;
+                }
+                // Check for duplicates
+                var uniqueParkCode = _context.Parks.Where(c => c.ParkCode == individualPark.ParkCode).FirstOrDefault();
+                if (uniqueParkCode == null)
+                {
+                    _context.Parks.Add(park);
+                    _context.SaveChanges();
+                }
+                await _context.SaveChangesAsync();
+            }
+        }
 
         /// <summary>
         /// HIKING TRAIL INFORMATION FROM HIKING DATA PROJECT REST API ENDPOINT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -144,6 +197,8 @@ namespace walkinthepark.Services
                 }
 
                 // Check to see if it already exists before adding to database
+                // Write conditional to delete trail if park is deleted
+                //!!!!!! Currently not adding a few parks because I deleted the original park, but not the associated trails
                 var trailCode = _context.HikingTrails.Where(c => c.HikingApiCode == hikingTrail.HikingApiCode).FirstOrDefault();
                 if (trailCode == null)
                 {

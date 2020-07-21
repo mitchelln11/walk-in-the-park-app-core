@@ -11,5 +11,6 @@ namespace walkinthepark.Services.Interfaces
         List<Park> GetParks();
         Park GetParkRecord(int id);
         int GetParkId(int id);
+        void DeletePark(int id);
     }
 }

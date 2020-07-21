@@ -10,5 +10,6 @@ namespace walkinthepark.Services.Interfaces
     {
         List<HikingTrail> GetTrails();
         List<HikingTrail> GetTrails(int id);
+        public void DeleteTrails(Park park);
     }
 }

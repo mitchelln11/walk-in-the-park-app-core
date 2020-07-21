@@ -51,7 +51,7 @@
 <div class="flex-container">
     <div class="flex-box">
         <div class="content-box">
-            <input type="button" value="Fetch Trails" onclick="location.href='@Url.Action("Index", "HikingTrail", new { id = Model.ParkId })'" />
+            <input type="button" value="Fetch Trails" onclick="location.href='@Url.Action("FetchTrailsRestHelper", "HikingTrail", new { id = Model.ParkId })'" />
         </div>
     </div>
 </div>
@@ -110,7 +110,8 @@
 <div class="flex-container">
     <div class="flex-box">
         <div class="content-box">
-            @Html.ActionLink("Back to Parks", "Index", "Park")
+            @Html.ActionLink("Back to Parks", "Index", "Park", null, new { @class = "btn btn-default crud-links" })
+            @Html.ActionLink("Delete Park", "Delete", "Park", new { id = Model.ParkId }, new { @class = "btn btn-danger crud-links" })
 
             @Html.HiddenFor(model => model.ParkLatitude)
             @Html.HiddenFor(model => model.ParkLongitude)
