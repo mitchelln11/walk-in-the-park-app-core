@@ -25,7 +25,7 @@
 <div class="flex-container">
     <div class="flex-box">
         <div class="content-box">
-            @Html.ActionLink("Add Park to Wish List", "AddParkToWishList", "Hiker", new { @id = Model.ParkId }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Add Park to Wish List", "AddParkToWishListHelper", "Wishlist", new { @id = Model.ParkId }, new { @class = "btn btn-default" })
             <h3>Located in: @Model.ParkState</h3>
             <p>@Model.ParkDescription</p>
         </div>
@@ -81,7 +81,6 @@
             <tbody>
                 @foreach (var item in Model.HikingTrail)
                 {
-
                     <tr>
                         <td>
                             @item.TrailName

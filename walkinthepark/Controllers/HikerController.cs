@@ -8,17 +8,22 @@ using Microsoft.EntityFrameworkCore.Internal;
 using walkinthepark.Data;
 using walkinthepark.Data.Migrations;
 using walkinthepark.Models;
+using walkinthepark.Services.Interfaces;
 
 namespace walkinthepark.Controllers
 {
     public class HikerController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHikerService _hikerService;
+        private readonly IWishlistService _wishlistService;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public HikerController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager)
+        public HikerController(ApplicationDbContext context, IHikerService hikerService, IWishlistService wishlistService, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
+            _hikerService = hikerService;
+            _wishlistService = wishlistService;
             _signInManager = signInManager;
             _context.Database.EnsureCreated();
         }
@@ -26,22 +31,33 @@ namespace walkinthepark.Controllers
         // GET: HikerController
         public ActionResult Index()
         {
-            return View(_context.Hikers.ToList());
+            try
+            {
+                var hikers = _hikerService.GetHikers();
+                return View(hikers);
+            }
+            catch(Exception ex) 
+            {
+                var hikerError = ex.Message;
+                return View(hikerError);
+            }
+            
         }
 
         // GET: HikerController/Details/5
         public IActionResult Details(int id)
         {
-            Hiker hiker = _context.Hikers.Find(id);
+            Hiker Hiker = _context.Hikers.Find(id);
             try
             {
+                Hiker.Wishlists = _wishlistService.GetWishlist(Hiker.HikerId);
                 RedirectToRoute("Details", new { id });
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return View(hiker);
+            return View(Hiker);
         }
 
         // GET: HikerController/Create
@@ -139,33 +155,33 @@ namespace walkinthepark.Controllers
             return RedirectToAction("DeleteConfirmed");
         }
 
-        public async Task<ActionResult> AddParkToWishList(int id)
-        {
+        //public async Task<ActionResult> AddParkToWishList(int id)
+        //{
 
-            // Find logged in user to add to the correct wishlist
-            string currentUser = FindRegisteredUserId();
-            var currentHiker = _context.Hikers.Where(h => h.ApplicationId == currentUser).FirstOrDefault();
+        //    // Find logged in user to add to the correct wishlist
+        //    string currentUser = FindRegisteredUserId();
+        //    var currentHiker = _context.Hikers.Where(h => h.ApplicationId == currentUser).FirstOrDefault();
 
-            // Find current park
-            var currentPark = _context.Parks.Where(p => p.ParkId == id).FirstOrDefault();
+        //    // Find current park
+        //    var currentPark = _context.Parks.Where(p => p.ParkId == id).FirstOrDefault();
 
-            HikerParkWishlist wishlist = new HikerParkWishlist()
-            {
-                HikerId = currentHiker.HikerId,
-                ParkId = currentPark.ParkId,
-                ParkName = currentPark.ParkName
-            };
+        //    HikerParkWishlist wishlist = new HikerParkWishlist()
+        //    {
+        //        HikerId = currentHiker.HikerId,
+        //        ParkId = currentPark.ParkId,
+        //        ParkName = currentPark.ParkName
+        //    };
 
-            // make sure there are no duplicates
-            bool parkExistsInWishlist = _context.HikerParkWishlists.Any(w => w.ParkId == wishlist.ParkId); // Doesn't let you add a park to wishlist if it exist on someone else's wishlist
-            if (parkExistsInWishlist == false )
-            {
-                _context.HikerParkWishlists.Add(wishlist);
-                await _context.SaveChangesAsync();
-            }
+        //    // make sure there are no duplicates
+        //    bool parkExistsInWishlist = _context.HikerParkWishlists.Any(w => w.ParkId == wishlist.ParkId); // Doesn't let you add a park to wishlist if it exist on someone else's wishlist
+        //    if (parkExistsInWishlist == false )
+        //    {
+        //        _context.HikerParkWishlists.Add(wishlist);
+        //        await _context.SaveChangesAsync();
+        //    }
 
-            return RedirectToAction("Details", "Hiker", new { id = currentHiker.HikerId });
-        }
+        //    return RedirectToAction("Details", "Hiker", new { id = currentHiker.HikerId });
+        //}
 
         //public bool RegisteredUserHasProfile()
         //{

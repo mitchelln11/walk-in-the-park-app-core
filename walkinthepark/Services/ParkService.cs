@@ -26,9 +26,6 @@ namespace walkinthepark.Services
 
         public Park GetParkRecord(int id) => _context.Parks.Where(i => i.ParkId == id).FirstOrDefault();
 
-        /// <summary>
-        /// TESTING ---------------------------------------
-        /// </summary>
         public void DeletePark(int id)
         {
             try
@@ -42,6 +39,11 @@ namespace walkinthepark.Services
                 Console.WriteLine(ex.Message);
             }
         }
+
+        /// <summary>
+        /// TESTING ---------------------------------------
+        /// </summary>
+
         ///
         /// END TESTING -----------------------------------
         ///
@@ -91,98 +93,5 @@ namespace walkinthepark.Services
             var parkCode = _context.Parks.Where(s => s.ParkCode == code).FirstOrDefault();
             return parkCode.ParkCode;
         }
-
-        //public async Task FetchParkApi()
-        //{
-        //    _ = _configuration["NpsKey"];
-        //    var request = new HttpRequestMessage(HttpMethod.Get,
-        //        "https://developer.nps.gov/api/v1/parks?q=National%20Park&limit=91&api_key={parkKey}");
-
-        //    var client = _clientFactory.CreateClient();
-
-        //    var response = await client.SendAsync(request);
-
-        //    if(response.IsSuccessStatusCode)
-        //    {
-        //        using var responseStream = await response.Content.ReadAsStreamAsync();
-        //        Parks = await System.Text.Json.JsonSerializer.DeserializeAsync<IEnumerable<Park>>(responseStream);
-        //    }
-        //    else
-        //    {
-        //        GetParkError = true;
-        //        Parks = Array.Empty<Park>();
-        //    }
-        //}
-
-
-        ////////---------------- WEATHER --------------------/////////////////
-        //public async Task<ActionResult> FetchWeatherApi(Park park) // Referenced on Button click
-        //{
-        //    var weatherKey = _configuration["OpenWeatherKey"];
-        //    string url = $"https://api.openweathermap.org/data/2.5/weather?lat={park.ParkLatitude}&lon={park.ParkLongitude}&APPID={weatherKey}";
-        //    HttpClient client = new HttpClient();
-        //    HttpResponseMessage response = await client.GetAsync(url);
-        //    string jsonresult = await response.Content.ReadAsStringAsync();
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        RestApiOpenWeather weather = JsonConvert.DeserializeObject<RestApiOpenWeather>(jsonresult);
-        //        park.CurrentWeatherInfo.Temperature = GetCurrentTemperature(weather.main.temp);
-        //        park.CurrentWeatherInfo.Condition = weather.weather[0].main;
-        //        park.CurrentWeatherInfo.Wind = Math.Round(weather.wind.speed, 2);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    return ActionResult("Details", "Parks", park.ParkId);
-        //}
-
-        //public async Task<SearchDataResponse> SearchAsync(string query, string accessToken)
-        //{
-        //    using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri)
-        //    {
-        //        request.Headers.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
-        //    var response = await httpClient.SendAsync(request);
-        //    }
-        //}
-
-        //public async Task FetchWeatherApi(Park park)
-        //{
-        //    var weatherKey = _configuration["OpenWeatherKey"];
-        //    var client = _clientFactory.CreateClient("weather");
-
-        //    try
-        //    {
-        //        restWeather = await client.GetFromJsonAsync<RestApiOpenWeather>($"?lat={park.ParkLatitude}&lon={park.ParkLongitude}&APPID={weatherKey}");
-        //        park.CurrentWeatherInfo.Temperature = GetCurrentTemperature(restWeather.main.temp);
-        //        park.CurrentWeatherInfo.Condition = restWeather.weather[0].main;
-        //        park.CurrentWeatherInfo.Wind = Math.Round(restWeather.wind.speed, 2);
-        //        await _context.SaveChangesAsync();
-        //        errorString = null;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        errorString = $"There was an error with the REST API: { ex.Message }";
-        //    }
-        //}
-
-        //public double GetCurrentTemperature(double kelvin)
-        //{
-        //    double convertKelvinToFahrenheit = Convert.ToDouble(((kelvin - 273.15) * 9 / 5) + 32);
-        //    CurrentWeatherInfo currentWeather = new CurrentWeatherInfo
-        //    {
-        //        Temperature = Math.Round(convertKelvinToFahrenheit, 2)
-        //    };
-        //    try
-        //    {
-        //        return currentWeather.Temperature;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        _context.SaveChangesAsync();
-        //    }
-        //    return currentWeather.Temperature;
-        //}
     }
 }

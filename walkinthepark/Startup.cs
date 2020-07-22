@@ -50,11 +50,11 @@ namespace walkinthepark
             services.AddMvc();
 
             // Adding databases from Servics pattern
-            //services.AddTransient<IHikerService, HikerService>();
+            services.AddTransient<IHikerService, HikerService>();
             services.AddTransient<IHikingTrailService, HikingTrailService>();
             services.AddTransient<IParkService, ParkService>();
             services.AddTransient<IRestCallsService, RestCallsService>();
-            //services.AddTransient<IWishlistService, WishlistService>();
+            services.AddTransient<IWishlistService, WishlistService>();
 
             // Set inactivity logout to 9 hours (Default is 14 days)
             services.ConfigureApplicationCookie(o =>

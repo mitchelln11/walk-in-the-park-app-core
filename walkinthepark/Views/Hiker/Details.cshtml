@@ -7,9 +7,7 @@
     ViewData["Title"] = "Details";
 }
 <div class="content-box">
-    @*<h1>@Html.DisplayFor(model => model.FirstName) Details</h1>*@
     <h1>@Model.FirstName Details</h1>
-
     <hr />
 </div>
 
@@ -60,13 +58,18 @@
         </div>
     </div>
 
-    <div class="flex-box">
-        <div class="content-box">
-            @*<partial name="../Shared/_WishlistPartialView.cshtml" model="Model.Wishlists" />*@
-            @*@await Component.InvokeAsync("../Wishlist/Components/WishlistList", new HikerParkWishlist())*@
-            @*await Component.InvokeAsync("Name of ViewComponent", "Parameter")*@
-            @*<vc:wishlist max-priority="2" is-done="false">
-                </vc:wishlist>*@
+    @if (Model.Wishlists != null) // Doesn't seem to be stopping H2 from displaying on page
+    {
+        <div class="flex-box">
+            <div class="content-box">
+                <h2 class="text-center">Wish List</h2>
+                <ul class="list-group">
+                    @foreach (var park in Model.Wishlists)
+                    {
+                        <li class="list-group-item">@park.ParkName</li>
+                    }
+                </ul>
+            </div>
         </div>
-    </div>
+    }
 </div>

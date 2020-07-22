@@ -8,6 +8,8 @@ namespace walkinthepark.Services.Interfaces
 {
     public interface IHikerService
     {
-        int GetHikerId(int id);
+        Hiker GetHikerRecord(int id);
+        List<Hiker> GetHikers();
+        string FindRegisteredUserId();
     }
 }
