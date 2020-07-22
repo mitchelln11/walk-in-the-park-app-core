@@ -19,7 +19,7 @@ namespace walkinthepark.Controllers.Helpers
 
         public ActionResult AddParkToWishListHelper(int id)
         {
-            _wishlistService.AddParktoWishlist(id); // Add to wishlist
+            _wishlistService.AddParktoWishlist(id); // Add Park to wishlist
             var registeredHiker = _wishlistService.HikerIdFromWishlist(id); // find id of hiker to redirect to details
             return RedirectToAction("Details", "Hiker", new { id = registeredHiker.HikerId });
         }

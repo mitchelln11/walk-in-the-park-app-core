@@ -10,6 +10,12 @@ namespace walkinthepark.Services.Interfaces
     {
         Hiker GetHikerRecord(int id);
         List<Hiker> GetHikers();
+        int GetHikerId(int id);
         string FindRegisteredUserId();
+        string GetHikerFirstName();
+        bool HikerRegisteredProfileBuilt();
+        void AddHiker(Hiker hiker);
+        void EditHiker(Hiker hiker);
+        void DeleteHiker(int id);
     }
 }

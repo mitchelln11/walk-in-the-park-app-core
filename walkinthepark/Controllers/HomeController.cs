@@ -7,12 +7,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using walkinthepark.Models;
 using System.Net.Http;
+using walkinthepark.Services.Interfaces;
 
 namespace walkinthepark.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index() => View();
+        //private readonly IHikerService _hikerService;
+
+        //public HomeController(IHikerService hikerService)
+        //{
+        //    _hikerService = hikerService;
+        //}
+        public IActionResult Index() 
+        {
+            //var name = _hikerService.GetHikerFirstName();
+            //var registeredProfiled = _hikerService.HikerRegisteredProfileBuilt();
+            return View();
+        }
 
         public IActionResult Privacy() => View();
 

@@ -14,6 +14,8 @@ namespace walkinthepark.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<IdentityUser> _signInManager; // To find out if they're logged in
+        public bool RegisteredAndHasProfile = false;
+        public string firstName;
 
         public HikerService(ApplicationDbContext context, SignInManager<IdentityUser> signInManager)
         {
@@ -21,11 +23,7 @@ namespace walkinthepark.Services
             _signInManager = signInManager;
         }
 
-        public List<Hiker> GetHikers()
-        {
-            var hikers = _context.Hikers.ToList();
-            return hikers;
-        }
+        public List<Hiker> GetHikers() => _context.Hikers.ToList();
 
         // Find logged in hiker's Application ID
         public string FindRegisteredUserId() => _signInManager.Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -37,7 +35,7 @@ namespace walkinthepark.Services
         public IdentityUser CurrentUser(Hiker hiker) => _context.Users.Where(s => s.Id == hiker.ApplicationId).FirstOrDefault();
 
         // Look for specific hiker
-        public Hiker GetHikerRecord(int id) => _context.Hikers.Where(i => i.HikerId == id).FirstOrDefault();
+        public Hiker GetHikerRecord(int id) => _context.Hikers.Where(i => i.HikerId == id).FirstOrDefault(); // not working
 
         public int GetHikerId(int id)
         {
@@ -45,7 +43,15 @@ namespace walkinthepark.Services
             return hikerId.HikerId;
         }
 
-        public string GetHikerFirstName(string firstName)
+        public string GetHikerFirstName()
+        {
+            string appId = FindRegisteredUserId();
+            Hiker hikerRecord = _context.Hikers.Where(i => i.ApplicationId == appId).FirstOrDefault();
+            firstName = hikerRecord.FirstName;
+            return firstName;
+        }
+
+        public string GetHikerFirstName(string firstName) // Overload for first name
         {
             var hikerFirstName = _context.Hikers.Where(i => i.FirstName == firstName).FirstOrDefault();
             return hikerFirstName.FirstName;
@@ -85,6 +91,59 @@ namespace walkinthepark.Services
         {
             var hikerLongitude = _context.Hikers.Where(i => i.Latitude == longitude).FirstOrDefault();
             return hikerLongitude.Longitude;
+        }
+
+        // For Navbar conditional
+        public bool HikerRegisteredProfileBuilt()
+        {
+            bool RegisteredAndHasProfile = false;
+            var registeredHiker = FindRegisteredUserId();
+            var hikerProfileCreated = _context.Hikers.Any(h => h.ApplicationId == registeredHiker);
+            if ((registeredHiker != null) && (hikerProfileCreated == true))
+            {
+                return RegisteredAndHasProfile = true;
+            }
+            return RegisteredAndHasProfile;
+        }
+
+        public void AddHiker(Hiker hiker)
+        {
+            try
+            {
+                _context.Hikers.Add(hiker);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void EditHiker(Hiker hiker)
+        {
+            try
+            {
+                _context.Hikers.Update(hiker);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void DeleteHiker(int id)
+        {
+            try
+            {
+                Hiker hiker = _context.Hikers.Where(h => h.HikerId == id).FirstOrDefault();
+                _context.Hikers.Remove(hiker);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
