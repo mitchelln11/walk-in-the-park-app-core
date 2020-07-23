@@ -8,10 +8,9 @@
 }
 <div class="content-box">
     <h1>@Model.FirstName Details</h1>
-    <hr />
 </div>
 
-<div class="flex-container flex-baseline">
+<div class="flex-container flex-baseline light-brown">
     <div class="flex-box">
         <div class="content-box">
             <dl class="row">
@@ -52,9 +51,9 @@
                 </dd>
             </dl>
 
-            @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-danger crud-links" })
-            @Html.ActionLink("Edit Profile", "Edit", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-default crud-links" })
-            <a asp-action="Index" asp-controller="Home" class="btn btn-default crud-links">Back to Home</a>
+            @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-danger crud-links drop-shadow" })
+            @Html.ActionLink("Edit Profile", "Edit", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-default crud-links medium-brown drop-shadow" })
+            <a asp-action="Index" asp-controller="Home" class="btn btn-default crud-links medium-brown drop-shadow">Back to Home</a>
         </div>
     </div>
 
@@ -63,7 +62,7 @@
         <div class="flex-box">
             <div class="content-box">
                 <h2 class="text-center">Wish List</h2>
-                <ul class="list-group">
+                <ul class="list-group drop-shadow alt-list-bg">
                     @foreach (var park in Model.Wishlists)
                     {
                         <li class="list-group-item">@park.ParkName</li>

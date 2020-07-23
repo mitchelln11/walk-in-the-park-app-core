@@ -35,7 +35,7 @@ namespace walkinthepark.Services
         public IdentityUser CurrentUser(Hiker hiker) => _context.Users.Where(s => s.Id == hiker.ApplicationId).FirstOrDefault();
 
         // Look for specific hiker
-        public Hiker GetHikerRecord(int id) => _context.Hikers.Where(i => i.HikerId == id).FirstOrDefault(); // not working
+        public Hiker GetHikerRecord(int? id) => _context.Hikers.Where(i => i.HikerId == id).FirstOrDefault(); // not working
 
         public int GetHikerId(int id)
         {

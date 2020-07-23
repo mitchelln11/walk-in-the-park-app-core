@@ -48,7 +48,7 @@ namespace walkinthepark.Controllers
         // GET: HikerController/Details/5
         public IActionResult Details(int? id)
         {
-            Hiker Hiker = _context.Hikers.Find(id);
+            Hiker Hiker = _hikerService.GetHikerRecord(id); 
             try
             {
                 Hiker.Wishlists = _wishlistService.GetWishlist(Hiker.HikerId);
@@ -74,7 +74,7 @@ namespace walkinthepark.Controllers
         {
             try
             {
-                hiker.ApplicationId = FindRegisteredUserId();
+                hiker.ApplicationId = _hikerService.FindRegisteredUserId();
                 _hikerService.AddHiker(hiker);
                 return RedirectToAction("Details", "Hiker", new { id = hiker.HikerId });
             }
@@ -146,9 +146,6 @@ namespace walkinthepark.Controllers
                 return View();
             }
         }
-
-        // Find Id of logged in user
-        public string FindRegisteredUserId() => User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
         // Log out user
         public async Task<IActionResult> LogOutUser()
