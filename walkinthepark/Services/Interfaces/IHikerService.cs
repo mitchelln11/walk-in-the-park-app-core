@@ -17,5 +17,6 @@ namespace walkinthepark.Services.Interfaces
         void AddHiker(Hiker hiker);
         void EditHiker(Hiker hiker);
         void DeleteHiker(int id);
+        void DeleteApplicant(string appId); // AspNetUsers that gets attached to the Hiker
     }
 }

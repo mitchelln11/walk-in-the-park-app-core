@@ -27,7 +27,7 @@ namespace walkinthepark.Services
 
         public HikerParkWishlist HikerIdFromWishlist(int id) => _context.HikerParkWishlists.Where(h => h.ParkId == id).FirstOrDefault();
         public void AddParktoWishlist(int id)
-        {
+        { // Redirecting to original person who added a park to the wishlist
             try
             {
                 var currentPark = _parkService.GetParkRecord(id);
@@ -43,6 +43,23 @@ namespace walkinthepark.Services
                 };
                 _context.HikerParkWishlists.Add(parkWishlist);
                 _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void DeleteWishlist(int id)
+        {
+            try
+            {
+                List<HikerParkWishlist> wishlistToRemove = _context.HikerParkWishlists.Where(h => h.HikerId == id).ToList();
+                foreach(var park in wishlistToRemove)
+                {
+                    _context.HikerParkWishlists.Remove(park);
+                    _context.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

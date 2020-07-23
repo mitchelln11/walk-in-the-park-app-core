@@ -145,5 +145,19 @@ namespace walkinthepark.Services
                 Console.WriteLine(ex.Message);
             }
         }
+
+        public void DeleteApplicant(string appId)
+        {
+            try
+            {
+                IdentityUser user = _context.Users.Where(h => h.Id == appId).FirstOrDefault();
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

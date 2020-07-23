@@ -13,5 +13,6 @@ namespace walkinthepark.Services.Interfaces
 
         HikerParkWishlist HikerIdFromWishlist(int id);
         void AddParktoWishlist(int id);
+        void DeleteWishlist(int id);
     }
 }

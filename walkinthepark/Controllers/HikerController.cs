@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -109,10 +110,10 @@ namespace walkinthepark.Controllers
         // GET: HikerController/Delete/5
         public ActionResult Delete(int id)
         {
-            Hiker hiker = _context.Hikers.Find(id);
+            Hiker hiker = _hikerService.GetHikerRecord(id);
             try
             {
-                RedirectToRoute("Delete", new { id });
+                RedirectToRoute("Delete", new { id = hiker.HikerId });
             }
             catch (Exception ex)
             {
@@ -126,14 +127,17 @@ namespace walkinthepark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Hiker hiker = _context.Hikers.Find(id);
-            IdentityUser user = _context.Users.Where(s => s.Id == hiker.ApplicationId).FirstOrDefault();
             try
             {
-                _context.Hikers.Remove(hiker);
-                _context.SaveChanges();
-                _context.Users.Remove(user);
-                _context.SaveChanges();
+                Hiker hiker = _hikerService.GetHikerRecord(id);
+                IdentityUser user = _context.Users.Where(s => s.Id == hiker.ApplicationId).FirstOrDefault();
+                List<HikerParkWishlist> wishlist = _wishlistService.GetWishlist(hiker.HikerId).ToList();
+                if (wishlist.Count > 0)
+                {
+                    _wishlistService.DeleteWishlist(hiker.HikerId);
+                }
+                _hikerService.DeleteHiker(hiker.HikerId);
+                _hikerService.DeleteApplicant(user.Id);
                 await LogOutUser();
                 return RedirectToAction("Index", "Park");
             }
