@@ -11,6 +11,7 @@ namespace walkinthepark.Services.Interfaces
         // Data retrieval
         Hiker GetHikerRecord(int? id);
         List<Hiker> GetHikers();
+        Hiker GetLoggedInHikerId();
         int GetHikerId(int id);
         string FindRegisteredUserId();
         string GetHikerFirstName();

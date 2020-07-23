@@ -24,8 +24,8 @@ namespace walkinthepark.Services
         }
         public List<HikerParkWishlist> GetWishlist() => _context.HikerParkWishlists.ToList();
         public List<HikerParkWishlist> GetWishlist(int id) => _context.HikerParkWishlists.Where(t => t.HikerId == id).ToList();
-
-        public HikerParkWishlist HikerIdFromWishlist(int id) => _context.HikerParkWishlists.Where(h => h.ParkId == id).FirstOrDefault();
+        public HikerParkWishlist HikerIdFromWishlist(int id) => _context.HikerParkWishlists.Where(w => w.HikerId == id).FirstOrDefault();
+        
         public void AddParktoWishlist(int id)
         { // Redirecting to original person who added a park to the wishlist
             try
@@ -35,14 +35,23 @@ namespace walkinthepark.Services
                 var registeredHiker = _hikerService.FindRegisteredUserId();
                 var hiker = _hikerService.GetHikers().Where(h => h.ApplicationId == registeredHiker).FirstOrDefault();
 
+                ///
+                List<HikerParkWishlist> currentHikerWishlist = _context.HikerParkWishlists.Where(w => w.HikerId == hiker.HikerId).ToList();
+                ///
+
+
                 HikerParkWishlist parkWishlist = new HikerParkWishlist
                 {
                     HikerId = hiker.HikerId,
                     ParkId = currentPark.ParkId,
                     ParkName = currentPark.ParkName
                 };
-                _context.HikerParkWishlists.Add(parkWishlist);
-                _context.SaveChanges();
+
+                if (!currentHikerWishlist.Any(p => p.ParkName.Contains(parkWishlist.ParkName)))
+                {
+                    _context.HikerParkWishlists.Add(parkWishlist);
+                    _context.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

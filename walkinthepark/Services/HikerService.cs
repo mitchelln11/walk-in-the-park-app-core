@@ -29,7 +29,19 @@ namespace walkinthepark.Services
         public string FindRegisteredUserId() => _signInManager.Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
         // Find logged in hiker -- Needed???  Or just use GetHikerId method???
-        public Hiker GetLoggedInHikerId(int id) => _context.Hikers.Find(id);
+        public Hiker GetLoggedInHiker(int id) => _context.Hikers.Find(id);
+
+        private Hiker GetAppIdFromUsers(string appId)
+        {
+            var applicant = _context.Hikers.Where(h => h.ApplicationId == appId).FirstOrDefault();
+            return applicant;
+        }
+
+        public Hiker GetLoggedInHikerId()
+        {
+            var registrant = FindRegisteredUserId();
+            return GetAppIdFromUsers(registrant);
+        }
 
         // Find Application User Record - Whole Record
         public IdentityUser CurrentUser(Hiker hiker) => _context.Users.Where(s => s.Id == hiker.ApplicationId).FirstOrDefault();
