@@ -51,6 +51,7 @@ namespace walkinthepark
 
             // Adding databases from Servics pattern
             services.AddTransient<IHikerService, HikerService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IHikingTrailService, HikingTrailService>();
             services.AddTransient<IParkService, ParkService>();
             services.AddTransient<IRestCallsService, RestCallsService>();

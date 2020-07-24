@@ -15,18 +15,17 @@ namespace walkinthepark.Controllers
 {
     public class HikerController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
         private readonly IHikerService _hikerService;
         private readonly IWishlistService _wishlistService;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public HikerController(ApplicationDbContext context, IHikerService hikerService, IWishlistService wishlistService, SignInManager<IdentityUser> signInManager)
+        public HikerController(IUserService userService, IHikerService hikerService, IWishlistService wishlistService, SignInManager<IdentityUser> signInManager)
         {
-            _context = context;
+            _userService = userService;
             _hikerService = hikerService;
             _wishlistService = wishlistService;
             _signInManager = signInManager;
-            _context.Database.EnsureCreated();
         }
 
         // GET: HikerController
@@ -74,7 +73,7 @@ namespace walkinthepark.Controllers
         {
             try
             {
-                hiker.ApplicationId = _hikerService.FindRegisteredUserId();
+                hiker.ApplicationId = _userService.FindRegisteredUserId(); // Doesn't come through parameter, so it needs to be added
                 _hikerService.AddHiker(hiker);
                 return RedirectToAction("Details", "Hiker", new { id = hiker.HikerId });
             }
@@ -130,7 +129,7 @@ namespace walkinthepark.Controllers
             try
             {
                 Hiker hiker = _hikerService.GetHikerRecord(id);
-                IdentityUser user = _context.Users.Where(s => s.Id == hiker.ApplicationId).FirstOrDefault();
+                IdentityUser user = _hikerService.CurrentUser(hiker);
                 List<HikerParkWishlist> wishlist = _wishlistService.GetWishlist(hiker.HikerId).ToList();
                 if (wishlist.Count > 0)
                 {
