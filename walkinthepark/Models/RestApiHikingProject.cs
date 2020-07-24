@@ -8,18 +8,18 @@ namespace walkinthepark.Models
 
     public class RestApiHikingProject
     {
-        public Trail[] trails { get; set; }
-        public int success { get; set; }
+        public Trail[] Trails { get; set; }
+        public int Success { get; set; }
     }
 
     public class Trail
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string summary { get; set; }
-        public string difficulty { get; set; }
-        public float length { get; set; }
-        public string conditionDetails { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Summary { get; set; }
+        public string Difficulty { get; set; }
+        public float Length { get; set; }
+        public string ConditionDetails { get; set; }
     }
 
 }

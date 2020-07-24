@@ -57,7 +57,7 @@
         </div>
     </div>
 
-    @if (Model.Wishlists != null) // Doesn't seem to be stopping H2 from displaying on page
+    @if (ViewData["HikerParkWishlist"].Equals(true)) // Doesn't seem to be stopping H2 from displaying on page
     {
         <div class="flex-box">
             <div class="content-box">

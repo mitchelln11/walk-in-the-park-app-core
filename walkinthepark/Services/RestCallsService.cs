@@ -148,7 +148,7 @@ namespace walkinthepark.Services
             if (response.IsSuccessStatusCode)
             {
                 RestApiHikingProject RestTrails = await response.Content.ReadFromJsonAsync<RestApiHikingProject>();
-                List<Trail> trailInfo = RestTrails.trails.ToList();
+                List<Trail> trailInfo = RestTrails.Trails.ToList();
                 await ApplyHikingTrailValues(park, trailInfo);
                 await _context.SaveChangesAsync();
                 return await response.Content.ReadAsStringAsync();
@@ -165,14 +165,14 @@ namespace walkinthepark.Services
             {
                 HikingTrail hikingTrail = new HikingTrail
                 {
-                    TrailName = individualTrail.name,
-                    TrailLength = Math.Round(individualTrail.length, 2),
-                    TrailDifficulty = individualTrail.difficulty,
-                    HikingApiCode = individualTrail.id,
+                    TrailName = individualTrail.Name,
+                    TrailLength = Math.Round(individualTrail.Length, 2),
+                    TrailDifficulty = individualTrail.Difficulty,
+                    HikingApiCode = individualTrail.Id,
                     ParkId = park.ParkId
                 };
 
-                string trailSummary = individualTrail.summary;
+                string trailSummary = individualTrail.Summary;
                 if (trailSummary == null)
                 {
                     hikingTrail.TrailSummary = "No information available at this time.";
@@ -185,7 +185,7 @@ namespace walkinthepark.Services
                 }
 
                 // Trail Conditions
-                string trailCondition = individualTrail.conditionDetails;
+                string trailCondition = individualTrail.ConditionDetails;
                 if (trailCondition != null)
                 {
                     hikingTrail.TrailCondition = trailCondition;

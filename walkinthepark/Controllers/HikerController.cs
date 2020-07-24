@@ -33,13 +33,12 @@ namespace walkinthepark.Controllers
         {
             try
             {
-                var hikers = _hikerService.GetHikers();
+                List<Hiker> hikers = _hikerService.GetHikers();
                 return View(hikers);
             }
             catch(Exception ex) 
             {
-                var hikerError = ex.Message;
-                return View(hikerError);
+                return View(ex.Message);
             }
             
         }
@@ -50,6 +49,7 @@ namespace walkinthepark.Controllers
             Hiker Hiker = _hikerService.GetHikerRecord(id); 
             try
             {
+                ViewData["HikerParkWishlist"] = _wishlistService.CheckEmptyWishlist(true);
                 Hiker.Wishlists = _wishlistService.GetWishlist(Hiker.HikerId);
                 RedirectToRoute("Details", new { id });
             }
