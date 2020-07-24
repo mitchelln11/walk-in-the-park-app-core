@@ -49,7 +49,7 @@ namespace walkinthepark.Controllers
             Hiker Hiker = _hikerService.GetHikerRecord(id); 
             try
             {
-                ViewData["HikerParkWishlist"] = _wishlistService.CheckEmptyWishlist(true);
+                _wishlistService.CheckEmptyWishlist(Hiker.EmptyWishlist);
                 Hiker.Wishlists = _wishlistService.GetWishlist(Hiker.HikerId);
                 RedirectToRoute("Details", new { id });
             }
