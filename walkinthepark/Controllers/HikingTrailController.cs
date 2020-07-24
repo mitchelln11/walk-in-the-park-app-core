@@ -15,16 +15,12 @@ namespace walkinthepark.Controllers
 {
     public class HikingTrailController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IConfiguration _configuration;
         private readonly IRestCallsService _restCalls;
         private readonly IHikingTrailService _hikingTrails;
 
         // Need constructor with parameter to work in Core
-        public HikingTrailController(ApplicationDbContext context, IConfiguration configuration, IRestCallsService restCalls, IHikingTrailService hikingTrails)
+        public HikingTrailController(IRestCallsService restCalls, IHikingTrailService hikingTrails)
         {
-            _context = context;
-            _configuration = configuration;
             _restCalls = restCalls;
             _hikingTrails = hikingTrails;
         }

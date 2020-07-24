@@ -13,18 +13,7 @@ namespace walkinthepark.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly IHikerService _hikerService;
-
-        //public HomeController(IHikerService hikerService)
-        //{
-        //    _hikerService = hikerService;
-        //}
-        public IActionResult Index() 
-        {
-            //var name = _hikerService.GetHikerFirstName();
-            //var registeredProfiled = _hikerService.HikerRegisteredProfileBuilt();
-            return View();
-        }
+        public IActionResult Index() => View();
 
         public IActionResult Privacy() => View();
 
