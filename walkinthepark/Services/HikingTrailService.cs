@@ -21,7 +21,7 @@ namespace walkinthepark.Services
 
         public List<HikingTrail> GetTrails() => _context.HikingTrails.ToList();
 
-        // Hiking List Over-ride to display on Parks  
+        // Hiking List Over-ride displaying trails that belong to a specific park
         public List<HikingTrail> GetTrails(int id) => _context.HikingTrails.Where(t => t.ParkId == id).ToList();
 
         // Look for specific trail

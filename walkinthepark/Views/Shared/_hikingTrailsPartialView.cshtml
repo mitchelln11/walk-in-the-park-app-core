@@ -1,0 +1,51 @@
+﻿@model IEnumerable<walkinthepark.Models.HikingTrail>
+
+<div class="flex-container">
+    <div class="flex-box">
+        <table class="table lengthy-table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrailName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrailDifficulty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrailLength)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrailCondition)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrailSummary)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.TrailName
+                        </td>
+                        <td>
+                            @item.TrailDifficulty
+                        </td>
+                        <td>
+                            @item.TrailLength
+                        </td>
+                        <td>
+                            @item.TrailCondition
+                        </td>
+                        <td>
+                            @item.TrailSummary
+                        </td>
+                        @Html.HiddenFor(modelItem => item.TrailId)
+                        @Html.HiddenFor(modelItem => item.HikingApiCode)
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
