@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace walkinthepark.Models
 {
-    // Needed to find logged in user id
     public class ApplicationUser : IdentityUser
     {
     }

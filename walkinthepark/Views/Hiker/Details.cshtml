@@ -17,8 +17,6 @@
                 @Html.HiddenFor(model => model.HikerId)
                 @Html.HiddenFor(model => model.Latitude)
                 @Html.HiddenFor(model => model.Longitude)
-                @Html.HiddenFor(model => model.ApplicationId)
-                @Html.HiddenFor(model => model.ApplicationUser)
                 <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.FirstName)
                 </dt>
@@ -54,6 +52,9 @@
             @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-danger crud-links drop-shadow" })
             @Html.ActionLink("Edit Profile", "Edit", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-default crud-links medium-brown drop-shadow" })
             <a asp-action="Index" asp-controller="Home" class="btn btn-default crud-links medium-brown drop-shadow">Back to Home</a>
+
+            @Html.DisplayNameFor(model => model.IsRegisteredWithProfile)
+            @Html.DisplayFor(model => model.IsRegisteredWithProfile)
         </div>
     </div>
 

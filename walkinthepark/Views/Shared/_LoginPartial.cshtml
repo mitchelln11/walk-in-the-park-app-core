@@ -1,13 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using walkinthepark.Models
 @inject SignInManager<IdentityUser> SignInManager
 @*@inject UserManager<IdentityUser> UserManager
 @inject walkinthepark.Services.Interfaces.IHikerService HikerProfile*@
 
+@*@{ 
+    var loggedInHiker = false;
+}*@
     <ul class="navbar-nav navbar-dark">
-        @*@if (SignInManager.IsSignedIn(User))
+        @*@if ( (SignInManager.IsSignedIn(User)) && (Model.Hiker.))
         {
             <li class="nav-item">
-                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @HikerProfile.!</a>
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @Model.Hiker.FirstName!</a>
             </li>
             <li>
                 <a class="nav-link" asp-area="" asp-controller="Hiker" asp-action="Details">Profile</a>
@@ -18,7 +22,7 @@
                 </form>
             </li>
         }*@
-        @if (SignInManager.IsSignedIn(User))
+        @if  (SignInManager.IsSignedIn(User))
         {
             <li class="nav-item">
                 <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>

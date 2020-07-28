@@ -35,11 +35,12 @@ namespace walkinthepark.Models
         [Display(Name = "Longitude")]
         public string Longitude { get; set; }
         public bool EmptyWishlist { get; set; } = false;
-
         [ForeignKey("ApplicationUser")]
         [HiddenInput(DisplayValue = false)]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+
+        public bool IsRegisteredWithProfile { get; set; } = false;
 
         public List<HikerParkWishlist> Wishlists { get; set; }
     }

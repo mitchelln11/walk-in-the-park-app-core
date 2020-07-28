@@ -16,6 +16,7 @@ namespace walkinthepark.Services.Interfaces
         int GetHikerId(int id);
         string FindRegisteredUserId();
         string GetHikerFirstName();
+        void HikerIsRegistered();
         bool HikerRegisteredProfileBuilt();
         IdentityUser CurrentUser(Hiker hiker);
 

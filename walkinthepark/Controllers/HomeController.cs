@@ -13,7 +13,18 @@ namespace walkinthepark.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index() => View();
+        private readonly IHikerService _hikerService;
+
+        // Need constructor with parameter to work in Core
+        public HomeController(IHikerService hikerService)
+        {
+            _hikerService = hikerService;
+        }
+        public IActionResult Index()
+        {
+            _hikerService.HikerIsRegistered();
+            return View();
+        }
 
         public IActionResult Privacy() => View();
 

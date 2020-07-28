@@ -31,10 +31,28 @@ namespace walkinthepark.Services
         // Find logged in hiker -- Needed???  Or just use GetHikerId method???
         public Hiker GetLoggedInHiker(int id) => _context.Hikers.Find(id);
 
-        private Hiker GetAppIdFromUsers(string appId)
+        private Hiker GetAppIdFromUsers(string appId) => _context.Hikers.Where(h => h.ApplicationId == appId).FirstOrDefault();
+        public void HikerIsRegistered()
         {
-            var applicant = _context.Hikers.Where(h => h.ApplicationId == appId).FirstOrDefault();
-            return applicant;
+            Hiker currentHiker;
+            string registrant;
+
+            // Runtime Binding error: Can't bind on null reference (Even when logged in)
+            // What to do when it fails? False boolean not possible if Hiker isn't created yet
+            try
+            {
+                registrant = FindRegisteredUserId();
+                currentHiker = GetAppIdFromUsers(registrant);
+                if (currentHiker.ApplicationId == registrant)
+                {
+                    currentHiker.IsRegisteredWithProfile = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //_context.Hikers.Update(currentHiker.IsRegisteredWithProfile) = false;
+            }
         }
 
         public Hiker GetLoggedInHikerId()
