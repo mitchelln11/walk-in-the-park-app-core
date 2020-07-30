@@ -35,6 +35,10 @@ p {
 
 select {
     padding: 5px;
+    color: #888;
+}
+select option {
+    color: #000;
 }
 
 .state-filter-box {
@@ -52,14 +56,24 @@ select {
     box-shadow: 1px 1px 2px rgba(0,0,0,0.8)
 }
 .alt-list-bg li:nth-child(odd) {
-    background: #766e59;
+    background: #6a5d43;
     color:#fff;
 }
 
 /* Custom Styles  */
+select {
+    width: 100%;
+    border-radius: 3px;
+    border-color: #d1c8c8;
+}
+
+label {
+    display:block;
+}
+
 .container-fluid {
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
 }
 .lengthy-table th:nth-child(4), .lengthy-table th:nth-child(5), .lengthy-table td:nth-child(4), .lengthy-table td:nth-child(5) {
     display: none;
@@ -114,11 +128,11 @@ a.navbar-brand {
     margin-left: 0;
 }
 
-    .weather-info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 tr:nth-child(even) {
     background-color: rgba(215,202,178,1);
@@ -154,6 +168,7 @@ a.btn.btn-default {
 
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:focus, .btn-primary:active:hover {
     border-color: #4f4635;
+    background-color: #6a5d43;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:focus {

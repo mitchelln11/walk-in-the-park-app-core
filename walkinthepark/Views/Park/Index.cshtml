@@ -19,33 +19,39 @@
     </div>
     <div class="clearfix"></div>
 
-    @*<div class="container-fluid">
+    <div class="container-fluid">
         <div class="flex-container">
             <div class="panel-body">
                 <div class="form-horizontal">
                     <h4>Park</h4>
                     <hr />
 
-                    <div class="form-group">
-                        <div class="flex-container">
-                            <div class="state-filter-box">
-                                @Html.LabelFor(model => model.SelectedState)
-                            </div>
-                            <div class="state-filter-box">
-                                @Html.DropDownListFor(model => model., Model., "Please Select State")
-                            </div>
-                            <div class="state-filter-box">
-                                <input type="submit" value="Filter" class="btn btn-default" />
-                            </div>
-                            <div class="state-filter-box">
-                                @Html.ActionLink("See All Parks", "Index", "Parks", null, new { @class = "btn btn-default" })
-                            </div>
-                        </div>
-                    </div>
+                    @*<div class="form-group">
+            <div class="flex-container">
+                <div class="state-filter-box">
+                    @Html.LabelFor(model => model.SelectedState)
+                </div>
+                <div class="state-filter-box">
+                    @Html.DropDownListFor(model => model.SelectedState, Model.States, "Please Select State")
+                </div>
+                <div class="state-filter-box">
+                    <input type="submit" value="Filter" class="btn btn-default" />
+                </div>
+                <div class="state-filter-box">
+                    @Html.ActionLink("See All Parks", "Index", "Parks", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>*@
+                     
+                    @*<select asp-action="FilterMultiStateParks" method="post" asp-items="Html.GetEnumSelectList<StateEnum">
+                    </select>
+                    <button asp-controller="Park" asp-action="FilterMultiStateParks">Filter</button>
+                    <button asp-controller="Park" asp-action="ResetParkList">Show All</button>*@
+                    
                 </div>
             </div>
         </div>
-    </div>*@
+    </div>
 
     <table class="table">
         <thead>

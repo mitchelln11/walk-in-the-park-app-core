@@ -23,10 +23,18 @@ namespace walkinthepark.Services
             _signInManager = signInManager;
         }
 
-        public List<Hiker> GetHikers() => _context.Hikers.ToList();
-
+        /// <summary>
+        /// ------------ CURRENT USER FROM SignInManager<IdentityUser> signInManager----------
+        /// </summary>
         // Find logged in hiker's Application ID
         public string FindRegisteredUserId() => _signInManager.Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+
+
+        /// <summary>
+        /// ------------ PULL INFO FROM DATABASE----------
+        /// </summary>
+        public List<Hiker> GetHikers() => _context.Hikers.ToList();
 
         // Find logged in hiker -- Needed???  Or just use GetHikerId method???
         public Hiker GetLoggedInHiker(int id) => _context.Hikers.Find(id);
@@ -105,6 +113,9 @@ namespace walkinthepark.Services
             return hikerLongitude.Longitude;
         }
 
+        /// <summary>
+        /// ------------ TESTING ----------
+        /// </summary>
         // For Navbar conditional
         public bool HikerRegisteredProfileBuilt()
         {
@@ -118,6 +129,11 @@ namespace walkinthepark.Services
             return RegisteredAndHasProfile;
         }
 
+
+
+        /// <summary>
+        /// ------------ DATABASE MANIPULATION ----------
+        /// </summary>
         public void AddHiker(Hiker hiker)
         {
             try

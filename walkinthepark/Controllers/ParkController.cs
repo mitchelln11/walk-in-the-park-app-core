@@ -126,10 +126,19 @@ namespace walkinthepark.Controllers
             }
         }
 
-        //public string GetGoogleMapsJsKey()
-        //{
-        //    var googleMapsJsKey = _configuration["GoogleMapsJsKey"];
-        //    return "https://maps.googleapis.com/maps/api/js?key={googleMapsJsKey}&callback=initMapgoogleMapsJsKey";
-        //}
+        /// <summary>
+        /// ------------ HELPER METHODS ----------
+        /// </summary>
+        public ActionResult FilterMultiStateParks()
+        {
+            _parkService.GetStatesWithParks();
+            return RedirectToAction("Index", "Park");
+        }
+
+        public ActionResult ResetParkList()
+        {
+            _parkService.GetParks();
+            return RedirectToAction("Index", "Park");
+        }
     }
 }

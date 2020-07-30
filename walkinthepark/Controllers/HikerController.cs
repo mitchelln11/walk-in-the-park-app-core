@@ -40,7 +40,6 @@ namespace walkinthepark.Controllers
             {
                 return View(ex.Message);
             }
-            
         }
 
         // GET: HikerController/Details/5
@@ -98,7 +97,7 @@ namespace walkinthepark.Controllers
             try
             {
                 _hikerService.EditHiker(hiker);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Hiker", new { id = hiker.HikerId });
             }
             catch
             {

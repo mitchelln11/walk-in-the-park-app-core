@@ -1,4 +1,5 @@
 ﻿@model walkinthepark.Models.Hiker
+@using walkinthepark.ViewModels
 
 @{
     ViewData["Title"] = "Edit";
@@ -42,6 +43,13 @@
                     <span asp-validation-for="State" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="EnumState" class="control-label"></label>
+                    <select asp-for="EnumState"
+                            asp-items="Html.GetEnumSelectList<DataHelpers.StateEnum>()">
+                        <option value="">Select State</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary medium-brown drop-shadow" />
                 </div>
             </form>
@@ -50,6 +58,6 @@
     </div>
 </div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

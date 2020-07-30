@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using static walkinthepark.ViewModels.DataHelpers;
 
 namespace walkinthepark.Models
 {
@@ -28,6 +30,20 @@ namespace walkinthepark.Models
 
         [Display(Name = "State")]
         public string State { get; set; }
+
+        /// <summary>
+        /// Testing
+        /// </summary>
+        //public IEnumerable<SelectListItem> StatesList { get; set; }
+
+        [Display(Name = "State")]
+        public StateEnum EnumState { get; set; }
+        /// <summary>
+        ///  End Testing
+        /// </summary>
+
+
+
 
         [Display(Name = "Latitude")]
         public string Latitude { get; set; }
