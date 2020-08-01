@@ -4,96 +4,93 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="flex-box">
+<div class="flex-box" id="page-header">
     <div class="content-box">
         <h1>United States National Parks</h1>
         <input type="button" value="Fetch Parks" class="btn light-brown drop-shadow" onclick="location.href='@Url.Action("FetchParksRestHelper", "RestApiCalls")'" />
     </div>
+</div>
+@{
+    // Create an empty list for the marker values to add into
+    List<walkinthepark.Models.ParkMarkers> parkMarkers = new List<walkinthepark.Models.ParkMarkers>();
+}
+@* Map with markers will generate inside map id *@
+<div id="map">
+</div>
+<div class="clearfix"></div>
 
-    @{
-        // Create an empty list for the marker values to add into
-        List<walkinthepark.Models.ParkMarkers> parkMarkers = new List<walkinthepark.Models.ParkMarkers>();
-    }
-    @* Map with markers will generate inside map id *@
-    <div id="map">
-    </div>
-    <div class="clearfix"></div>
+<div id="park-header">
+    <div class="flex-container">
+        <div class="flex-box">
+            <div class="flex-table-cell">
+                <h4>Parks</h4>
+                @*<div class="form-group">
+                <div class="flex-container">
+                    <div class="state-filter-box">
+                        @Html.LabelFor(model => model.SelectedState)
+                    </div>
+                    <div class="state-filter-box">
+                        @Html.DropDownListFor(model => model.SelectedState, Model.States, "Please Select State")
+                    </div>
+                    <div class="state-filter-box">
+                        <input type="submit" value="Filter" class="btn btn-default" />
+                    </div>
+                    <div class="state-filter-box">
+                        @Html.ActionLink("See All Parks", "Index", "Parks", null, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>*@
 
-    <div class="container-fluid">
-        <div class="flex-container">
-            <div class="panel-body">
-                <div class="form-horizontal">
-                    <h4>Park</h4>
-                    <hr />
+                @*<select asp-action="FilterMultiStateParks" method="post" asp-items="Html.GetEnumSelectList<StateEnum">
+            </select>
+            <button asp-controller="Park" asp-action="FilterMultiStateParks">Filter</button>
+            <button asp-controller="Park" asp-action="ResetParkList">Show All</button>*@
 
-                    @*<div class="form-group">
-            <div class="flex-container">
-                <div class="state-filter-box">
-                    @Html.LabelFor(model => model.SelectedState)
-                </div>
-                <div class="state-filter-box">
-                    @Html.DropDownListFor(model => model.SelectedState, Model.States, "Please Select State")
-                </div>
-                <div class="state-filter-box">
-                    <input type="submit" value="Filter" class="btn btn-default" />
-                </div>
-                <div class="state-filter-box">
-                    @Html.ActionLink("See All Parks", "Index", "Parks", null, new { @class = "btn btn-default" })
-                </div>
-            </div>
-        </div>*@
-                     
-                    @*<select asp-action="FilterMultiStateParks" method="post" asp-items="Html.GetEnumSelectList<StateEnum">
-                    </select>
-                    <button asp-controller="Park" asp-action="FilterMultiStateParks">Filter</button>
-                    <button asp-controller="Park" asp-action="ResetParkList">Show All</button>*@
-                    
-                </div>
             </div>
         </div>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ParkName)
-                <th>
-                    @Html.DisplayNameFor(model => model.ParkState)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                // Add Markers
-                ParkMarkers parkMarker = new ParkMarkers();
-                //Assign required parameters
-                parkMarker.ParkLatitude = item.ParkLatitude;
-                parkMarker.ParkLongitude = item.ParkLongitude;
-                //Actually add all three values together into the parkMarker object
-                parkMarkers.Add(parkMarker);
-                <tr>
-                    <td>
-                        @item.ParkName
-                    </td>
-                    <td>
-                        @item.ParkState
-                    </td>
-
-                    @Html.HiddenFor(modelItem => item.ParkLongitude)
-                    @Html.HiddenFor(modelItem => item.ParkLongitude)
-
-                    <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.ParkId })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
 </div>
-<script>
+
+<div id="park-list">
+    <div class="flex-table-row flex-table-header">
+        <div class="flex-box flex-table-cell">
+            @Html.DisplayNameFor(model => model.ParkName)
+        </div>
+        <div class="flex-box flex-table-cell">
+            @Html.DisplayNameFor(model => model.ParkState)
+        </div>
+        <div class="flex-box flex-table-cell">
+            @* Empty to keep 3 columns for details buttons *@
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        // Add Markers
+        ParkMarkers parkMarker = new ParkMarkers();
+        //Assign required parameters
+        parkMarker.ParkLatitude = item.ParkLatitude;
+        parkMarker.ParkLongitude = item.ParkLongitude;
+        //Actually add all three values together into the parkMarker object
+        parkMarkers.Add(parkMarker);
+
+        <div class="flex-table-row">
+            <div class="flex-box flex-table-cell">
+                @item.ParkName
+            </div>
+            <div class="flex-box flex-table-cell">
+                @item.ParkState
+            </div>
+            @Html.HiddenFor(modelItem => item.ParkLongitude)
+            @Html.HiddenFor(modelItem => item.ParkLongitude)
+            <div class="flex-box flex-table-cell">
+                @Html.ActionLink("Details", "Details", new { id = item.ParkId })
+            </div>
+        </div>
+    }
+</div>
+
+        <script>
     var map;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -114,6 +111,6 @@
         }
 
     }
-</script>
+        </script>
 
-<script src='https://maps.googleapis.com/maps/api/js?key=@(ViewData["GoogleMapsJsKey"])&callback=initMap' async defer type="text/javascript"></script>
+        <script src='https://maps.googleapis.com/maps/api/js?key=@(ViewData["GoogleMapsJsKey"])&callback=initMap' async defer type="text/javascript"></script>

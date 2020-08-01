@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using walkinthepark.Data;
 using walkinthepark.Models;
 using walkinthepark.Services.Interfaces;
+using walkinthepark.ViewModels;
 
 namespace walkinthepark.Services
 {
@@ -97,8 +99,8 @@ namespace walkinthepark.Services
 
         public string GetHikerState(string state)
         {
-            var hikerState = _context.Hikers.Where(i => i.State == state).FirstOrDefault();
-            return hikerState.State;
+            var hikerState = _context.Hikers.Where(i => i.SelectedState == state).FirstOrDefault();
+            return hikerState.SelectedState;
         }
 
         public string GetHikerLatitude(string latitude)
@@ -134,6 +136,12 @@ namespace walkinthepark.Services
         /// <summary>
         /// ------------ DATABASE MANIPULATION ----------
         /// </summary>
+        /// 
+        public List<SelectListItem> AssignStateList()
+        {
+            DataHelpers stateData = new DataHelpers();
+            return stateData.GetStates();
+        }
         public void AddHiker(Hiker hiker)
         {
             try

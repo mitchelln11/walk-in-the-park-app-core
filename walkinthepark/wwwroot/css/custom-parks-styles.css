@@ -28,6 +28,9 @@ h1 {
     font-size: 3.5em;
     text-align: center;
 }
+h4 {
+    margin:0;
+}
 
 p {
     text-align: justify;
@@ -74,6 +77,9 @@ label {
 .container-fluid {
     padding: 0;
     margin: 0;
+}
+#park-list, #park-header, #page-header .content-box {
+    text-align: center;
 }
 .lengthy-table th:nth-child(4), .lengthy-table th:nth-child(5), .lengthy-table td:nth-child(4), .lengthy-table td:nth-child(5) {
     display: none;
@@ -190,6 +196,18 @@ th {
     background-color: #907f5d;
 }
 
+.flex-table-cell {
+    padding: .75rem;
+}
+
+.flex-table-row:nth-child(even) {
+    background-color: rgba(215,202,178,1);
+}
+.flex-table-header {
+    background-color: #907f5d;
+    font-weight: bold;
+}
+
 .trail-list .trail-box {
     padding: 10px 0;
 }
@@ -240,8 +258,14 @@ footer {
         margin: 15px;
         display:inline-block;
     }
+    #page-header .content-box {
+        text-align:left;
+    }
 
     @media screen and (min-width:768px) {
+        #park-list, #park-header {
+            text-align: left;
+        }
         .header-container {
             display: flex;
             flex-direction: column;
@@ -273,9 +297,13 @@ footer {
             align-items: baseline;
         }
 
-        .flex-box {
+        .flex-table-row {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .flex-box {
             flex: 1;
         }
 
@@ -286,11 +314,11 @@ footer {
             flex-direction: column;
         }
 
-            .trail-list .trail-box {
-                display: flex;
-                width: 100%;
-                padding: 10px 0;
-            }
+        .trail-list .trail-box {
+            display: flex;
+            width: 100%;
+            padding: 10px 0;
+        }
 
         .centered-flex {
             display: flex;

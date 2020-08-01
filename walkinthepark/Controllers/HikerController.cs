@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using walkinthepark.Data;
 using walkinthepark.Data.Migrations;
 using walkinthepark.Models;
 using walkinthepark.Services.Interfaces;
+using walkinthepark.ViewModels;
 
 namespace walkinthepark.Controllers
 {
@@ -62,6 +64,7 @@ namespace walkinthepark.Controllers
         // GET: HikerController/Create
         public ActionResult Create()
         {
+            //var stateList = _hikerService.AssignStateList();
             return View();
         }
 
@@ -73,6 +76,7 @@ namespace walkinthepark.Controllers
             try
             {
                 hiker.ApplicationId = _userService.FindRegisteredUserId(); // Doesn't come through parameter, so it needs to be added
+                hiker.States = _hikerService.AssignStateList(); // List of states coming from other file
                 _hikerService.AddHiker(hiker);
                 return RedirectToAction("Details", "Hiker", new { id = hiker.HikerId });
             }

@@ -67,8 +67,6 @@ namespace walkinthepark.Services
             return reorderedFinalList;
         }
 
-
-
         public Park GetParkRecord(int id) => _context.Parks.Where(i => i.ParkId == id).FirstOrDefault();
 
         public int GetParkId(int id)
@@ -113,7 +111,12 @@ namespace walkinthepark.Services
             return parkCode.ParkCode;
         }
 
-
+        /// <summary>
+        /// ------------ Order Database Information ----------
+        /// </summary>
+        
+        public List<Park> ParkOrderByState() => _context.Parks.OrderBy(s => s.ParkState).ToList();
+        public List<Park> ParkReverseOrderByState() => _context.Parks.OrderByDescending(s => s.ParkState).ToList();
 
         /// <summary>
         /// ------------ DATABASE MANIPULATION ----------

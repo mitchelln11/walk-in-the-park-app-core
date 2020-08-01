@@ -28,16 +28,23 @@ namespace walkinthepark.Models
         [Display(Name = "City")]
         public string City { get; set; }
 
-        [Display(Name = "State")]
-        public string State { get; set; }
-
         /// <summary>
         /// Testing
         /// </summary>
         //public IEnumerable<SelectListItem> StatesList { get; set; }
 
-        [Display(Name = "State")]
-        public StateEnum EnumState { get; set; }
+        //[Display(Name = "State")]
+        //public StateEnum EnumState { get; set; }
+
+
+
+
+        [Display(Name ="Selected State")]
+        public string SelectedState { get; set; }
+        
+        [NotMapped]
+        public List<SelectListItem> States { get; set; }
+
         /// <summary>
         ///  End Testing
         /// </summary>
