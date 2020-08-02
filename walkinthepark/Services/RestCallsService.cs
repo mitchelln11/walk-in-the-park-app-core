@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -9,6 +11,8 @@ using System.Threading.Tasks;
 using walkinthepark.Data;
 using walkinthepark.Models;
 using walkinthepark.Services.Interfaces;
+using System.Web;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace walkinthepark.Services
 {
@@ -56,7 +60,7 @@ namespace walkinthepark.Services
             }
         }
 
-        public double GetCurrentTemperature(double kelvin)
+        private double GetCurrentTemperature(double kelvin)
         {
             double convertKelvinToFahrenheit = Convert.ToDouble(((kelvin - 273.15) * 9 / 5) + 32);
             CurrentWeatherInfo currentWeather = new CurrentWeatherInfo
@@ -77,6 +81,9 @@ namespace walkinthepark.Services
             }
             return currentWeather.Temperature;
         }
+
+
+
         /// <summary>
         /// PARK INFORMATION FROM NPS REST API ENDPOINT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         /// </summary>
@@ -113,7 +120,15 @@ namespace walkinthepark.Services
                 };
                 if (park.Designation.Contains("National and State Parks") || park.Designation.Contains("National Park")) // First statement to add Redwood
                 {
-                    park.ParkName = individualPark.FullName;
+                    if (!individualPark.FullName.Contains("&"))
+                    {
+                        park.ParkName = individualPark.FullName;
+                    }
+                    else
+                    {
+                        park.ParkName = HttpUtility.HtmlDecode(individualPark.FullName);
+                    }
+
                     park.ParkState = individualPark.States;
                     park.ParkDescription = individualPark.Description;
                     park.ParkLatitude = individualPark.Latitude;
@@ -121,16 +136,21 @@ namespace walkinthepark.Services
                     park.ParkCode = individualPark.ParkCode;
 
                     // Check for duplicates
-                    var uniqueParkCode = _context.Parks.Where(c => c.ParkCode == individualPark.ParkCode).FirstOrDefault();
+                    Park uniqueParkCode = _context.Parks.Where(c => c.ParkCode == individualPark.ParkCode).FirstOrDefault();
                     if (uniqueParkCode == null)
                     {
                         _context.Parks.Add(park);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
                         _context.SaveChanges();
                     }
                 }
                 await _context.SaveChangesAsync();
             }
         }
+
 
         /// <summary>
         /// HIKING TRAIL INFORMATION FROM HIKING DATA PROJECT REST API ENDPOINT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

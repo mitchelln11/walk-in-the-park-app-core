@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using walkinthepark.Services.Interfaces;
 using walkinthepark.Services;
 using System.Net.Http.Json;
+using System.Web;
 
 namespace walkinthepark.Controllers
 {
@@ -37,7 +38,13 @@ namespace walkinthepark.Controllers
         // GET: ParkController
         public ActionResult Index()
         {
-            var parks = _parkService.GetParks();
+
+            //var encodeTest = HttpUtility.HtmlEncode("&#257;");
+            //var decodeTest = HttpUtility.HtmlDecode("&#257;");
+            //var decodeTest = HttpUtility.HtmlDecode("Haleakal&#257; National Park");
+
+
+            List<Park> parks = _parkService.GetParks();
             return View(parks);
         }
 

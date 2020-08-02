@@ -118,6 +118,8 @@ namespace walkinthepark.Services
         public List<Park> ParkOrderByState() => _context.Parks.OrderBy(s => s.ParkState).ToList();
         public List<Park> ParkReverseOrderByState() => _context.Parks.OrderByDescending(s => s.ParkState).ToList();
 
+
+
         /// <summary>
         /// ------------ DATABASE MANIPULATION ----------
         /// </summary>
