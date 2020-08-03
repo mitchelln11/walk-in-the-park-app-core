@@ -27,7 +27,7 @@ namespace walkinthepark.Services
         /// ------------ PULL INFO FROM DATABASE ----------
         /// </summary>
         // Find logged in hiker's Application ID
-        public List<Park> GetParks() => _context.Parks.ToList();
+        public List<Park> GetParks() => _context.Parks.OrderBy(p => p.ParkName).ToList();
         public List<string> GetStatesWithParks()
         {
             var states = GetParks().Select(s => s.ParkState).Distinct().ToList(); // Run Method to get all States from Park records and avoid duplicates with Distinct

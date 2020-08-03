@@ -43,12 +43,18 @@
                 <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.City)
                 </dd>
-                @*<dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.EnumState)
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.SelectedState)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.EnumState)
-                </dd>*@
+                    @Html.DisplayFor(model => model.SelectedState)
+                </dd>
+                @*<dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.EnumState)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.EnumState)
+        </dd>*@
             </dl>
 
             @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-danger crud-links drop-shadow" })

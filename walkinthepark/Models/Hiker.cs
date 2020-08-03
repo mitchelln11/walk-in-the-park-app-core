@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using static walkinthepark.ViewModels.DataHelpers;
+using walkinthepark.Services.Interfaces;
 
 namespace walkinthepark.Models
 {
@@ -39,7 +35,7 @@ namespace walkinthepark.Models
 
 
 
-        [Display(Name ="Selected State")]
+        [Display(Name ="State")]
         public string SelectedState { get; set; }
         
         [NotMapped]
@@ -57,7 +53,7 @@ namespace walkinthepark.Models
 
         [Display(Name = "Longitude")]
         public string Longitude { get; set; }
-        public bool EmptyWishlist { get; set; } = false;
+        public bool EmptyWishlist { get; set; } = true;
 
         [ForeignKey("ApplicationUser")]
         [HiddenInput(DisplayValue = false)]

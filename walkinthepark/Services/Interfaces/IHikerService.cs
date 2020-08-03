@@ -19,7 +19,6 @@ namespace walkinthepark.Services.Interfaces
         string GetHikerFirstName();
         bool HikerRegisteredProfileBuilt();
         IdentityUser CurrentUser(Hiker hiker);
-        List<SelectListItem> AssignStateList();
 
 
         // Data manipulation

@@ -1,77 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using walkinthepark.Services.Interfaces;
 
-namespace walkinthepark.ViewModels
+namespace walkinthepark.Services
 {
-    public class DataHelpers
+    public class StateService : IStateService
     {
-        //public enum StateEnum
-        //{
-        //    AL,
-        //    AK,
-        //    AS,
-        //    AZ,
-        //    AR,
-        //    CA,
-        //    CO,
-        //    CT,
-        //    DE,
-        //    DC,
-        //    FL,
-        //    GA,
-        //    HI,
-        //    ID,
-        //    IL,
-        //    IN,
-        //    IA,
-        //    KS,
-        //    KY,
-        //    LA,
-        //    ME,
-        //    MD,
-        //    MA,
-        //    MI,
-        //    MN,
-        //    MS,
-        //    MO,
-        //    MT,
-        //    NE,
-        //    NV,
-        //    NH,
-        //    NJ,
-        //    NM,
-        //    NY,
-        //    NC,
-        //    ND,
-        //    OH,
-        //    OK,
-        //    OR,
-        //    PA,
-        //    RI,
-        //    SC,
-        //    SD,
-        //    TN,
-        //    TX,
-        //    UT,
-        //    VT,
-        //    VA,
-        //    WA,
-        //    WV,
-        //    WI,
-        //    WY
-        //}
-
-
-
         public List<SelectListItem> GetStates() // Run this method to reference elsewhere
         {
             List<SelectListItem> states = new List<SelectListItem>()
             {
-                new SelectListItem { Text="--Select a State--", Value=""},
                 new SelectListItem() { Text="Alabama", Value="AL"},
                 new SelectListItem() { Text="Alaska", Value="AK"},
                 new SelectListItem() { Text="American Samoa", Value="AS"},

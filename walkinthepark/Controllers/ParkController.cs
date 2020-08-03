@@ -38,12 +38,6 @@ namespace walkinthepark.Controllers
         // GET: ParkController
         public ActionResult Index()
         {
-
-            //var encodeTest = HttpUtility.HtmlEncode("&#257;");
-            //var decodeTest = HttpUtility.HtmlDecode("&#257;");
-            //var decodeTest = HttpUtility.HtmlDecode("Haleakal&#257; National Park");
-
-
             List<Park> parks = _parkService.GetParks();
             return View(parks);
         }

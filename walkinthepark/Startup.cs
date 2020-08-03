@@ -56,6 +56,7 @@ namespace walkinthepark
             services.AddTransient<IParkService, ParkService>();
             services.AddTransient<IRestCallsService, RestCallsService>();
             services.AddTransient<IWishlistService, WishlistService>();
+            services.AddScoped<IStateService, StateService>();
 
             // Set inactivity logout to 9 hours (Default is 14 days)
             services.ConfigureApplicationCookie(o =>

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using walkinthepark.Data;
 using walkinthepark.Models;
 using walkinthepark.Services.Interfaces;
-using walkinthepark.ViewModels;
 
 namespace walkinthepark.Services
 {
@@ -61,7 +60,7 @@ namespace walkinthepark.Services
 
         public int GetHikerId(int id)
         {
-            var hikerId = _context.Hikers.Where(i => i.HikerId == id).FirstOrDefault();
+            Hiker hikerId = _context.Hikers.Where(i => i.HikerId == id).FirstOrDefault();
             return hikerId.HikerId;
         }
 
@@ -69,49 +68,48 @@ namespace walkinthepark.Services
         {
             string appId = FindRegisteredUserId();
             Hiker hikerRecord = _context.Hikers.Where(i => i.ApplicationId == appId).FirstOrDefault();
-            firstName = hikerRecord.FirstName;
-            return firstName;
+            return hikerRecord.FirstName;
         }
 
         public string GetHikerFirstName(string firstName) // Overload for first name
         {
-            var hikerFirstName = _context.Hikers.Where(i => i.FirstName == firstName).FirstOrDefault();
+            Hiker hikerFirstName = _context.Hikers.Where(i => i.FirstName == firstName).FirstOrDefault();
             return hikerFirstName.FirstName;
         }
 
         public string GetHikerLastName(string lastName)
         {
-            var hikerLastName = _context.Hikers.Where(i => i.LastName == lastName).FirstOrDefault();
+            Hiker hikerLastName = _context.Hikers.Where(i => i.LastName == lastName).FirstOrDefault();
             return hikerLastName.LastName;
         }
 
         public string GetHikerAddress(string address)
         {
-            var hikerAddress = _context.Hikers.Where(i => i.StreetAddress == address).FirstOrDefault();
+            Hiker hikerAddress = _context.Hikers.Where(i => i.StreetAddress == address).FirstOrDefault();
             return hikerAddress.StreetAddress;
         }
 
         public string GetHikerCity(string city)
         {
-            var hikerCity = _context.Hikers.Where(i => i.City == city).FirstOrDefault();
+            Hiker hikerCity = _context.Hikers.Where(i => i.City == city).FirstOrDefault();
             return hikerCity.City;
         }
 
         public string GetHikerState(string state)
         {
-            var hikerState = _context.Hikers.Where(i => i.SelectedState == state).FirstOrDefault();
+            Hiker hikerState = _context.Hikers.Where(i => i.SelectedState == state).FirstOrDefault();
             return hikerState.SelectedState;
         }
 
         public string GetHikerLatitude(string latitude)
         {
-            var hikerLatitude = _context.Hikers.Where(i => i.Latitude == latitude).FirstOrDefault();
+            Hiker hikerLatitude = _context.Hikers.Where(i => i.Latitude == latitude).FirstOrDefault();
             return hikerLatitude.Latitude;
         }
 
         public string GetHikerLongitude(string longitude)
         {
-            var hikerLongitude = _context.Hikers.Where(i => i.Latitude == longitude).FirstOrDefault();
+            Hiker hikerLongitude = _context.Hikers.Where(i => i.Latitude == longitude).FirstOrDefault();
             return hikerLongitude.Longitude;
         }
 
@@ -137,11 +135,6 @@ namespace walkinthepark.Services
         /// ------------ DATABASE MANIPULATION ----------
         /// </summary>
         /// 
-        public List<SelectListItem> AssignStateList()
-        {
-            DataHelpers stateData = new DataHelpers();
-            return stateData.GetStates();
-        }
         public void AddHiker(Hiker hiker)
         {
             try

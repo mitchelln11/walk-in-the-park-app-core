@@ -144,7 +144,7 @@ namespace walkinthepark.Services
                     }
                     else
                     {
-                        _context.SaveChanges();
+                        _context.SaveChanges(); // Does this actually save anything?
                     }
                 }
                 await _context.SaveChangesAsync();

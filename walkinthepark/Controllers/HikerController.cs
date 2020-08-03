@@ -11,7 +11,6 @@ using walkinthepark.Data;
 using walkinthepark.Data.Migrations;
 using walkinthepark.Models;
 using walkinthepark.Services.Interfaces;
-using walkinthepark.ViewModels;
 
 namespace walkinthepark.Controllers
 {
@@ -20,13 +19,15 @@ namespace walkinthepark.Controllers
         private readonly IUserService _userService;
         private readonly IHikerService _hikerService;
         private readonly IWishlistService _wishlistService;
+        private readonly IStateService _stateService;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public HikerController(IUserService userService, IHikerService hikerService, IWishlistService wishlistService, SignInManager<IdentityUser> signInManager)
+        public HikerController(IUserService userService, IHikerService hikerService, IWishlistService wishlistService, IStateService stateService, SignInManager<IdentityUser> signInManager)
         {
             _userService = userService;
             _hikerService = hikerService;
             _wishlistService = wishlistService;
+            _stateService = stateService;
             _signInManager = signInManager;
         }
 
@@ -65,7 +66,11 @@ namespace walkinthepark.Controllers
         public ActionResult Create()
         {
             //var stateList = _hikerService.AssignStateList();
-            return View();
+            Hiker hiker = new Hiker
+            {
+                States = _stateService.GetStates()
+            };
+            return View(hiker);
         }
 
         // POST: HikerController/Create
@@ -76,7 +81,6 @@ namespace walkinthepark.Controllers
             try
             {
                 hiker.ApplicationId = _userService.FindRegisteredUserId(); // Doesn't come through parameter, so it needs to be added
-                hiker.States = _hikerService.AssignStateList(); // List of states coming from other file
                 _hikerService.AddHiker(hiker);
                 return RedirectToAction("Details", "Hiker", new { id = hiker.HikerId });
             }
