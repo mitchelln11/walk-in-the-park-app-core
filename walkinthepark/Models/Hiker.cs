@@ -24,29 +24,11 @@ namespace walkinthepark.Models
         [Display(Name = "City")]
         public string City { get; set; }
 
-        /// <summary>
-        /// Testing
-        /// </summary>
-        //public IEnumerable<SelectListItem> StatesList { get; set; }
-
-        //[Display(Name = "State")]
-        //public StateEnum EnumState { get; set; }
-
-
-
-
         [Display(Name ="State")]
         public string SelectedState { get; set; }
         
         [NotMapped]
         public List<SelectListItem> States { get; set; }
-
-        /// <summary>
-        ///  End Testing
-        /// </summary>
-
-
-
 
         [Display(Name = "Latitude")]
         public string Latitude { get; set; }
@@ -59,7 +41,6 @@ namespace walkinthepark.Models
         [HiddenInput(DisplayValue = false)]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-
         public List<HikerParkWishlist> Wishlists { get; set; }
     }
 }

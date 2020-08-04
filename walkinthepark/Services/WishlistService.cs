@@ -36,7 +36,7 @@ namespace walkinthepark.Services
             return hiker;
         }
 
-        public async void CheckEmptyWishlist()
+        public void CheckEmptyWishlist()
         {
             Hiker currentHiker = FindCurrentHiker();
             List<HikerParkWishlist> currentHikerWishlist = GetWishlist(currentHiker.HikerId);
@@ -46,13 +46,13 @@ namespace walkinthepark.Services
             {
                 currentHiker.EmptyWishlist = false;
                 _context.Hikers.Update(currentHiker);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             }
             else
             {
                 currentHiker.EmptyWishlist = true;
                 _context.Hikers.Update(currentHiker);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             }
         }
 

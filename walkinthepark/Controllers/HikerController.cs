@@ -65,7 +65,6 @@ namespace walkinthepark.Controllers
         // GET: HikerController/Create
         public ActionResult Create()
         {
-            //var stateList = _hikerService.AssignStateList();
             Hiker hiker = new Hiker
             {
                 States = _stateService.GetStates()
@@ -94,6 +93,7 @@ namespace walkinthepark.Controllers
         public ActionResult Edit(int id)
         {
             Hiker hiker = _hikerService.GetHikerRecord(id);
+            hiker.States = _stateService.GetStates();
             return View(hiker);
         }
 
