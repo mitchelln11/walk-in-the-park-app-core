@@ -1,5 +1,6 @@
 ﻿@model walkinthepark.Models.Park
 @using Microsoft.AspNetCore.Identity
+@inject IEnumerable<walkinthepark.Services.Interfaces.IHikingTrailService> HikingTrails
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
@@ -56,55 +57,9 @@
     </div>
 </div>
 
-<div class="flex-container">
-    <div class="flex-box">
-        <table class="table lengthy-table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailDifficulty)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailLength)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailCondition)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.HikingTrail[0].TrailSummary)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.HikingTrail)
-                {
-                    <tr>
-                        <td>
-                            @item.TrailName
-                        </td>
-                        <td>
-                            @item.TrailDifficulty
-                        </td>
-                        <td>
-                            @item.TrailLength
-                        </td>
-                        <td>
-                            @item.TrailCondition
-                        </td>
-                        <td>
-                            @item.TrailSummary
-                        </td>
-                        @Html.HiddenFor(modelItem => item.TrailId)
-                        @Html.HiddenFor(modelItem => item.HikingApiCode)
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+@* Both work, both are referencing the list on the Park Model page *@
+<!--<partial name="../Shared/_hikingTrailsPartialView.cshtml" for="HikingTrail" />--> @*Referencing the list on the Park Model*@
+<partial name="../Shared/_hikingTrailsPartialView.cshtml" model="@Model.HikingTrail" /> @*Referencing the list on the Park Model*@
 
 <div class="flex-container">
     <div class="flex-box">

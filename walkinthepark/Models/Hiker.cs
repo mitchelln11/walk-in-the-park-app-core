@@ -53,7 +53,7 @@ namespace walkinthepark.Models
 
         [Display(Name = "Longitude")]
         public string Longitude { get; set; }
-        public bool EmptyWishlist { get; set; } = true;
+        public bool EmptyWishlist { get; set; }
 
         [ForeignKey("ApplicationUser")]
         [HiddenInput(DisplayValue = false)]

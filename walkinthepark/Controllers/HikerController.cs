@@ -51,7 +51,7 @@ namespace walkinthepark.Controllers
             Hiker Hiker = _hikerService.GetHikerRecord(id); 
             try
             {
-                _wishlistService.CheckEmptyWishlist(Hiker.EmptyWishlist);
+                _wishlistService.CheckEmptyWishlist();
                 Hiker.Wishlists = _wishlistService.GetWishlist(Hiker.HikerId);
                 RedirectToRoute("Details", new { id });
             }

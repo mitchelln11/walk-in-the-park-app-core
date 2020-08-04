@@ -36,7 +36,7 @@ namespace walkinthepark.Services
             return hiker;
         }
 
-        public async void CheckEmptyWishlist(bool EmptyWishlist)
+        public async void CheckEmptyWishlist()
         {
             Hiker currentHiker = FindCurrentHiker();
             List<HikerParkWishlist> currentHikerWishlist = GetWishlist(currentHiker.HikerId);
@@ -44,13 +44,13 @@ namespace walkinthepark.Services
             int emptyWishlist = currentHikerWishlist.Count();
             if (emptyWishlist > 0)
             {
-                currentHiker.EmptyWishlist = true;
+                currentHiker.EmptyWishlist = false;
                 _context.Hikers.Update(currentHiker);
                 await _context.SaveChangesAsync();
             }
             else
             {
-                currentHiker.EmptyWishlist = false;
+                currentHiker.EmptyWishlist = true;
                 _context.Hikers.Update(currentHiker);
                 await _context.SaveChangesAsync();
             }
@@ -64,9 +64,7 @@ namespace walkinthepark.Services
                 var currentPark = _parkService.GetParkRecord(id);
                 var currentHiker = FindCurrentHiker();
 
-                ///
                 List<HikerParkWishlist> currentHikerWishlist = GetWishlist(currentHiker.HikerId);
-                ///
 
                 HikerParkWishlist parkWishlist = new HikerParkWishlist
                 {
