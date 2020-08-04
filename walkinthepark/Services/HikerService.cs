@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,18 @@ namespace walkinthepark.Services
             _signInManager = signInManager;
         }
 
-        public List<Hiker> GetHikers() => _context.Hikers.ToList();
-
+        /// <summary>
+        /// ------------ CURRENT USER FROM SignInManager<IdentityUser> signInManager----------
+        /// </summary>
         // Find logged in hiker's Application ID
         public string FindRegisteredUserId() => _signInManager.Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+
+
+        /// <summary>
+        /// ------------ PULL INFO FROM DATABASE----------
+        /// </summary>
+        public List<Hiker> GetHikers() => _context.Hikers.ToList();
 
         // Find logged in hiker -- Needed???  Or just use GetHikerId method???
         public Hiker GetLoggedInHiker(int id) => _context.Hikers.Find(id);
@@ -69,7 +78,7 @@ namespace walkinthepark.Services
 
         public int GetHikerId(int id)
         {
-            var hikerId = _context.Hikers.Where(i => i.HikerId == id).FirstOrDefault();
+            Hiker hikerId = _context.Hikers.Where(i => i.HikerId == id).FirstOrDefault();
             return hikerId.HikerId;
         }
 
@@ -77,52 +86,54 @@ namespace walkinthepark.Services
         {
             string appId = FindRegisteredUserId();
             Hiker hikerRecord = _context.Hikers.Where(i => i.ApplicationId == appId).FirstOrDefault();
-            firstName = hikerRecord.FirstName;
-            return firstName;
+            return hikerRecord.FirstName;
         }
 
         public string GetHikerFirstName(string firstName) // Overload for first name
         {
-            var hikerFirstName = _context.Hikers.Where(i => i.FirstName == firstName).FirstOrDefault();
+            Hiker hikerFirstName = _context.Hikers.Where(i => i.FirstName == firstName).FirstOrDefault();
             return hikerFirstName.FirstName;
         }
 
         public string GetHikerLastName(string lastName)
         {
-            var hikerLastName = _context.Hikers.Where(i => i.LastName == lastName).FirstOrDefault();
+            Hiker hikerLastName = _context.Hikers.Where(i => i.LastName == lastName).FirstOrDefault();
             return hikerLastName.LastName;
         }
 
         public string GetHikerAddress(string address)
         {
-            var hikerAddress = _context.Hikers.Where(i => i.StreetAddress == address).FirstOrDefault();
+            Hiker hikerAddress = _context.Hikers.Where(i => i.StreetAddress == address).FirstOrDefault();
             return hikerAddress.StreetAddress;
         }
 
         public string GetHikerCity(string city)
         {
-            var hikerCity = _context.Hikers.Where(i => i.City == city).FirstOrDefault();
+            Hiker hikerCity = _context.Hikers.Where(i => i.City == city).FirstOrDefault();
             return hikerCity.City;
         }
 
         public string GetHikerState(string state)
         {
-            var hikerState = _context.Hikers.Where(i => i.State == state).FirstOrDefault();
-            return hikerState.State;
+            Hiker hikerState = _context.Hikers.Where(i => i.SelectedState == state).FirstOrDefault();
+            return hikerState.SelectedState;
         }
 
         public string GetHikerLatitude(string latitude)
         {
-            var hikerLatitude = _context.Hikers.Where(i => i.Latitude == latitude).FirstOrDefault();
+            Hiker hikerLatitude = _context.Hikers.Where(i => i.Latitude == latitude).FirstOrDefault();
             return hikerLatitude.Latitude;
         }
 
         public string GetHikerLongitude(string longitude)
         {
-            var hikerLongitude = _context.Hikers.Where(i => i.Latitude == longitude).FirstOrDefault();
+            Hiker hikerLongitude = _context.Hikers.Where(i => i.Latitude == longitude).FirstOrDefault();
             return hikerLongitude.Longitude;
         }
 
+        /// <summary>
+        /// ------------ TESTING ----------
+        /// </summary>
         // For Navbar conditional
         public bool HikerRegisteredProfileBuilt()
         {
@@ -136,6 +147,12 @@ namespace walkinthepark.Services
             return RegisteredAndHasProfile;
         }
 
+
+
+        /// <summary>
+        /// ------------ DATABASE MANIPULATION ----------
+        /// </summary>
+        /// 
         public void AddHiker(Hiker hiker)
         {
             try

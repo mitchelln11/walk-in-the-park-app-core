@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using walkinthepark.Services.Interfaces;
 using walkinthepark.Services;
 using System.Net.Http.Json;
+using System.Web;
 
 namespace walkinthepark.Controllers
 {
@@ -37,7 +38,7 @@ namespace walkinthepark.Controllers
         // GET: ParkController
         public ActionResult Index()
         {
-            var parks = _parkService.GetParks();
+            List<Park> parks = _parkService.GetParks();
             return View(parks);
         }
 
@@ -126,10 +127,19 @@ namespace walkinthepark.Controllers
             }
         }
 
-        //public string GetGoogleMapsJsKey()
-        //{
-        //    var googleMapsJsKey = _configuration["GoogleMapsJsKey"];
-        //    return "https://maps.googleapis.com/maps/api/js?key={googleMapsJsKey}&callback=initMapgoogleMapsJsKey";
-        //}
+        /// <summary>
+        /// ------------ HELPER METHODS ----------
+        /// </summary>
+        public ActionResult FilterMultiStateParks()
+        {
+            _parkService.GetStatesWithParks();
+            return RedirectToAction("Index", "Park");
+        }
+
+        public ActionResult ResetParkList()
+        {
+            _parkService.GetParks();
+            return RedirectToAction("Index", "Park");
+        }
     }
 }

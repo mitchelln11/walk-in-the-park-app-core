@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using walkinthepark.Data;
 using walkinthepark.Data.Migrations;
 using walkinthepark.Models;
@@ -18,13 +19,15 @@ namespace walkinthepark.Controllers
         private readonly IUserService _userService;
         private readonly IHikerService _hikerService;
         private readonly IWishlistService _wishlistService;
+        private readonly IStateService _stateService;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public HikerController(IUserService userService, IHikerService hikerService, IWishlistService wishlistService, SignInManager<IdentityUser> signInManager)
+        public HikerController(IUserService userService, IHikerService hikerService, IWishlistService wishlistService, IStateService stateService, SignInManager<IdentityUser> signInManager)
         {
             _userService = userService;
             _hikerService = hikerService;
             _wishlistService = wishlistService;
+            _stateService = stateService;
             _signInManager = signInManager;
         }
 
@@ -40,7 +43,6 @@ namespace walkinthepark.Controllers
             {
                 return View(ex.Message);
             }
-            
         }
 
         // GET: HikerController/Details/5
@@ -49,7 +51,7 @@ namespace walkinthepark.Controllers
             Hiker Hiker = _hikerService.GetHikerRecord(id); 
             try
             {
-                _wishlistService.CheckEmptyWishlist(Hiker.EmptyWishlist);
+                _wishlistService.CheckEmptyWishlist();
                 Hiker.Wishlists = _wishlistService.GetWishlist(Hiker.HikerId);
                 RedirectToRoute("Details", new { id });
             }
@@ -63,7 +65,11 @@ namespace walkinthepark.Controllers
         // GET: HikerController/Create
         public ActionResult Create()
         {
-            return View();
+            Hiker hiker = new Hiker
+            {
+                States = _stateService.GetStates()
+            };
+            return View(hiker);
         }
 
         // POST: HikerController/Create
@@ -87,6 +93,7 @@ namespace walkinthepark.Controllers
         public ActionResult Edit(int id)
         {
             Hiker hiker = _hikerService.GetHikerRecord(id);
+            hiker.States = _stateService.GetStates();
             return View(hiker);
         }
 
@@ -98,7 +105,7 @@ namespace walkinthepark.Controllers
             try
             {
                 _hikerService.EditHiker(hiker);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Hiker", new { id = hiker.HikerId });
             }
             catch
             {

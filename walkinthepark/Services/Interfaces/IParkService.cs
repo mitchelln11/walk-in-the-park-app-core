@@ -9,6 +9,7 @@ namespace walkinthepark.Services.Interfaces
     public interface IParkService 
     {
         List<Park> GetParks();
+        List<string> GetStatesWithParks();
         Park GetParkRecord(int id);
         int GetParkId(int id);
         void DeletePark(int id);

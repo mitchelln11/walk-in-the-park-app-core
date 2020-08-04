@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace walkinthepark.Services.Interfaces
         void HikerIsRegistered();
         bool HikerRegisteredProfileBuilt();
         IdentityUser CurrentUser(Hiker hiker);
+
 
         // Data manipulation
         void AddHiker(Hiker hiker);

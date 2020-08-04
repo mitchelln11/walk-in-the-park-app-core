@@ -42,11 +42,17 @@
                     @Html.DisplayFor(model => model.City)
                 </dd>
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.State)
+                    @Html.DisplayNameFor(model => model.SelectedState)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.State)
+                    @Html.DisplayFor(model => model.SelectedState)
                 </dd>
+                @*<dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.EnumState)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.EnumState)
+        </dd>*@
             </dl>
 
             @Html.ActionLink("Delete Profile", "Delete", "Hiker", new { id = Model.HikerId }, new { @class = "btn btn-danger crud-links drop-shadow" })
@@ -58,7 +64,7 @@
         </div>
     </div>
 
-    @if (Model.EmptyWishlist.Equals(true)) // Doesn't seem to be stopping H2 from displaying on page
+    @if (Model.EmptyWishlist.Equals(false))
     {
         <div class="flex-box">
             <div class="content-box">

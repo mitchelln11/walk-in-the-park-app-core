@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using walkinthepark.Data;
 
 namespace walkinthepark.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200730141205_RemovedStaticStateFromHikers")]
+    partial class RemovedStaticStateFromHikers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,11 +243,11 @@ namespace walkinthepark.Data.Migrations
                     b.Property<bool>("EmptyWishlist")
                         .HasColumnType("bit");
 
+                    b.Property<int>("EnumState")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRegisteredWithProfile")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -254,9 +256,6 @@ namespace walkinthepark.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Longitude")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SelectedState")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetAddress")

@@ -10,7 +10,7 @@ namespace walkinthepark.Services.Interfaces
     {
         List<HikerParkWishlist> GetWishlist();
         List<HikerParkWishlist> GetWishlist(int id); // Override
-        void CheckEmptyWishlist(bool EmptyWishlist);
+        void CheckEmptyWishlist();
         HikerParkWishlist HikerIdFromWishlist(int id);
         void AddParktoWishlist(int id);
         void DeleteWishlist(int id);

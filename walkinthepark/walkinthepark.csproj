@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-walkinthepark-1510255E-DA5F-4BF7-8F56-79FAADE7E0DE</UserSecretsId>
+    <StartupObject>walkinthepark.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
