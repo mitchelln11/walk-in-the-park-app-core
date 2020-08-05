@@ -262,6 +262,10 @@ footer {
         text-align:left;
     }
 
+    .flex-long-cell {
+        flex:2;
+    }
+
     @media screen and (min-width:768px) {
         #park-list, #park-header {
             text-align: left;
@@ -305,6 +309,10 @@ footer {
         }
         .flex-box {
             flex: 1;
+        }
+
+        .flex-long-cell {
+            flex: 2;
         }
 
         .trail-list {
