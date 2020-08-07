@@ -2,9 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-
 }
-
 
 <div class="flex-container">
     <div class="flex-box">
@@ -34,13 +32,6 @@
                     <input asp-for="City" class="form-control" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
-                @*<div class="form-group">
-                    <label asp-for="EnumState" class="control-label"></label>
-                    <select asp-for="EnumState"
-                            asp-items="Html.GetEnumSelectList<DataHelpers.StateEnum>()">
-                        <option value="">Select State</option>
-                    </select>
-                </div>*@
                 <div class="form-group">
                     <label asp-for="SelectedState" class="control-label"></label>
                     <select asp-for="SelectedState"
@@ -48,8 +39,6 @@
                         <option value="">Select State</option>
                     </select>
                 </div>
-
-
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary medium-brown drop-shadow" />
                 </div>

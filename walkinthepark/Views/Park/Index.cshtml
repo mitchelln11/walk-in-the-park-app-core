@@ -1,4 +1,4 @@
-﻿@model IEnumerable<walkinthepark.Models.Park>
+﻿@model walkinthepark.ViewModels.StaticDataViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -19,51 +19,35 @@
 </div>
 <div class="clearfix"></div>
 
-<div id="park-header">
-    <div class="flex-container">
-        <div class="flex-box">
-            <div class="flex-table-cell">
-                <h4>Parks</h4>
-                @*<div class="form-group">
-                <div class="flex-container">
-                    <div class="state-filter-box">
-                        @Html.LabelFor(model => model.SelectedState)
-                    </div>
-                    <div class="state-filter-box">
-                        @Html.DropDownListFor(model => model.SelectedState, Model.States, "Please Select State")
-                    </div>
-                    <div class="state-filter-box">
-                        <input type="submit" value="Filter" class="btn btn-default" />
-                    </div>
-                    <div class="state-filter-box">
-                        @Html.ActionLink("See All Parks", "Index", "Parks", null, new { @class = "btn btn-default" })
-                    </div>
-                </div>
-            </div>*@
-
-                @*<select asp-action="FilterMultiStateParks" method="post" asp-items="Html.GetEnumSelectList<StateEnum">
-            </select>
-            <button asp-controller="Park" asp-action="FilterMultiStateParks">Filter</button>
-            <button asp-controller="Park" asp-action="ResetParkList">Show All</button>*@
-
-            </div>
-        </div>
-    </div>
+<div id="park-header" class="content-box">
+    <h4>Parks</h4>
+    @using (Html.BeginForm("Index", "Park", FormMethod.Post, new { @class = "flex-inline-left" }))
+    {
+        <select asp-for="@Model.ParkObj.ParkState"
+                asp-items="@(Model.States)">
+            <option value="">Select State</option>
+        </select>
+        @* Still don't think the parameter is ever being sent, so it's never making it ot the post *@
+        @*<a type="submit" class="btn btn-default medium-brown drop-shadow">Filter</a>*@
+        <input type="submit" value="Filter" class="btn btn-default medium-brown drop-shadow" />
+        <input type="submit" value="See All Parks" class="btn btn-default medium-brown drop-shadow" />
+    }
 </div>
+
 <div id="park-list">
     <div class="flex-table-row flex-table-header">
         <div class="flex-box flex-table-cell">
-            @Html.DisplayNameFor(model => model.ParkName)
+            @Html.DisplayNameFor(model => model.ParkObj.ParkName)
         </div>
         <div class="flex-box flex-table-cell">
-            @Html.DisplayNameFor(model => model.ParkState)
+            @Html.DisplayNameFor(model => model.ParkObj.ParkState)
         </div>
         <div class="flex-box flex-table-cell">
-             @*Empty to keep 3 columns for details buttons*@ 
+            @*Empty to keep 3 columns for details buttons*@
         </div>
     </div>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.FilteredParkList) @*Using Filtered, it's just not filtered yet on load*@
     {
         // Add Markers
         ParkMarkers parkMarker = new ParkMarkers();
@@ -86,7 +70,7 @@
                 @Html.ActionLink("Details", "Details", new { id = item.ParkId })
             </div>
         </div>
-        }
+    }
 </div>
 
 <script>

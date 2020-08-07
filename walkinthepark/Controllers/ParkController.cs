@@ -18,6 +18,8 @@ using walkinthepark.Services.Interfaces;
 using walkinthepark.Services;
 using System.Net.Http.Json;
 using System.Web;
+using walkinthepark.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace walkinthepark.Controllers
 {
@@ -38,8 +40,40 @@ namespace walkinthepark.Controllers
         // GET: ParkController
         public ActionResult Index()
         {
-            List<Park> parks = _parkService.GetParks();
-            return View(parks);
+            try
+            {
+                List<Park> parks = _parkService.GetParks();
+                List<SelectListItem> selectListItems = _parkService.GetStatesWithParks();
+
+                StaticDataViewModel parksViewModel = new StaticDataViewModel
+                {
+                    Park = parks, // List of all Parks ---- used to list all trails on the view
+                    States = selectListItems, // Returns only states where Parks exist
+                    ParkObj = null,
+                    FilteredParkList = parks
+
+                };
+                return View(parksViewModel);
+
+            } catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Index(StaticDataViewModel parkStateList)
+        {
+            List<SelectListItem> selectListItems = _parkService.GetStatesWithParks();
+            List<Park> parksList = _parkService.GetParks();
+            SelectListItem selected = selectListItems.Where(l => l.Value == parkStateList.ParkObj.ParkState).First();
+
+            StaticDataViewModel parksViewModel = new StaticDataViewModel
+            {
+                States = selectListItems, // Returns only states where Parks exist
+                FilteredParkList = parksList.Where(p => p.ParkState == selected.Value).ToList()
+            };
+            return View(parksViewModel);
         }
 
         // GET: ParkController/Details/5
@@ -125,21 +159,6 @@ namespace walkinthepark.Controllers
             {
                 return RedirectToAction("Index", "Park");
             }
-        }
-
-        /// <summary>
-        /// ------------ HELPER METHODS ----------
-        /// </summary>
-        public ActionResult FilterMultiStateParks()
-        {
-            _parkService.GetStatesWithParks();
-            return RedirectToAction("Index", "Park");
-        }
-
-        public ActionResult ResetParkList()
-        {
-            _parkService.GetParks();
-            return RedirectToAction("Index", "Park");
         }
     }
 }

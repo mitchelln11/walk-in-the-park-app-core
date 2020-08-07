@@ -1,0 +1,18 @@
+﻿@model List<walkinthepark.ViewModels.StaticDataViewModel>
+
+<div id="park-header">
+    <div class="flex-container">
+        <div class="flex-box">
+            <div class="flex-table-cell">
+                <h4>Parks</h4>
+                <div class="form-group">
+                    <label asp-for="@Model" class="control-label"></label>
+                    @*<select asp-for="@Model"
+                            asp-items="@(Model)">
+                        <option value="">Select State</option>
+                    </select>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
