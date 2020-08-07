@@ -160,7 +160,7 @@ namespace walkinthepark.Services
             Park park = await _context.Parks.FindAsync(id);
             var hikingTrailsKey = _configuration["HikingProjectKey"];
             var request = new HttpRequestMessage(HttpMethod.Get,
-                $"https://www.hikingproject.com/data/get-trails?lat={park.ParkLatitude}&lon={park.ParkLongitude}&maxDistance=100&key={hikingTrailsKey}");
+                $"https://www.hikingproject.com/data/get-trails?lat={park.ParkLatitude}&lon={park.ParkLongitude}&maxDistance=50&maxResults=60&key={hikingTrailsKey}");
 
             var client = ClientFactory.CreateClient("trails");
             HttpResponseMessage response = await client.SendAsync(request);

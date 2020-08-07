@@ -37,8 +37,9 @@ p {
 }
 
 select {
-    padding: 5px;
+    padding: 6px;
     color: #888;
+    margin: 0 5px 0 0;
 }
 select option {
     color: #000;
@@ -261,6 +262,15 @@ footer {
     #page-header .content-box {
         text-align:left;
     }
+    .flex-inline-left {
+        display:flex;
+        align-items:center;
+        justify-content:left;
+    }
+
+    .flex-long-cell {
+        flex: 2;
+    }
 
     @media screen and (min-width:768px) {
         #park-list, #park-header {
@@ -305,6 +315,10 @@ footer {
         }
         .flex-box {
             flex: 1;
+        }
+
+        .flex-long-cell {
+            flex: 2;
         }
 
         .trail-list {

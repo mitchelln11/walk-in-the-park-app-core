@@ -2,50 +2,44 @@
 
 <div class="flex-container">
     <div class="flex-box">
-        <table class="table lengthy-table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TrailName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TrailDifficulty)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TrailLength)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TrailCondition)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TrailSummary)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @item.TrailName
-                        </td>
-                        <td>
-                            @item.TrailDifficulty
-                        </td>
-                        <td>
-                            @item.TrailLength
-                        </td>
-                        <td>
-                            @item.TrailCondition
-                        </td>
-                        <td>
-                            @item.TrailSummary
-                        </td>
-                        @Html.HiddenFor(modelItem => item.TrailId)
-                        @Html.HiddenFor(modelItem => item.HikingApiCode)
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="flex-table-row flex-table-header">
+            <div class="flex-box flex-table-cell">
+                @Html.DisplayNameFor(model => model.TrailName)
+            </div>
+            <div class="flex-box flex-table-cell">
+                @Html.DisplayNameFor(model => model.TrailDifficulty)
+            </div>
+            <div class="flex-box flex-table-cell">
+                @Html.DisplayNameFor(model => model.TrailLength)
+            </div>
+            <div class="flex-box flex-table-cell flex-long-cell">
+                @Html.DisplayNameFor(model => model.TrailCondition)
+            </div>
+            <div class="flex-box flex-table-cell flex-long-cell">
+                @Html.DisplayNameFor(model => model.TrailSummary)
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="flex-table-row">
+                <div class="flex-box flex-table-cell">
+                    @item.TrailName
+                </div>
+                <div class="flex-box flex-table-cell">
+                    @item.TrailDifficulty
+                </div>
+                <div class="flex-box flex-table-cell">
+                    @item.TrailLength
+                </div>
+                <div class="flex-box flex-table-cell flex-long-cell">
+                    @item.TrailCondition
+                </div>
+                <div class="flex-box flex-table-cell flex-long-cell">
+                    @item.TrailSummary
+                </div>
+            </div>
+            @Html.HiddenFor(modelItem => item.TrailId)
+            @Html.HiddenFor(modelItem => item.HikingApiCode)
+        }
     </div>
 </div>

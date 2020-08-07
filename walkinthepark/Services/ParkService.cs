@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -28,11 +29,12 @@ namespace walkinthepark.Services
         /// </summary>
         // Find logged in hiker's Application ID
         public List<Park> GetParks() => _context.Parks.OrderBy(p => p.ParkName).ToList();
-        public List<string> GetStatesWithParks()
+        public List<SelectListItem> GetStatesWithParks()
         {
-            var states = GetParks().Select(s => s.ParkState).Distinct().ToList(); // Run Method to get all States from Park records and avoid duplicates with Distinct
-            var multiStateFiltering = FilterParksWithMultipeStates(states); // Filter multi-state parks
-            return multiStateFiltering;
+            List<string> states = GetParks().Select(s => s.ParkState).Distinct().ToList(); // Run Method to get all States from Park records and avoid duplicates with Distinct
+            return FilterParksWithMultipeStates(states).Select(m => new SelectListItem { Text = m, Value = m }).ToList(); // Filter multi-state parks
+            //var listToItemConversion = multi
+            //return multiStateFiltering;
         }
 
         private List<string> FilterParksWithMultipeStates(List<string> statesWithParks)
@@ -63,7 +65,7 @@ namespace walkinthepark.Services
                     finalizedStateList.Add(stateArray);
                 }
             }
-            var reorderedFinalList = finalizedStateList.Distinct().OrderBy(s => s).ToList();
+            List<string> reorderedFinalList = finalizedStateList.Distinct().OrderBy(s => s).ToList();
             return reorderedFinalList;
         }
 
@@ -71,43 +73,43 @@ namespace walkinthepark.Services
 
         public int GetParkId(int id)
         {
-            var parkId = _context.Parks.Where(i => i.ParkId == id).FirstOrDefault();
+            Park parkId = _context.Parks.Where(i => i.ParkId == id).FirstOrDefault();
             return parkId.ParkId;
         }
 
         public string GetParkName(string name)
         {
-            var parkName = _context.Parks.Where(i => i.ParkName == name).FirstOrDefault();
+            Park parkName = _context.Parks.Where(i => i.ParkName == name).FirstOrDefault();
             return parkName.ParkName;
         }
 
         public string GetParkState(string state)
         {
-            var parkState = _context.Parks.Where(s => s.ParkState == state).FirstOrDefault();
+            Park parkState = _context.Parks.Where(s => s.ParkState == state).FirstOrDefault();
             return parkState.ParkState;
         }
 
         public string GetParkLatitude(string latitude)
         {
-            var parkLatitude = _context.Parks.Where(s => s.ParkLatitude == latitude).FirstOrDefault();
+            Park parkLatitude = _context.Parks.Where(s => s.ParkLatitude == latitude).FirstOrDefault();
             return parkLatitude.ParkLatitude;
         }
 
         public string GetParkLongitude(string longitude)
         {
-            var parkLongitude = _context.Parks.Where(s => s.ParkLongitude == longitude).FirstOrDefault();
+            Park parkLongitude = _context.Parks.Where(s => s.ParkLongitude == longitude).FirstOrDefault();
             return parkLongitude.ParkLongitude;
         }
 
         public string GetParkDescription(string description)
         {
-            var parkDescription = _context.Parks.Where(s => s.ParkDescription == description).FirstOrDefault();
+            Park parkDescription = _context.Parks.Where(s => s.ParkDescription == description).FirstOrDefault();
             return parkDescription.ParkDescription;
         }
 
         public string GetParkCode(string code)
         {
-            var parkCode = _context.Parks.Where(s => s.ParkCode == code).FirstOrDefault();
+            Park parkCode = _context.Parks.Where(s => s.ParkCode == code).FirstOrDefault();
             return parkCode.ParkCode;
         }
 

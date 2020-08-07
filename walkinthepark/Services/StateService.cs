@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using walkinthepark.Services.Interfaces;
+using walkinthepark.ViewModels;
 
 namespace walkinthepark.Services
 {
@@ -13,6 +14,7 @@ namespace walkinthepark.Services
         {
             List<SelectListItem> states = new List<SelectListItem>()
             {
+                new SelectListItem() { Text="--Select A State--", Value=""},
                 new SelectListItem() { Text="Alabama", Value="AL"},
                 new SelectListItem() { Text="Alaska", Value="AK"},
                 new SelectListItem() { Text="American Samoa", Value="AS"},
