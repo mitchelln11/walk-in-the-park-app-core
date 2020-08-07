@@ -145,6 +145,10 @@ tr:nth-child(even) {
     background-color: rgba(215,202,178,1);
 }
 
+.btn {
+    margin: 0 2px;
+    color: #fff;
+}
 a.btn.btn-default {
     background: #766e59;
     color: #fff;
